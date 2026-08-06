@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operational Research (BCA) - Exam Questions with Answers</title>
+<style>
+  :root{
+    --ink:#1c1b19;
+    --ink-soft:#4a4741;
+    --paper:#fbf9f4;
+    --card:#ffffff;
+    --rule:#ddd6c8;
+    --accent:#8a5a2b;
+    --accent-soft:#f3e9db;
+    --blue:#2b5d8a;
+    --blue-soft:#e6eef6;
+    --green:#3d6b45;
+    --green-soft:#e7f0e8;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:28px 22px 80px}
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    text-align:center;
+    border-bottom:3px double var(--ink);
+    padding-bottom:18px;
+    margin-bottom:22px;
+  }
+  .uni{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:2rem;line-height:1.2;margin:8px 0 6px;font-weight:700;
+  }
+  .sub{color:var(--ink-soft);font-size:.95rem;margin:0}
+
+  /* ---------- pattern box ---------- */
+  .pattern{
+    background:var(--accent-soft);
+    border:1px solid #e2d3bd;
+    border-radius:10px;
+    padding:16px 18px;
+    margin:0 0 26px;
+  }
+  .pattern h2{margin:0 0 10px;font-size:1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  .pattern table{width:100%;border-collapse:collapse;font-size:.92rem}
+  .pattern td{padding:5px 8px;border-bottom:1px solid #e6dac6;vertical-align:top}
+  .pattern tr:last-child td{border-bottom:none}
+  .pattern td:first-child{font-weight:600;white-space:nowrap;width:1%}
+  .pattern p.note{margin:10px 0 0;font-size:.85rem;color:var(--ink-soft)}
+
+  /* ---------- contents ---------- */
+  nav.toc{
+    background:var(--card);border:1px solid var(--rule);border-radius:10px;
+    padding:16px 20px;margin-bottom:30px;
+  }
+  nav.toc h2{margin:0 0 10px;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:.9rem}
+  nav.toc li{margin:3px 0;break-inside:avoid}
+  nav.toc a{color:var(--blue);text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+
+  /* ---------- group banner ---------- */
+  .group{
+    margin:40px 0 20px;padding:12px 18px;
+    background:var(--ink);color:#fbf9f4;border-radius:8px;
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+  }
+  .group h2{margin:0;font-size:1.15rem;letter-spacing:.05em}
+  .group span{font-size:.88rem;opacity:.85}
+
+  /* ---------- question card ---------- */
+  article.q{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-left:4px solid var(--accent);
+    border-radius:8px;
+    padding:18px 22px 20px;
+    margin:0 0 20px;
+  }
+  article.q.long{border-left-color:var(--blue)}
+  .qhead{display:flex;gap:12px;align-items:flex-start;margin-bottom:4px}
+  .qno{
+    flex:0 0 auto;background:var(--accent);color:#fff;
+    font-size:.78rem;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:5px;margin-top:3px;
+  }
+  article.q.long .qno{background:var(--blue)}
+  .qtext{font-weight:600;font-size:1.03rem;margin:0}
+  .meta{margin:6px 0 14px 0;font-size:.78rem;color:var(--ink-soft)}
+  .meta b{color:var(--accent);font-weight:600}
+  article.q.long .meta b{color:var(--blue)}
+
+  .ans{border-top:1px dashed var(--rule);padding-top:14px}
+  .ans h4{
+    margin:16px 0 6px;font-size:.95rem;color:var(--accent);
+    font-family:Georgia,serif;font-weight:700;
+  }
+  article.q.long .ans h4{color:var(--blue)}
+  .ans h4:first-child{margin-top:0}
+  .ans p{margin:8px 0}
+  .ans ul,.ans ol{margin:8px 0;padding-left:24px}
+  .ans li{margin:4px 0}
+  .ans li>ul,.ans li>ol{margin:3px 0}
+
+  /* ---------- helpers ---------- */
+  .fml{
+    background:#f6f2ea;border:1px solid #e6ddcc;border-radius:6px;
+    padding:10px 14px;margin:10px 0;
+    font-family:"Cascadia Mono",Consolas,"DejaVu Sans Mono",monospace;
+    font-size:.9rem;line-height:1.7;white-space:pre-wrap;
+  }
+  .fml b{color:var(--accent)}
+  .key{
+    background:var(--green-soft);border:1px solid #cfe0d2;border-left:4px solid var(--green);
+    border-radius:6px;padding:10px 14px;margin:12px 0;font-size:.95rem;
+  }
+  .key strong{color:var(--green)}
+  .tip{
+    background:var(--blue-soft);border:1px solid #d4e2ee;border-left:4px solid var(--blue);
+    border-radius:6px;padding:10px 14px;margin:12px 0;font-size:.9rem;
+  }
+  .tip strong{color:var(--blue)}
+
+  table.data{
+    width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem;
+  }
+  table.data caption{
+    caption-side:top;text-align:left;font-size:.82rem;color:var(--ink-soft);
+    padding-bottom:5px;font-style:italic;
+  }
+  table.data th,table.data td{border:1px solid var(--rule);padding:6px 9px;text-align:center}
+  table.data th{background:#f2ece1;font-weight:600}
+  table.data td.l,table.data th.l{text-align:left}
+  table.data tr.total td{background:#f7f3ea;font-weight:700}
+  .alloc{background:#eef5ef;font-weight:700}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* ---------- formula sheet ---------- */
+  .sheet{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:20px 24px}
+  .sheet h3{margin:20px 0 8px;font-family:Georgia,serif;font-size:1.05rem;color:var(--accent)}
+  .sheet h3:first-child{margin-top:0}
+
+  footer{margin-top:44px;text-align:center;font-size:.82rem;color:var(--ink-soft)}
+
+  /* ---------- dark screen theme ---------- */
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ink:#ece7dd;--ink-soft:#b3aca0;--paper:#161513;--card:#201f1c;
+      --rule:#3a3833;--accent:#d9a86a;--accent-soft:#2a241b;
+      --blue:#8ab6dd;--blue-soft:#1c2530;--green:#8fc79a;--green-soft:#1b2620;
+    }
+    .group{background:#2c2a26}
+    .qno{color:#161513}
+    table.data th{background:#2a2823}
+    table.data tr.total td{background:#26241f}
+    .alloc{background:#243026}
+    .fml{background:#26241f;border-color:#3a3833}
+    .pattern{border-color:#3a352c}
+    .pattern td{border-bottom-color:#3a352c}
+  }
+
+  /* ---------- print / save as PDF ---------- */
+  @media print{
+    @page{size:A4;margin:14mm 13mm}
+    html,body{background:#fff!important;color:#000!important;font-size:10.5pt}
+    .wrap{max-width:none;padding:0}
+    nav.toc{display:none}
+    .noprint{display:none!important}
+    header.masthead{border-bottom:2px solid #000}
+    .group{
+      background:#fff!important;color:#000!important;
+      border:1.5px solid #000;border-radius:0;
+      break-after:avoid;page-break-after:avoid;
+    }
+    article.q{
+      break-inside:avoid;page-break-inside:avoid;
+      border:1px solid #999;border-left:3px solid #000;
+      box-shadow:none;margin-bottom:12px;padding:12px 14px;
+    }
+    .qno{background:#000!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .fml,.key,.tip,.pattern{background:#f4f4f4!important;border-color:#bbb!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    table.data th{background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .alloc{background:#e4e4e4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .ans h4{color:#000!important}
+    a{color:#000;text-decoration:none}
+    .sheet{break-before:page;page-break-before:always}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="uni">Bachelor of Computer Application (BCA)</div>
+  <h1>Operational Research</h1>
+  <p class="sub">Model questions with complete answers &nbsp;&middot;&nbsp; built from Units 1 to 7 and the 2021, 2023 and 2024 past papers</p>
+</header>
+
+<section class="pattern">
+  <h2>Exam pattern</h2>
+  <table>
+    <tr><td>Full marks</td><td>60 &nbsp;&middot;&nbsp; Pass marks 24 &nbsp;&middot;&nbsp; Time 3 hours</td></tr>
+    <tr><td>Group A</td><td>Question 1, compulsory long answer &nbsp;<b>[1 &times; 10 = 10]</b></td></tr>
+    <tr><td>Group B</td><td>Questions 2 to 8, attempt any six short answers &nbsp;<b>[6 &times; 5 = 30]</b></td></tr>
+    <tr><td>Group C</td><td>Questions 9 to 11, attempt any two long answers &nbsp;<b>[2 &times; 10 = 20]</b></td></tr>
+  </table>
+  <p class="note">Group B answers below are sized for 5 marks (roughly one page, or one worked table). Group C answers are sized for 10 marks (theory plus a full numerical). Marks splits like [1+4] mean one mark for the definition and four for the working, so always write both parts.</p>
+</section>
+
+<nav class="toc noprint">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#b1">OR definition and general solution methods</a></li>
+    <li><a href="#b2">Tools and techniques of OR</a></li>
+    <li><a href="#b3">Mathematical formulation of LPP (firm A, B, C)</a></li>
+    <li><a href="#b4">Simplex algorithm for maximization</a></li>
+    <li><a href="#b5">Simplex algorithm for minimization</a></li>
+    <li><a href="#b6">Solve by simplex: Max z = 5x1 - 3x2</a></li>
+    <li><a href="#b7">Duality: meaning and steps with example</a></li>
+    <li><a href="#b8">Transportation problem, optimal solution</a></li>
+    <li><a href="#b9">Hungarian algorithm</a></li>
+    <li><a href="#b10">Classification of queueing models</a></li>
+    <li><a href="#b11">M/M/1 numerical (radio repair shop)</a></li>
+    <li><a href="#b12">EOQ numerical (spark plugs)</a></li>
+    <li><a href="#b13">Replacement of a scooter</a></li>
+    <li><a href="#b14">Individual replacement of street lamps</a></li>
+    <li><a href="#b15">Game theory by dominance rule</a></li>
+    <li><a href="#b16">Short notes: EOQ, Kendall, duality theorem, degeneracy</a></li>
+    <li><a href="#c1">Inventory costs and ABC analysis</a></li>
+    <li><a href="#c2">ABC system plus EOQ with quantity discount</a></li>
+    <li><a href="#c3">Two person zero sum game, full solution</a></li>
+    <li><a href="#c4">Assignment problem, five contractors</a></li>
+    <li><a href="#c5">Solving an LPP through its dual</a></li>
+    <li><a href="#sheet">Formula sheet for the last hour of revision</a></li>
+  </ol>
+</nav>
+
+<!-- ================= GROUP B ================= -->
+<div class="group"><h2>Group B &nbsp;&middot;&nbsp; Short answer questions</h2><span>Attempt any six &nbsp;[6 &times; 5 = 30]</span></div>
+
+<!-- B1 -->
+<article class="q" id="b1">
+  <div class="qhead"><span class="qno">Q 1</span>
+  <p class="qtext">What is Operational Research? Explain the general methods for solving OR models.</p></div>
+  <p class="meta"><b>[1 + 4]</b> &nbsp;&middot;&nbsp; Unit 1 &nbsp;&middot;&nbsp; asked in 2021 and 2023</p>
+  <div class="ans">
+    <h4>Definition</h4>
+    <p>Operations Research (OR) is a scientific and systematic method of solving complex decision making problems. It uses mathematical models, statistical analysis and computational techniques to optimise a process and help an organisation take better decisions. Its main goal is to find the best possible solution for allocation of limited resources (time, money, material, labour) under given constraints.</p>
+    <p><i>Example:</i> a company that wants to deliver goods at the least shipping cost models the situation as a transportation problem and solves it to get the cheapest routes.</p>
+
+    <h4>General methods for solving OR models</h4>
+    <p>The methods fall into three broad classes.</p>
+    <ol>
+      <li><b>Analytical methods.</b> They use exact mathematical techniques such as calculus, algebra and linear programming to obtain a precise closed form solution. They apply when the model can be written as a set of equations or inequalities with known properties. <i>Example:</i> differentiating a cost function to find its minimum, or the EOQ formula in inventory control.</li>
+      <li><b>Iterative (numerical) methods.</b> Used when an analytical solution is difficult or impossible. The method starts from an initial feasible solution and improves it step by step until the optimal solution is reached. <i>Example:</i> the Simplex method for LPP, the MODI method in transportation, the Hungarian method in assignment.</li>
+      <li><b>Simulation methods (Monte Carlo).</b> Used for complex systems that contain probabilistic elements. Random numbers are generated to represent the uncertain variables, the system is run many times, and the results are analysed to estimate performance measures. <i>Example:</i> simulating a hospital emergency room or traffic flow.</li>
+    </ol>
+    <div class="key"><strong>Remember:</strong> analytical gives an exact answer, iterative improves a solution step by step, simulation imitates the system when maths alone cannot describe it.</div>
+  </div>
+</article>
+
+<!-- B2 -->
+<article class="q" id="b2">
+  <div class="qhead"><span class="qno">Q 2</span>
+  <p class="qtext">Describe in brief the tools and techniques of Operations Research.</p></div>
+  <p class="meta"><b>[2.5 + 2.5]</b> &nbsp;&middot;&nbsp; Unit 1 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <p>OR provides a toolbox of quantitative techniques. The main ones are listed below.</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Tool</th><th class="l">What it does</th><th class="l">Example</th></tr>
+      <tr><td class="l">Linear Programming</td><td class="l">Optimises a linear objective under linear constraints. Solved graphically (2 variables) or by simplex.</td><td class="l">Best product mix for maximum profit</td></tr>
+      <tr><td class="l">Transportation model</td><td class="l">Ships goods from several sources to several destinations at least cost.</td><td class="l">Cheapest factory to warehouse plan</td></tr>
+      <tr><td class="l">Assignment model</td><td class="l">One to one allocation of jobs to workers or machines (Hungarian method).</td><td class="l">Assign 5 contractors to 5 tasks</td></tr>
+      <tr><td class="l">Queueing theory</td><td class="l">Studies waiting lines and balances waiting cost against service cost.</td><td class="l">Number of counters in a bank</td></tr>
+      <tr><td class="l">Inventory models</td><td class="l">Decide how much to order and when, to minimise total inventory cost.</td><td class="l">EOQ, ABC analysis</td></tr>
+      <tr><td class="l">Game theory</td><td class="l">Optimal strategy in a competitive situation between rational players.</td><td class="l">Pricing war between two firms</td></tr>
+      <tr><td class="l">Simulation</td><td class="l">Imitates a real system on computer when it is too complex to model exactly.</td><td class="l">Traffic flow, factory line</td></tr>
+      <tr><td class="l">Dynamic programming</td><td class="l">Breaks a multi stage decision problem into stages solved one by one.</td><td class="l">Shortest path, project planning</td></tr>
+      <tr><td class="l">Network models (PERT / CPM)</td><td class="l">Project scheduling and time cost trade off.</td><td class="l">Construction project timeline</td></tr>
+      <tr><td class="l">Decision theory</td><td class="l">Choice among alternatives under risk and uncertainty.</td><td class="l">Best investment option</td></tr>
+      <tr><td class="l">Replacement theory</td><td class="l">Best time to replace equipment that deteriorates or fails.</td><td class="l">When to replace a vehicle</td></tr>
+    </table>
+    </div>
+    <div class="tip"><strong>Writing tip:</strong> for 5 marks, name six to eight tools, give one line of description and one example each. A table earns marks faster than paragraphs.</div>
+  </div>
+</article>
+
+<!-- B3 -->
+<article class="q" id="b3">
+  <div class="qhead"><span class="qno">Q 3</span>
+  <p class="qtext">What do you mean by the mathematical formulation of LPP? A firm manufactures three products A, B, C. Time to manufacture A is twice that for B and thrice that for C, and they are to be produced in the ratio 3 : 4 : 5. If the whole raw material is engaged in manufacturing product A, 1600 units of it can be produced. There is a demand for at least 300, 250 and 200 units of A, B and C, and the profit per unit is Rs. 50, Rs. 40 and Rs. 70. Formulate the problem as an LPP.</p></div>
+  <p class="meta"><b>[1 + 4]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <h4>Meaning of mathematical formulation</h4>
+    <p>Mathematical formulation of an LPP means translating a real life business situation into a mathematical model made of four parts:</p>
+    <ol>
+      <li><b>Decision variables:</b> the unknown quantities to be determined.</li>
+      <li><b>Objective function:</b> a linear expression to be maximised or minimised.</li>
+      <li><b>Constraints:</b> linear inequalities or equations expressing resource limits and requirements.</li>
+      <li><b>Non negativity restrictions:</b> the variables cannot take negative values.</li>
+    </ol>
+
+    <h4>Given data</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Raw material</th><th>A (kg)</th><th>B (kg)</th><th>C (kg)</th><th>Total available (kg)</th></tr>
+      <tr><td class="l">P</td><td>6</td><td>5</td><td>9</td><td>5000</td></tr>
+      <tr><td class="l">Q</td><td>4</td><td>6</td><td>8</td><td>6000</td></tr>
+      <tr class="total"><td class="l">Profit per unit</td><td>Rs. 50</td><td>Rs. 40</td><td>Rs. 70</td><td></td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: decision variables</h4>
+    <div class="fml">x&#8321; = number of units of product A produced
+x&#8322; = number of units of product B produced
+x&#8323; = number of units of product C produced</div>
+
+    <h4>Step 2: objective function</h4>
+    <p>Profit is to be maximised, so</p>
+    <div class="fml"><b>Maximize Z = 50x&#8321; + 40x&#8322; + 70x&#8323;</b></div>
+
+    <h4>Step 3: raw material constraints</h4>
+    <div class="fml">6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000     (raw material P)
+4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000     (raw material Q)</div>
+
+    <h4>Step 4: demand constraints</h4>
+    <div class="fml">x&#8321; &ge; 300     (minimum demand of A)
+x&#8322; &ge; 250     (minimum demand of B)
+x&#8323; &ge; 200     (minimum demand of C)</div>
+
+    <h4>Step 5: non negativity</h4>
+    <div class="fml">x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
+
+    <h4>Final LPP model</h4>
+    <div class="fml"><b>Maximize Z = 50x&#8321; + 40x&#8322; + 70x&#8323;</b>
+subject to
+    6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000
+    4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000
+    x&#8321; &ge; 300,  x&#8322; &ge; 250,  x&#8323; &ge; 200
+    x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
+
+    <div class="key"><strong>Note on the extra data:</strong> the time ratio (A is twice B and thrice C) and the production ratio 3 : 4 : 5 do not create constraints here because no machine hour limit is given. The statement that 1600 units of A alone could be produced is only background information, it is already covered by the two raw material constraints. State this in the answer so the examiner sees you understood the data instead of ignoring it.</div>
+  </div>
+</article>
+
+<!-- B4 -->
+<article class="q" id="b4">
+  <div class="qhead"><span class="qno">Q 4</span>
+  <p class="qtext">Write an algorithm to maximize the solution of an LPP using the Simplex method.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <h4>Algorithm</h4>
+    <ol>
+      <li><b>Convert the LPP into standard form.</b> Add a slack variable to every &le; constraint to turn it into an equation, and give each slack a zero coefficient in the objective function. All right hand side constants must be non negative and all variables non negative.
+        <div class="fml">x + y &le; 10   &rarr;   x + y + s&#8321; = 10
+Max Z = c&#8321;x&#8321; + c&#8322;x&#8322; + 0&middot;s&#8321; + 0&middot;s&#8322;</div>
+      </li>
+      <li><b>Set up the initial simplex tableau.</b> Rows are the constraints, columns are the decision variables, slack variables and the RHS column b. The slack variables form the initial basis, so the initial basic feasible solution is x = 0 and s = b.</li>
+      <li><b>Test for optimality.</b> Compute Z<sub>j</sub> = &Sigma; C<sub>B</sub> &times; (column entries) and the net evaluation row Z<sub>j</sub> - C<sub>j</sub>. If every Z<sub>j</sub> - C<sub>j</sub> &ge; 0, the present solution is optimal, stop. Otherwise go to step 4.</li>
+      <li><b>Select the pivot column (entering variable).</b> Choose the column with the most negative Z<sub>j</sub> - C<sub>j</sub>. That variable enters the basis.</li>
+      <li><b>Select the pivot row (leaving variable).</b> For each row compute the ratio b / (pivot column coefficient), ignoring zero and negative denominators. The row with the smallest non negative ratio is the pivot row and its basic variable leaves.</li>
+      <li><b>Perform the pivot operation.</b> The element at the intersection is the pivot (key) element. Divide the whole pivot row by the pivot element so that it becomes 1, then use row operations to make every other entry of the pivot column zero.</li>
+      <li><b>Update the tableau.</b> Replace the leaving variable by the entering variable in the basis column and write the new coefficients.</li>
+      <li><b>Repeat</b> steps 3 to 7 until all Z<sub>j</sub> - C<sub>j</sub> &ge; 0. The final tableau gives the optimal values of the basic variables and Max Z.</li>
+    </ol>
+    <div class="tip"><strong>Special cases worth one line each:</strong> if a pivot column has no positive coefficient the solution is <b>unbounded</b>; if some non basic variable has Z<sub>j</sub> - C<sub>j</sub> = 0 in the final table there are <b>multiple optimal solutions</b>; a tie in the minimum ratio is <b>degeneracy</b> and is broken arbitrarily.</div>
+  </div>
+</article>
+
+<!-- B5 -->
+<article class="q" id="b5">
+  <div class="qhead"><span class="qno">Q 5</span>
+  <p class="qtext">Write an algorithm to minimize the solution of an LPP using the Simplex method.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2023</p>
+  <div class="ans">
+    <p>A minimization LPP is solved by the same simplex machinery. There are two accepted routes.</p>
+
+    <h4>Route 1: convert to maximization (most common)</h4>
+    <div class="fml">Min Z  =  Max (-Z)</div>
+    <p>Multiply the objective function by -1, solve exactly by the eight steps of the maximization algorithm, and at the end put Min Z = -(Max Z&prime;).</p>
+
+    <h4>Route 2: solve directly, with the optimality test reversed</h4>
+    <ol>
+      <li>Convert every constraint into an equation. A &le; constraint gets a <b>slack</b> variable, a &ge; constraint gets a <b>surplus</b> variable subtracted plus an <b>artificial</b> variable added, an = constraint gets only an artificial variable.
+        <div class="fml">x + y &ge; 5   &rarr;   x + y - S&#8321; + A&#8321; = 5</div>
+      </li>
+      <li>Penalise the artificial variables in the objective function. For a minimization problem use <b>+M &middot; A</b>, where M is a very large positive number (Big M method). Alternatively use the Two Phase method: Phase 1 minimises the sum of the artificial variables to reach feasibility, Phase 2 optimises the original objective.</li>
+      <li>Build the initial tableau with the artificial and slack variables in the basis.</li>
+      <li>Compute Z<sub>j</sub> and the net evaluation row C<sub>j</sub> - Z<sub>j</sub>.</li>
+      <li><b>Optimality test for minimization:</b> the solution is optimal when all C<sub>j</sub> - Z<sub>j</sub> &ge; 0 (equivalently all Z<sub>j</sub> - C<sub>j</sub> &le; 0). Otherwise continue.</li>
+      <li>Entering variable = the column with the most negative C<sub>j</sub> - Z<sub>j</sub>. Leaving variable = the row with the minimum positive ratio b / (pivot column coefficient).</li>
+      <li>Pivot: divide the pivot row by the key element, then clear the rest of the pivot column with row operations. Once an artificial variable leaves the basis its column may be deleted.</li>
+      <li>Repeat until the optimality test is satisfied.</li>
+      <li><b>Feasibility check:</b> if any artificial variable is still in the final basis with a positive value, the problem has <b>no feasible solution</b>.</li>
+    </ol>
+    <div class="key"><strong>One line to remember:</strong> maximization stops when all Z<sub>j</sub> - C<sub>j</sub> &ge; 0, minimization stops when all C<sub>j</sub> - Z<sub>j</sub> &ge; 0. Everything else in the procedure is identical.</div>
+  </div>
+</article>
+
+<!-- B6 -->
+<article class="q" id="b6">
+  <div class="qhead"><span class="qno">Q 6</span>
+  <p class="qtext">Solve the following LPP by the Simplex method: Maximize z = 5x&#8321; - 3x&#8322;, subject to 2x&#8321; + x&#8322; &le; 5, x&#8321; + x&#8322; &le; 4, x&#8321;, x&#8322; &ge; 0.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <h4>Step 1: standard form</h4>
+    <div class="fml">Max Z = 5x&#8321; - 3x&#8322; + 0&middot;S&#8321; + 0&middot;S&#8322;
+subject to
+    2x&#8321; + x&#8322; + S&#8321;       = 5
+     x&#8321; + x&#8322;      + S&#8322; = 4
+    x&#8321;, x&#8322;, S&#8321;, S&#8322; &ge; 0</div>
+
+    <h4>Iteration 1</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th></th><th>C<sub>j</sub> &rarr;</th><th>5</th><th>-3</th><th>0</th><th>0</th><th></th></tr>
+      <tr><th class="l">B.V.</th><th>C<sub>B</sub> &nbsp; b</th><th>x&#8321;</th><th>x&#8322;</th><th>S&#8321;</th><th>S&#8322;</th><th>Min ratio b / x&#8321;</th></tr>
+      <tr><td class="l">S&#8321;</td><td>0 &nbsp; 5</td><td class="alloc">(2)</td><td>1</td><td>1</td><td>0</td><td>5 / 2 = 2.5 &larr;</td></tr>
+      <tr><td class="l">S&#8322;</td><td>0 &nbsp; 4</td><td>1</td><td>1</td><td>0</td><td>1</td><td>4 / 1 = 4</td></tr>
+      <tr><td class="l">Z = 0</td><td>Z<sub>j</sub></td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr>
+      <tr class="total"><td class="l"></td><td>Z<sub>j</sub> - C<sub>j</sub></td><td>-5 &uarr;</td><td>3</td><td>0</td><td>0</td><td></td></tr>
+    </table>
+    </div>
+    <p>The most negative Z<sub>j</sub> - C<sub>j</sub> is -5, so <b>x&#8321; enters</b>. The minimum ratio is 2.5, so <b>S&#8321; leaves</b>. Key element = 2.</p>
+    <div class="fml">R&#8321;(new) = R&#8321;(old) &divide; 2
+R&#8322;(new) = R&#8322;(old) - 1 &times; R&#8321;(new)</div>
+
+    <h4>Iteration 2</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th></th><th>C<sub>j</sub> &rarr;</th><th>5</th><th>-3</th><th>0</th><th>0</th></tr>
+      <tr><th class="l">B.V.</th><th>C<sub>B</sub> &nbsp; b</th><th>x&#8321;</th><th>x&#8322;</th><th>S&#8321;</th><th>S&#8322;</th></tr>
+      <tr><td class="l">x&#8321;</td><td>5 &nbsp; 2.5</td><td>1</td><td>0.5</td><td>0.5</td><td>0</td></tr>
+      <tr><td class="l">S&#8322;</td><td>0 &nbsp; 1.5</td><td>0</td><td>0.5</td><td>-0.5</td><td>1</td></tr>
+      <tr><td class="l">Z = 12.5</td><td>Z<sub>j</sub></td><td>5</td><td>2.5</td><td>2.5</td><td>0</td></tr>
+      <tr class="total"><td class="l"></td><td>Z<sub>j</sub> - C<sub>j</sub></td><td>0</td><td>5.5</td><td>2.5</td><td>0</td></tr>
+    </table>
+    </div>
+    <p>All Z<sub>j</sub> - C<sub>j</sub> &ge; 0, so the optimal solution has been reached.</p>
+    <div class="key"><strong>Answer:</strong> x&#8321; = 5/2 = 2.5, x&#8322; = 0, <strong>Max Z = 12.5</strong>. Since x&#8322; carries a negative profit of -3 it stays out of the basis, which is exactly what the tableau shows.</div>
+  </div>
+</article>
+
+<!-- B7 -->
+<article class="q" id="b7">
+  <div class="qhead"><span class="qno">Q 7</span>
+  <p class="qtext">Write the meaning of duality. What are the major steps of formulating dual LPPs? Justify with an example.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <h4>Meaning of duality</h4>
+    <p>Every linear programming problem has a second LPP associated with it. The original problem is called the <b>primal</b> and the associated one is called its <b>dual</b>. Duality states that the two problems are two views of the same situation: if the primal maximises profit from activities, the dual minimises the imputed value of the resources used by those activities.</p>
+    <div class="key"><strong>Duality theorem:</strong> if the primal problem has an optimal solution then its dual also has an optimal solution, and the two optimal objective values are equal.</div>
+
+    <h4>Primal to dual relationship</h4>
+    <ul>
+      <li>The dual of the dual is the primal.</li>
+      <li>Number of dual variables = number of primal constraints, and number of dual constraints = number of primal variables.</li>
+      <li>Max in the primal becomes Min in the dual and the inequality signs reverse.</li>
+      <li>The objective coefficients of the primal become the RHS constants of the dual, and the RHS constants of the primal become the objective coefficients of the dual.</li>
+      <li>The rows of the primal become the columns of the dual (the constraint matrix is transposed).</li>
+    </ul>
+
+    <h4>Major steps of formulating the dual</h4>
+    <ol>
+      <li>Write the primal in standard (canonical) form: all constraints &le; for a maximization primal, all constraints &ge; for a minimization primal, all variables non negative.</li>
+      <li>Assign one dual variable y&#8321;, y&#8322;, ... y<sub>m</sub> to each primal constraint.</li>
+      <li>Form the dual objective function using the primal RHS values as coefficients, and reverse the sense (Max becomes Min).</li>
+      <li>Form one dual constraint for each primal variable, using the transposed coefficient column, with the inequality reversed, and the primal objective coefficient as the RHS.</li>
+      <li>Add the sign restrictions. Dual variables are &ge; 0. If a primal variable is unrestricted its dual constraint becomes an equality.</li>
+    </ol>
+
+    <h4>Example</h4>
+    <div class="fml">PRIMAL
+Max Z = x&#8321; - x&#8322; + 3x&#8323;
+subject to
+     x&#8321; +  x&#8322; +  x&#8323; &le; 10
+    2x&#8321; -  x&#8322; -  x&#8323; &le;  2
+    2x&#8321; - 2x&#8322; - 3x&#8323; &le;  6
+    x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
+    <p>There are 3 variables and 3 constraints, so the dual has 3 constraints and 3 variables y&#8321;, y&#8322;, y&#8323;. The objective is maximizing, so the dual minimises.</p>
+    <div class="fml">DUAL
+Min W = 10y&#8321; + 2y&#8322; + 6y&#8323;
+subject to
+     y&#8321; + 2y&#8322; + 2y&#8323; &ge;  1
+     y&#8321; -  y&#8322; - 2y&#8323; &ge; -1
+     y&#8321; -  y&#8322; - 3y&#8323; &ge;  3
+    y&#8321;, y&#8322;, y&#8323; &ge; 0</div>
+
+    <h4>Advantages of duality</h4>
+    <ul>
+      <li>The dual is often smaller and quicker to solve than the primal (m constraints become m variables).</li>
+      <li>Solving one problem gives the optimal solution of both.</li>
+      <li>The dual variables are <b>shadow prices</b>, the marginal worth of one more unit of each resource, which is used in sensitivity analysis.</li>
+      <li>It provides bounds on the primal optimum and a clear economic interpretation of the constraints.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- B8 -->
+<article class="q" id="b8">
+  <div class="qhead"><span class="qno">Q 8</span>
+  <p class="qtext">Find the optimal solution for the following transportation problem using any method.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 3 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <div class="scroll">
+    <table class="data">
+      <caption>Given cost matrix (supplies in the last column, demands in the last row)</caption>
+      <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>Supply</th></tr>
+      <tr><td class="l">S&#8321;</td><td>1</td><td>2</td><td>1</td><td>4</td><td>30</td></tr>
+      <tr><td class="l">S&#8322;</td><td>3</td><td>3</td><td>2</td><td>1</td><td>50</td></tr>
+      <tr><td class="l">S&#8323;</td><td>4</td><td>2</td><td>5</td><td>9</td><td>20</td></tr>
+      <tr class="total"><td class="l">Demand</td><td>20</td><td>40</td><td>30</td><td>9</td><td>100 / 99</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: check balance</h4>
+    <p>Total supply = 30 + 50 + 20 = <b>100</b>, total demand = 20 + 40 + 30 + 9 = <b>99</b>. Supply exceeds demand, so the problem is <b>unbalanced</b>. Add a <b>dummy destination</b> with demand 1 and zero cost.</p>
+
+    <h4>Step 2: initial basic feasible solution by VAM</h4>
+    <div class="scroll">
+    <table class="data">
+      <caption>Allocations shown in brackets, costs outside</caption>
+      <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>D<sub>dummy</sub></th><th>Supply</th></tr>
+      <tr><td class="l">S&#8321;</td><td class="alloc">1 (20)</td><td>2</td><td class="alloc">1 (10)</td><td>4</td><td>0</td><td>30</td></tr>
+      <tr><td class="l">S&#8322;</td><td>3</td><td class="alloc">3 (20)</td><td class="alloc">2 (20)</td><td class="alloc">1 (9)</td><td class="alloc">0 (1)</td><td>50</td></tr>
+      <tr><td class="l">S&#8323;</td><td>4</td><td class="alloc">2 (20)</td><td>5</td><td>9</td><td>0</td><td>20</td></tr>
+      <tr class="total"><td class="l">Demand</td><td>20</td><td>40</td><td>30</td><td>9</td><td>1</td><td>100</td></tr>
+    </table>
+    </div>
+    <div class="fml">Total cost = 1&times;20 + 1&times;10 + 3&times;20 + 2&times;20 + 1&times;9 + 0&times;1 + 2&times;20
+           = 20 + 10 + 60 + 40 + 9 + 0 + 40 = <b>Rs. 179</b></div>
+    <p>Number of allocated cells = 7 = m + n - 1 = 3 + 5 - 1 = 7, so the solution is <b>non degenerate</b> and the optimality test can be applied.</p>
+
+    <h4>Step 3: optimality test by the MODI (u-v) method</h4>
+    <p>For every occupied cell set c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub>, starting with u&#8322; = 0 (row S&#8322; has the most allocations).</p>
+    <div class="fml">u&#8321; = -1,  u&#8322; = 0,  u&#8323; = -1
+v&#8321; =  2,  v&#8322; = 3,  v&#8323; = 2,  v&#8324; = 1,  v&#8325; = 0</div>
+    <p>For every unoccupied cell compute d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>). Values in square brackets:</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>D<sub>dummy</sub></th><th>u<sub>i</sub></th></tr>
+      <tr><td class="l">S&#8321;</td><td class="alloc">1 (20)</td><td>[0]</td><td class="alloc">1 (10)</td><td>[4]</td><td>[1]</td><td>-1</td></tr>
+      <tr><td class="l">S&#8322;</td><td>[1]</td><td class="alloc">3 (20)</td><td class="alloc">2 (20)</td><td class="alloc">1 (9)</td><td class="alloc">0 (1)</td><td>0</td></tr>
+      <tr><td class="l">S&#8323;</td><td>[3]</td><td class="alloc">2 (20)</td><td>[4]</td><td>[9]</td><td>[1]</td><td>-1</td></tr>
+      <tr class="total"><td class="l">v<sub>j</sub></td><td>2</td><td>3</td><td>2</td><td>1</td><td>0</td><td></td></tr>
+    </table>
+    </div>
+    <p>All d<sub>ij</sub> &ge; 0, therefore the current solution is already optimal and no closed loop is needed.</p>
+
+    <div class="key"><strong>Optimal shipping plan:</strong> S&#8321;&rarr;D&#8321; = 20, S&#8321;&rarr;D&#8323; = 10, S&#8322;&rarr;D&#8322; = 20, S&#8322;&rarr;D&#8323; = 20, S&#8322;&rarr;D&#8324; = 9, S&#8323;&rarr;D&#8322; = 20, and 1 unit left undelivered in the dummy column.<br><strong>Minimum total transportation cost = Rs. 179.</strong></div>
+    <div class="tip"><strong>Extra mark:</strong> cell (S&#8321;, D&#8322;) has d<sub>ij</sub> = 0, which means an <b>alternative optimal solution</b> exists with the same cost of Rs. 179. Mentioning this shows you can read the final table.</div>
+  </div>
+</article>
+
+<!-- B9 -->
+<article class="q" id="b9">
+  <div class="qhead"><span class="qno">Q 9</span>
+  <p class="qtext">Write the Hungarian algorithm to solve the assignment problem.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 3 &nbsp;&middot;&nbsp; asked in 2021 and 2023</p>
+  <div class="ans">
+    <h4>What the assignment problem is</h4>
+    <p>An assignment problem is a special transportation problem in which the number of sources equals the number of destinations and every supply and demand is 1. Each worker is given exactly one job and each job goes to exactly one worker, so as to minimise total cost or time.</p>
+
+    <h4>Hungarian algorithm</h4>
+    <ol>
+      <li><b>Check balance.</b> If the number of rows is not equal to the number of columns, add a dummy row or dummy column with all costs zero to make the matrix square.</li>
+      <li><b>Row reduction.</b> Find the smallest element in each row and subtract it from every element of that row.</li>
+      <li><b>Column reduction.</b> In the resulting matrix find the smallest element in each column and subtract it from every element of that column. Every row and every column now has at least one zero.</li>
+      <li><b>Make assignments and cover all zeros with the minimum number of lines.</b>
+        <ul>
+          <li>Examine the rows one by one. If a row has exactly one zero, box that zero (assignment) and draw a vertical line through its column. If a row has more than one zero, skip it for now.</li>
+          <li>Repeat the same scan for the columns, drawing a horizontal line through the row of each single boxed zero.</li>
+          <li>Continue until every zero is either boxed or covered by a line.</li>
+        </ul>
+      </li>
+      <li><b>Optimality test.</b> If the number of boxed assignments (lines) equals the number of rows or columns, the assignment is optimal. Stop.</li>
+      <li><b>Revise the matrix</b> if it is not optimal.
+        <ul>
+          <li>Find the smallest element that is not covered by any line.</li>
+          <li>Subtract it from every uncovered element.</li>
+          <li>Add it to every element that lies at the intersection of two lines (covered twice).</li>
+          <li>Leave the singly covered elements unchanged, then go back to step 4.</li>
+        </ul>
+      </li>
+      <li><b>Read the answer.</b> Add the original costs of the boxed cells to get the minimum total cost.</li>
+    </ol>
+    <div class="tip"><strong>Two variants to mention for extra marks:</strong> a <b>maximization</b> problem is converted to minimization by subtracting every element from the largest element of the matrix, and a <b>restricted or infeasible</b> assignment (a worker who cannot do a job) is handled by putting a very large cost M or &infin; in that cell so it never enters the solution.</div>
+  </div>
+</article>
+
+<!-- B10 -->
+<article class="q" id="b10">
+  <div class="qhead"><span class="qno">Q 10</span>
+  <p class="qtext">Classify the queueing models with examples.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 4 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <p>Queueing models are named with Kendall's notation <b>(a / b / c) : (d / e)</b> where a is the arrival distribution, b the service distribution, c the number of servers, d the system capacity and e the queue discipline. The four standard classroom models are:</p>
+
+    <h4>A. Single server models</h4>
+    <p><b>Model I: (M / M / 1) : (&infin; / FCFS)</b></p>
+    <ul>
+      <li>Poisson arrivals, exponential service time, one server, infinite waiting space, first come first served.</li>
+      <li>Customers never leave the queue and the system is stable only when &rho; = &lambda; / &mu; &lt; 1.</li>
+      <li><i>Example:</i> a single ATM in a 24 hour bank lobby. Customers arrive at random, transaction times vary, nobody is turned away and they are served in order of arrival.</li>
+    </ul>
+    <p><b>Model II: (M / M / 1) : (N / FCFS)</b></p>
+    <ul>
+      <li>Same as Model I but the system holds at most N customers including the one in service. A customer who arrives when the system is full is turned away.</li>
+      <li>It works even when &rho; &ge; 1 because the finite capacity prevents an infinite queue.</li>
+      <li><i>Example:</i> a small coffee shop with 5 seats, one person ordering and four waiting. New customers leave when all seats are full.</li>
+    </ul>
+
+    <h4>B. Multi server models</h4>
+    <p><b>Model III: (M / M / S) : (&infin; / FCFS)</b></p>
+    <ul>
+      <li>Poisson arrivals, exponential service, S parallel servers, one common queue, infinite capacity.</li>
+      <li>Stable when &rho; = &lambda; / (S&mu;) &lt; 1.</li>
+      <li><i>Example:</i> a bank with 4 tellers and a single common queue. The customer at the head goes to whichever teller falls free first.</li>
+    </ul>
+    <p><b>Model IV: (M / M / S) : (N / FCFS)</b></p>
+    <ul>
+      <li>S servers with a finite capacity of N customers, where N &gt; S. S are in service and N - S wait. Arrivals are rejected when the system is full.</li>
+      <li><i>Example:</i> a drive through with 2 service windows and room for 5 cars, so 2 are served and 3 wait. Further cars drive away.</li>
+    </ul>
+
+    <div class="key"><strong>M stands for Markovian</strong>, that is Poisson arrivals and exponential service. Other symbols are D for deterministic (constant) times, G for a general distribution and E<sub>k</sub> for an Erlang-k distribution.</div>
+  </div>
+</article>
+
+<!-- B11 -->
+<article class="q" id="b11">
+  <div class="qhead"><span class="qno">Q 11</span>
+  <p class="qtext">A radio repairman finds on average 5 customers coming to his shop every hour to get their radio sets repaired. He disposes of each of them within 10 minutes on average. Arrivals are Poisson and service times exponential. Determine (a) the proportion of time the shop remains empty, (b) the average number of customers in the system and in the queue, (c) the average time spent by a customer in the queue and in the system, (d) the probability of finding at least five customers in the shop.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 4 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <h4>Given</h4>
+    <div class="fml">Model: (M / M / 1) : (&infin; / FCFS)
+Arrival rate      &lambda; = 5 customers per hour
+Service time      = 10 minutes per customer
+Service rate      &mu; = 60 / 10 = 6 customers per hour
+Traffic intensity &rho; = &lambda; / &mu; = 5 / 6 = 0.8333   (&rho; &lt; 1, so the system is stable)</div>
+
+    <h4>(a) Proportion of time the shop is empty</h4>
+    <div class="fml">P&#8320; = 1 - &rho; = 1 - 5/6 = <b>1/6 = 0.1667</b>  i.e. about <b>16.67 %</b> of the time</div>
+    <p>The repairman is idle for roughly 10 minutes in every hour, and busy 83.33 % of the time.</p>
+
+    <h4>(b) Average number of customers</h4>
+    <div class="fml">In the system   L<sub>s</sub> = &lambda; / (&mu; - &lambda;) = 5 / (6 - 5) = <b>5 customers</b>
+In the queue    L<sub>q</sub> = &lambda;&sup2; / [&mu;(&mu; - &lambda;)] = 25 / (6 &times; 1) = <b>4.17 customers</b>
+Check: L<sub>q</sub> = L<sub>s</sub> - &rho; = 5 - 0.8333 = 4.17 &check;</div>
+
+    <h4>(c) Average time spent by a customer</h4>
+    <div class="fml">In the system   W<sub>s</sub> = 1 / (&mu; - &lambda;) = 1 / 1 = <b>1 hour = 60 minutes</b>
+In the queue    W<sub>q</sub> = &lambda; / [&mu;(&mu; - &lambda;)] = 5 / 6 hour = <b>50 minutes</b>
+Check: W<sub>s</sub> = W<sub>q</sub> + 1/&mu; = 50 + 10 = 60 minutes &check;</div>
+
+    <h4>(d) Probability of at least five customers in the shop</h4>
+    <div class="fml">P(n &ge; k) = &rho;<sup>k</sup>
+P(n &ge; 5) = (5/6)&#8309; = 3125 / 7776 = <b>0.4019</b>  i.e. about <b>40.19 %</b></div>
+
+    <div class="key"><strong>Summary:</strong> the shop is empty 16.67 % of the time, holds 5 customers on average with 4.17 waiting, a customer spends 60 minutes in the shop of which 50 minutes is pure waiting, and there is a 40.19 % chance of finding five or more customers present.</div>
+  </div>
+</article>
+
+<!-- B12 -->
+<article class="q" id="b12">
+  <div class="qhead"><span class="qno">Q 12</span>
+  <p class="qtext">An auto industry purchases spark plugs at Rs. 25 per piece. The annual consumption is 18,000 pieces, the ordering cost is Rs. 250 per order and the carrying cost is 25 % per annum. What is the EOQ? If the supplier offers a 5 % discount for an order quantity of 3,000 pieces, should the offer be accepted?</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 5 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <h4>Given</h4>
+    <div class="fml">Annual demand      D  = 18,000 units
+Ordering cost      C&#8320; = Rs. 250 per order
+Unit price         C  = Rs. 25
+Carrying rate      i  = 25 % per annum
+Carrying cost      C<sub>h</sub> = i &times; C = 0.25 &times; 25 = Rs. 6.25 per unit per year</div>
+
+    <h4>Step 1: Economic Order Quantity</h4>
+    <div class="fml">EOQ = &radic;(2 D C&#8320; / C<sub>h</sub>)
+    = &radic;(2 &times; 18000 &times; 250 / 6.25)
+    = &radic;(9,000,000 / 6.25) = &radic;1,440,000
+EOQ = <b>1,200 units per order</b>
+Number of orders per year = 18000 / 1200 = 15 orders</div>
+
+    <h4>Step 2: total annual cost without the discount (Q = 1,200)</h4>
+    <div class="fml">Purchase cost = 18000 &times; 25              = Rs. 4,50,000
+Ordering cost = (18000 / 1200) &times; 250     = Rs.     3,750
+Carrying cost = (1200 / 2) &times; 6.25         = Rs.     3,750
+                                     Total = <b>Rs. 4,57,500</b></div>
+
+    <h4>Step 3: total annual cost with the 5 % discount (Q = 3,000)</h4>
+    <div class="fml">Discounted price = 25 - 5 % of 25 = Rs. 23.75
+New carrying cost C<sub>h</sub> = 0.25 &times; 23.75 = Rs. 5.9375 per unit per year
+
+Purchase cost = 18000 &times; 23.75             = Rs. 4,27,500.00
+Ordering cost = (18000 / 3000) &times; 250      = Rs.     1,500.00
+Carrying cost = (3000 / 2) &times; 5.9375        = Rs.     8,906.25
+                                     Total = <b>Rs. 4,37,906.25</b></div>
+
+    <h4>Step 4: decision</h4>
+    <div class="fml">Saving = 4,57,500 - 4,37,906.25 = <b>Rs. 19,593.75 per year</b></div>
+    <div class="key"><strong>Conclusion:</strong> although 3,000 units is larger than the EOQ and raises the carrying cost, the fall in purchase cost is much bigger. The total annual cost drops by about Rs. 19,594, so the <strong>discount offer should be accepted</strong>.</div>
+  </div>
+</article>
+
+<!-- B13 -->
+<article class="q" id="b13">
+  <div class="qhead"><span class="qno">Q 13</span>
+  <p class="qtext">A scooter with a first cost of Rs. 80,000 has the depreciation and service pattern given below. How many years should the scooter be kept in service before replacement?</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 6 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Year</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+      <tr><td class="l">Depreciation during the year</td><td>28,000</td><td>20,000</td><td>14,000</td><td>5,000</td><td>4,000</td><td>4,000</td></tr>
+      <tr><td class="l">Annual service charge</td><td>18,000</td><td>21,000</td><td>25,000</td><td>29,000</td><td>34,000</td><td>40,000</td></tr>
+    </table>
+    </div>
+
+    <h4>Method</h4>
+    <p>For an item whose maintenance cost rises with age, compute the total cost up to each year and then the average annual cost. The optimal replacement year is the year at which the <b>average annual cost is minimum</b>.</p>
+    <div class="fml">Total cost  = cumulative running (service) cost + depreciation cost
+Average cost = total cost &divide; number of years</div>
+
+    <h4>Working table</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th>Year (1)</th><th>Running cost (2)</th><th>Cumulative running cost (3)</th><th>Depreciation cost (4)</th><th>Total cost (3)+(4)</th><th>Average cost = total &divide; (1)</th></tr>
+      <tr><td>1</td><td>18,000</td><td>18,000</td><td>28,000</td><td>46,000</td><td>46,000</td></tr>
+      <tr><td>2</td><td>21,000</td><td>39,000</td><td>20,000</td><td>59,000</td><td>29,500</td></tr>
+      <tr><td>3</td><td>25,000</td><td>64,000</td><td>14,000</td><td>78,000</td><td>26,000</td></tr>
+      <tr class="total"><td>4</td><td>29,000</td><td>93,000</td><td>5,000</td><td>98,000</td><td>24,500 &nbsp;&larr; minimum</td></tr>
+      <tr><td>5</td><td>34,000</td><td>1,27,000</td><td>4,000</td><td>1,31,000</td><td>26,200</td></tr>
+      <tr><td>6</td><td>40,000</td><td>1,67,000</td><td>4,000</td><td>1,71,000</td><td>28,500</td></tr>
+    </table>
+    </div>
+
+    <div class="key"><strong>Conclusion:</strong> the average annual cost falls up to the fourth year, reaches its minimum of <strong>Rs. 24,500 at the end of year 4</strong> and rises after that. Therefore the scooter should be kept in service for <strong>4 years</strong> and replaced at the end of the fourth year.</div>
+  </div>
+</article>
+
+<!-- B14 -->
+<article class="q" id="b14">
+  <div class="qhead"><span class="qno">Q 14</span>
+  <p class="qtext">Find the cost per period of an individual replacement policy for an installation of 3,000 street lamps. The cost of replacing an individual bulb is Rs. 5 and the cumulative probability of failure is given below.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 6 &nbsp;&middot;&nbsp; asked in 2023</p>
+  <div class="ans">
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Week</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+      <tr><td class="l">Cumulative probability of failure</td><td>0</td><td>0.1</td><td>0.3</td><td>0.5</td><td>0.7</td><td>1.0</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: probability of failure in each week</h4>
+    <p>The probability of failing <i>during</i> week i is the difference of successive cumulative values.</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Week (i)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>Total</th></tr>
+      <tr><td class="l">p<sub>i</sub></td><td>0.1</td><td>0.2</td><td>0.2</td><td>0.2</td><td>0.3</td><td>1.0</td></tr>
+      <tr><td class="l">i &times; p<sub>i</sub></td><td>0.1</td><td>0.4</td><td>0.6</td><td>0.8</td><td>1.5</td><td>3.4</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 2: average (expected) life of a bulb</h4>
+    <div class="fml">Mean life = &Sigma; i &middot; p<sub>i</sub> = 0.1 + 0.4 + 0.6 + 0.8 + 1.5 = <b>3.4 weeks</b></div>
+
+    <h4>Step 3: average number of failures per week in the steady state</h4>
+    <div class="fml">Average replacements per week = N / mean life
+                             = 3000 / 3.4 = <b>882.35 &asymp; 882 bulbs</b></div>
+
+    <h4>Step 4: cost per week of the individual replacement policy</h4>
+    <div class="fml">Cost per week = 882.35 &times; Rs. 5 = <b>Rs. 4,411.76 &asymp; Rs. 4,412</b></div>
+
+    <div class="key"><strong>Answer:</strong> under an individual replacement policy about 882 lamps fail and are replaced every week, costing approximately <strong>Rs. 4,412 per week</strong>. This figure is the benchmark against which the cost of a group replacement policy is compared. Group replacement is preferred whenever its cost per week works out lower than this.</div>
+  </div>
+</article>
+
+<!-- B15 -->
+<article class="q" id="b15">
+  <div class="qhead"><span class="qno">Q 15</span>
+  <p class="qtext">Reduce the following two person zero sum game to 2 &times; 2 order by the dominance rule and obtain the optimal strategies for each player and the value of the game.</p></div>
+  <p class="meta"><b>[5]</b> &nbsp;&middot;&nbsp; Unit 7 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Player A \ Player B</th><th>B&#8321;</th><th>B&#8322;</th><th>B&#8323;</th><th>B&#8324;</th></tr>
+      <tr><td class="l">A&#8321;</td><td>3</td><td>2</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">A&#8322;</td><td>3</td><td>4</td><td>2</td><td>4</td></tr>
+      <tr><td class="l">A&#8323;</td><td>4</td><td>2</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">A&#8324;</td><td>0</td><td>4</td><td>0</td><td>8</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: test for a saddle point</h4>
+    <div class="fml">Row minima    : A&#8321; = 0, A&#8322; = 2, A&#8323; = 0, A&#8324; = 0   &rarr;  MaxiMin = <b>2</b>
+Column maxima : B&#8321; = 4, B&#8322; = 4, B&#8323; = 4, B&#8324; = 8   &rarr;  MiniMax = <b>4</b>
+MaxiMin &ne; MiniMax, so the game has <b>no saddle point</b> and mixed strategies are needed.</div>
+
+    <h4>Step 2: apply the dominance rule</h4>
+    <p><b>Rows:</b> A dominated row is one whose every element is less than or equal to the corresponding element of another row (player A wants larger payoffs).</p>
+    <div class="fml">Row A&#8321; (3, 2, 4, 0) &le; Row A&#8323; (4, 2, 4, 0)  &rarr;  <b>delete A&#8321;</b></div>
+    <p><b>Columns:</b> A dominated column is one whose every element is greater than or equal to the corresponding element of another column (player B wants smaller payoffs).</p>
+    <div class="fml">Column B&#8321; (3, 4, 0) &ge; Column B&#8323; (2, 4, 0)  &rarr;  <b>delete B&#8321;</b></div>
+    <p>Remaining matrix:</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>B&#8322;</th><th>B&#8323;</th><th>B&#8324;</th></tr>
+      <tr><td class="l">A&#8322;</td><td>4</td><td>2</td><td>4</td></tr>
+      <tr><td class="l">A&#8323;</td><td>2</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">A&#8324;</td><td>4</td><td>0</td><td>8</td></tr>
+    </table>
+    </div>
+    <p>No plain dominance is left, so use <b>average dominance</b>.</p>
+    <div class="fml">Average of B&#8323; and B&#8324; = ((2+4)/2, (4+0)/2, (0+8)/2) = (3, 2, 4)
+Column B&#8322; = (4, 2, 4) &ge; (3, 2, 4)  &rarr;  <b>delete B&#8322;</b>
+
+Average of A&#8323; and A&#8324; = ((4+0)/2, (0+8)/2) = (2, 4)
+Row A&#8322; = (2, 4) &le; (2, 4)  &rarr;  <b>delete A&#8322;</b></div>
+
+    <h4>Step 3: reduced 2 &times; 2 game</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>B&#8323;</th><th>B&#8324;</th></tr>
+      <tr><td class="l">A&#8323;</td><td>a = 4</td><td>b = 0</td></tr>
+      <tr><td class="l">A&#8324;</td><td>c = 0</td><td>d = 8</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 4: optimal mixed strategies (algebraic method)</h4>
+    <div class="fml">p = probability of A&#8323; = (d - c) / (a + d - b - c) = (8 - 0) / (4 + 8 - 0 - 0) = 8/12 = <b>2/3</b>
+1 - p = probability of A&#8324; = <b>1/3</b>
+
+q = probability of B&#8323; = (d - b) / (a + d - b - c) = (8 - 0) / 12 = <b>2/3</b>
+1 - q = probability of B&#8324; = <b>1/3</b>
+
+Value of the game
+V = (a d - b c) / (a + d - b - c) = (4&times;8 - 0&times;0) / 12 = 32 / 12 = <b>8/3 &asymp; 2.67</b></div>
+
+    <div class="key"><strong>Answer:</strong><br>
+    Optimal strategy of A = (0, 0, 2/3, 1/3) over A&#8321;, A&#8322;, A&#8323;, A&#8324;<br>
+    Optimal strategy of B = (0, 0, 2/3, 1/3) over B&#8321;, B&#8322;, B&#8323;, B&#8324;<br>
+    <strong>Value of the game V = 8/3 &asymp; 2.67</strong>, which correctly lies between the MaxiMin 2 and the MiniMax 4.</div>
+  </div>
+</article>
+
+<!-- B16 -->
+<article class="q" id="b16">
+  <div class="qhead"><span class="qno">Q 16</span>
+  <p class="qtext">Write short notes on (any two): (a) EOQ &nbsp; (b) Kendall's notation for queueing models &nbsp; (c) Duality theorem &nbsp; (d) Degeneracy in a transportation problem</p></div>
+  <p class="meta"><b>[2.5 + 2.5]</b> &nbsp;&middot;&nbsp; Units 2, 3, 4, 5 &nbsp;&middot;&nbsp; asked in 2021 and 2023</p>
+  <div class="ans">
+    <h4>(a) EOQ, Economic Order Quantity</h4>
+    <p>EOQ is that order size which minimises the <b>total inventory cost</b>, made up of ordering cost plus carrying cost. Ordering cost falls as the order size grows because fewer orders are placed, while carrying cost rises because more stock is held. The two curves cross at the quantity where total cost is least, and that quantity is the EOQ.</p>
+    <div class="fml">EOQ  Q* = &radic;(2 D C&#8320; / C<sub>h</sub>)
+
+D  = annual demand
+C&#8320; = ordering cost per order
+C<sub>h</sub> = carrying cost per unit per year (often i &times; unit price)
+
+Number of orders per year = D / Q*
+Total cost at EOQ = D&middot;C&#8320;/Q* + Q*&middot;C<sub>h</sub>/2  (plus purchase cost D &times; price)</div>
+    <p><b>Assumptions:</b> demand is known and uniform, replenishment is instantaneous, lead time is constant (taken as zero), the price is constant with no discounts, ordering and carrying costs are known and constant, and shortages are not allowed.</p>
+
+    <h4>(b) Kendall's notation for queueing models</h4>
+    <p>Kendall's notation is a shorthand that describes any queueing system in five symbols.</p>
+    <div class="fml">(a / b / c) : (d / e)
+
+a = arrival (inter arrival time) distribution
+b = service time distribution
+c = number of servers
+d = system capacity (maximum customers allowed)
+e = queue discipline</div>
+    <ul>
+      <li><b>Symbols for a and b:</b> M = Markovian (Poisson arrivals, exponential service), D = deterministic or constant, G = general distribution, GI = general independent arrivals, E<sub>k</sub> = Erlang-k distribution.</li>
+      <li><b>Symbols for c:</b> 1 = single server, S = multiple servers, &infin; = infinite servers.</li>
+      <li><b>Symbols for d:</b> &infin; = unlimited waiting space, N = finite capacity of N customers.</li>
+      <li><b>Symbols for e:</b> FCFS or FIFO = first come first served, LIFO = last in first out, SIRO = service in random order, priority based.</li>
+    </ul>
+    <p><i>Example:</i> <b>(M / M / 1) : (&infin; / FCFS)</b> means Poisson arrivals, exponential service, one server, infinite queue and first come first served, which is the single ATM model.</p>
+
+    <h4>(c) Duality theorem</h4>
+    <p>Every LPP (the primal) has an associated LPP called its dual. The duality theorem states: <b>if the primal problem has an optimal solution then its dual also has an optimal solution, and the two optimal objective values are equal.</b></p>
+    <ul>
+      <li>The dual of the dual is the primal.</li>
+      <li>Max in the primal corresponds to Min in the dual, and the inequality signs reverse.</li>
+      <li>Number of dual variables = number of primal constraints, number of dual constraints = number of primal variables.</li>
+      <li>If one problem has an unbounded solution the other is infeasible.</li>
+      <li>The dual variables are the <b>shadow prices</b>, the marginal value of one extra unit of each resource, which is the basis of sensitivity analysis.</li>
+    </ul>
+
+    <h4>(d) Degeneracy in a transportation problem</h4>
+    <p>A basic feasible solution of a transportation problem with m sources and n destinations must have exactly <b>m + n - 1</b> occupied (allocated) cells. If the number of allocations is <b>less than m + n - 1</b> the solution is called <b>degenerate</b>, and the MODI optimality test cannot be applied because the u<sub>i</sub> and v<sub>j</sub> values cannot all be determined.</p>
+    <p><b>Remedy:</b> allocate a very small quantity &epsilon; (epsilon, taken as almost zero) to one of the unoccupied cells having the least cost, chosen so that it does <b>not</b> form a closed loop with the existing allocations. Repeat until there are m + n - 1 occupied cells, then carry out the MODI test as usual. At the end &epsilon; is treated as zero, so it does not change the total cost.</p>
+    <p>Degeneracy can appear at two stages: in the initial basic feasible solution (when a row and a column are satisfied at the same time by one allocation), and during an improvement step (when two cells tie for the minimum in the closed loop).</p>
+  </div>
+</article>
+
+<!-- ================= GROUP C ================= -->
+<div class="group"><h2>Group C &nbsp;&middot;&nbsp; Long answer questions</h2><span>Attempt any two &nbsp;[2 &times; 10 = 20]</span></div>
+
+<!-- C1 -->
+<article class="q long" id="c1">
+  <div class="qhead"><span class="qno">Q 17</span>
+  <p class="qtext">Define the various costs related to inventory. Explain ABC analysis with a suitable example.</p></div>
+  <p class="meta"><b>[10]</b> &nbsp;&middot;&nbsp; Unit 5 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <h4>Part 1: costs associated with inventory</h4>
+    <p>Inventory means the resources or items kept for future use. Holding them costs money, and so does running out of them. Inventory control tries to balance four kinds of cost.</p>
+
+    <p><b>1. Ordering cost (setup cost).</b> The cost incurred every time an order is placed, independent of the size of the order. It covers the paperwork of raising a purchase order, communication and processing charges, shipping and handling fees, and inspection of the goods on arrival. If a firm places 100 orders a year at Rs. 50 each, the ordering cost is 100 &times; 50 = Rs. 5,000. Frequent small orders push this cost up.</p>
+
+    <p><b>2. Carrying or holding cost.</b> The cost of keeping the stock in store for a period. It covers warehouse rent and utilities, insurance and security, deterioration, obsolescence, pilferage and damage, and above all the interest on the capital tied up in unsold stock. It is usually quoted as a percentage of the unit price per year. Stock worth Rs. 1,00,000 with a carrying rate of 20 % costs Rs. 20,000 a year to hold. Holding cost rises directly with the order size.</p>
+
+    <p><b>3. Shortage or stockout cost.</b> The penalty for not having an item when a customer asks for it. It includes the profit lost on the sale that did not happen, the cost of emergency or express purchasing, production stoppage in a factory, and the intangible loss of goodwill which can also cost future sales. If a retailer loses 50 phone sales worth Rs. 500 each, the immediate loss is Rs. 25,000, and the customer who went away twice may never come back.</p>
+
+    <p><b>4. Purchase cost.</b> The actual price paid for the goods, that is quantity &times; unit price, plus taxes, duties and transport if they are included in the price. It becomes an active part of the decision when the supplier gives a <b>quantity discount</b>, because then buying more per order lowers the unit price and the EOQ has to be re tested against the discounted price.</p>
+
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Cost type</th><th class="l">Behaviour with order size</th><th class="l">Main components</th></tr>
+      <tr><td class="l">Ordering</td><td class="l">Falls as order size rises</td><td class="l">Paperwork, transport, inspection</td></tr>
+      <tr><td class="l">Carrying</td><td class="l">Rises as order size rises</td><td class="l">Storage, insurance, obsolescence, interest</td></tr>
+      <tr><td class="l">Shortage</td><td class="l">Rises as stock falls too low</td><td class="l">Lost sales, rush orders, loss of goodwill</td></tr>
+      <tr><td class="l">Purchase</td><td class="l">Falls per unit if a discount applies</td><td class="l">Unit price, taxes, freight</td></tr>
+    </table>
+    </div>
+
+    <h4>Part 2: ABC analysis</h4>
+    <p>ABC analysis is a method of classifying inventory items according to their <b>annual consumption value</b>, so that control effort is spent where the money actually is. It applies the <b>Pareto principle (the 80 / 20 rule)</b>: roughly 80 % of the total inventory value comes from only about 20 % of the items.</p>
+
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Class</th><th class="l">Description</th><th>% of items</th><th>% of value</th><th class="l">Management focus</th></tr>
+      <tr><td class="l">A</td><td class="l">High value, low quantity</td><td>10 to 20 %</td><td>70 to 80 %</td><td class="l">Tight control, frequent review, accurate records, small safety stock</td></tr>
+      <tr><td class="l">B</td><td class="l">Moderate value, moderate quantity</td><td>20 to 30 %</td><td>15 to 20 %</td><td class="l">Regular monitoring, normal ordering rules</td></tr>
+      <tr><td class="l">C</td><td class="l">Low value, high quantity</td><td>50 to 70 %</td><td>5 to 10 %</td><td class="l">Minimum control, bulk ordering, large safety stock</td></tr>
+    </table>
+    </div>
+
+    <h4>Steps to carry out ABC analysis</h4>
+    <ol>
+      <li>List every item with its annual usage in units and its cost per unit.</li>
+      <li>Compute the annual consumption value = annual usage &times; unit cost, and the grand total.</li>
+      <li>Express each item's value as a percentage of the grand total.</li>
+      <li>Rank the items in descending order of that percentage.</li>
+      <li>Compute the cumulative percentage down the ranked list.</li>
+      <li>Classify: items making up the first roughly 70 to 80 % of cumulative value are <b>A</b>, the next roughly 15 to 20 % are <b>B</b>, and the rest are <b>C</b>.</li>
+      <li>Plot the cumulative percentage against rank to get the ABC curve.</li>
+    </ol>
+
+    <h4>Worked example</h4>
+    <div class="scroll">
+    <table class="data">
+      <caption>Ten items, ranked by annual consumption value</caption>
+      <tr><th class="l">Item</th><th>Annual usage (units)</th><th>Unit cost (Rs.)</th><th>Annual value (Rs.)</th><th>% of total</th><th>Cumulative %</th><th>Class</th></tr>
+      <tr><td class="l">I-5</td><td>1,000</td><td>500</td><td>5,00,000</td><td>50.0</td><td>50.0</td><td>A</td></tr>
+      <tr><td class="l">I-2</td><td>1,500</td><td>200</td><td>3,00,000</td><td>30.0</td><td>80.0</td><td>A</td></tr>
+      <tr><td class="l">I-8</td><td>2,000</td><td>50</td><td>1,00,000</td><td>10.0</td><td>90.0</td><td>B</td></tr>
+      <tr><td class="l">I-1</td><td>1,200</td><td>50</td><td>60,000</td><td>6.0</td><td>96.0</td><td>B</td></tr>
+      <tr><td class="l">I-7</td><td>800</td><td>25</td><td>20,000</td><td>2.0</td><td>98.0</td><td>C</td></tr>
+      <tr><td class="l">I-3</td><td>1,000</td><td>10</td><td>10,000</td><td>1.0</td><td>99.0</td><td>C</td></tr>
+      <tr><td class="l">I-4, I-6, I-9, I-10</td><td>various</td><td>small</td><td>10,000</td><td>1.0</td><td>100.0</td><td>C</td></tr>
+      <tr class="total"><td class="l">Total</td><td></td><td></td><td>10,00,000</td><td>100.0</td><td></td><td></td></tr>
+    </table>
+    </div>
+    <p><b>Reading the table:</b> two items out of ten (20 % of the items) account for 80 % of the value, so they are class A and deserve tight control, weekly review and careful forecasting. Two more items give 16 % of value and form class B. The remaining six items are only 4 % of the value, so they are class C and can be bought in bulk once or twice a year with a generous buffer stock.</p>
+
+    <h4>Advantages</h4>
+    <ul>
+      <li>Control effort and working capital are concentrated on the items that matter most.</li>
+      <li>Better forecasting and better supplier negotiation on class A items, where a small percentage saving is a large sum.</li>
+      <li>Lower storage cost and a healthier stock turnover ratio.</li>
+      <li>Fewer stockouts of critical items and a better service level for customers.</li>
+    </ul>
+
+    <h4>Limitations</h4>
+    <ul>
+      <li>It is static, and the classification goes stale when demand shifts, so it must be reviewed regularly.</li>
+      <li>It looks only at money value and ignores the strategic criticality of an item, its lead time and supplier reliability. A cheap C class screw can stop a whole assembly line.</li>
+      <li>Setting up and maintaining the classification is time consuming and is not economical for very small firms.</li>
+      <li>Strict adherence may lead to neglect of B and C items.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- C2 -->
+<article class="q long" id="c2">
+  <div class="qhead"><span class="qno">Q 18</span>
+  <p class="qtext">Explain the ABC inventory planning system. An auto industry purchases spark plugs at Rs. 25 per piece, annual consumption 18,000 pieces, ordering cost Rs. 250 per order and carrying cost 25 % per annum. What is the EOQ? If the supplier offers a 5 % discount for an order quantity of 3,000 pieces, do you accept the offer?</p></div>
+  <p class="meta"><b>[10]</b> &nbsp;&middot;&nbsp; Unit 5 &nbsp;&middot;&nbsp; asked in 2024</p>
+  <div class="ans">
+    <div class="tip"><strong>How to split the time:</strong> spend about four marks worth of writing on the ABC theory (definition, Pareto rule, the A / B / C table and the seven steps, all of which are in Q 17 above) and six on the numerical, which must be shown step by step with a clear accept or reject decision at the end.</div>
+
+    <h4>Part 1: the ABC inventory planning system in brief</h4>
+    <p>ABC analysis classifies inventory items by annual consumption value so that control effort matches value. It follows the Pareto 80 / 20 principle. Class <b>A</b> is 10 to 20 % of items carrying 70 to 80 % of the value and gets tight control. Class <b>B</b> is 20 to 30 % of items carrying 15 to 20 % of the value and gets routine monitoring. Class <b>C</b> is 50 to 70 % of items carrying only 5 to 10 % of the value and gets minimum control with bulk ordering. The procedure is: compute annual usage &times; unit cost for each item, find each item's percentage of the total, rank in descending order, cumulate the percentages and cut the list into A, B and C. (Full detail and a worked table are given in Q 17.)</p>
+
+    <h4>Part 2: EOQ numerical</h4>
+    <div class="fml">D  = 18,000 units per year
+C&#8320; = Rs. 250 per order
+C  = Rs. 25 per unit
+i  = 25 % per annum
+C<sub>h</sub> = 0.25 &times; 25 = Rs. 6.25 per unit per year</div>
+
+    <p><b>Economic order quantity</b></p>
+    <div class="fml">EOQ = &radic;(2 D C&#8320; / C<sub>h</sub>) = &radic;(2 &times; 18000 &times; 250 / 6.25)
+    = &radic;1,440,000 = <b>1,200 units</b>
+Orders per year = 18000 / 1200 = 15
+Time between orders = 12 / 15 &asymp; 0.8 month</div>
+
+    <p><b>Total annual cost at the EOQ, no discount</b></p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Cost element</th><th class="l">Calculation</th><th>Amount (Rs.)</th></tr>
+      <tr><td class="l">Purchase cost</td><td class="l">18,000 &times; 25</td><td>4,50,000.00</td></tr>
+      <tr><td class="l">Ordering cost</td><td class="l">(18,000 / 1,200) &times; 250</td><td>3,750.00</td></tr>
+      <tr><td class="l">Carrying cost</td><td class="l">(1,200 / 2) &times; 6.25</td><td>3,750.00</td></tr>
+      <tr class="total"><td class="l">Total annual cost</td><td class="l"></td><td>4,57,500.00</td></tr>
+    </table>
+    </div>
+    <p>Note that at the EOQ the ordering cost and the carrying cost are equal (Rs. 3,750 each), which is the standard check that the EOQ has been computed correctly.</p>
+
+    <p><b>Total annual cost with the 5 % quantity discount, Q = 3,000</b></p>
+    <div class="fml">Discounted unit price = 25 &times; 0.95 = Rs. 23.75
+Revised carrying cost C<sub>h</sub> = 0.25 &times; 23.75 = Rs. 5.9375 per unit per year</div>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Cost element</th><th class="l">Calculation</th><th>Amount (Rs.)</th></tr>
+      <tr><td class="l">Purchase cost</td><td class="l">18,000 &times; 23.75</td><td>4,27,500.00</td></tr>
+      <tr><td class="l">Ordering cost</td><td class="l">(18,000 / 3,000) &times; 250</td><td>1,500.00</td></tr>
+      <tr><td class="l">Carrying cost</td><td class="l">(3,000 / 2) &times; 5.9375</td><td>8,906.25</td></tr>
+      <tr class="total"><td class="l">Total annual cost</td><td class="l"></td><td>4,37,906.25</td></tr>
+    </table>
+    </div>
+
+    <h4>Comparison and decision</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Policy</th><th>Order size</th><th>Purchase</th><th>Ordering</th><th>Carrying</th><th>Total (Rs.)</th></tr>
+      <tr><td class="l">EOQ, no discount</td><td>1,200</td><td>4,50,000</td><td>3,750</td><td>3,750</td><td>4,57,500.00</td></tr>
+      <tr class="total"><td class="l">Discounted order</td><td>3,000</td><td>4,27,500</td><td>1,500</td><td>8,906.25</td><td>4,37,906.25</td></tr>
+    </table>
+    </div>
+    <div class="fml">Saving = 4,57,500.00 - 4,37,906.25 = <b>Rs. 19,593.75 per year</b></div>
+    <div class="key"><strong>Decision:</strong> ordering 3,000 units at a time raises the carrying cost from Rs. 3,750 to Rs. 8,906.25, but the 5 % price cut saves Rs. 22,500 on purchases and the ordering cost also falls. The net saving is about Rs. 19,594 a year, so the <strong>discount offer should be accepted</strong> and the order quantity changed from 1,200 to 3,000 units.</div>
+  </div>
+</article>
+
+<!-- C3 -->
+<article class="q long" id="c3">
+  <div class="qhead"><span class="qno">Q 19</span>
+  <p class="qtext">Explain the theory of two person zero sum games with an example. Two food manufacturers A and B are competing for an increased market share. The payoff matrix shows the increase in market share for A and the decrease for B. Determine the optimal strategies for both manufacturers and the value of the game.</p></div>
+  <p class="meta"><b>[10]</b> &nbsp;&middot;&nbsp; Unit 7 &nbsp;&middot;&nbsp; asked in 2021 and 2023</p>
+  <div class="ans">
+    <h4>Part 1: theory of two person zero sum games</h4>
+    <p>A <b>game</b> is a competitive situation in which two or more rational players choose strategies and each receives a payoff that depends on the choices of all of them. A <b>two person zero sum game</b> is the simplest and most studied case.</p>
+    <ul>
+      <li><b>Two person:</b> exactly two players take part, conventionally called A and B.</li>
+      <li><b>Zero sum:</b> whatever one player gains, the other loses exactly the same amount, so payoff(A) + payoff(B) = 0. Their interests are completely opposed.</li>
+    </ul>
+    <p><i>Simple example:</i> if A gains +5 by a move then B must lose -5. Chess, heads up poker and a tug of war are everyday zero sum games. In business, two firms fighting over a fixed market share play a zero sum game, since a percentage won by one is lost by the other.</p>
+
+    <p><b>Key terms</b></p>
+    <ul>
+      <li><b>Players:</b> the decision makers, usually two in basic models.</li>
+      <li><b>Strategy:</b> a complete plan of action. A <b>pure strategy</b> means the player always chooses the same course of action, a <b>mixed strategy</b> means choosing among courses of action with fixed probabilities.</li>
+      <li><b>Payoff matrix:</b> a table whose entries are the gains of the maximizing player A (and therefore the losses of B).</li>
+      <li><b>Value of the game (V):</b> the expected payoff when both players use their optimal strategies.</li>
+      <li><b>Saddle point:</b> a cell where MaxiMin = MiniMax. If it exists, the game is solved by pure strategies and its entry is the value of the game.</li>
+    </ul>
+
+    <p><b>Assumptions</b></p>
+    <ol>
+      <li>There is a finite number of players, each with a finite number of possible courses of action.</li>
+      <li>Player A tries to maximise his gain, player B tries to minimise his loss.</li>
+      <li>Both players decide independently and simultaneously, without communication, so neither knows the other's move in advance.</li>
+      <li>Both players know the full payoff matrix.</li>
+      <li>The outcome of the game is predetermined by the strategies chosen.</li>
+    </ol>
+
+    <p><b>Maximin and Minimax principles</b></p>
+    <div class="fml">MaxiMin (player A) : take the minimum of each row, then the maximum of those minima.
+MiniMax (player B) : take the maximum of each column, then the minimum of those maxima.
+If MaxiMin = MiniMax, the game has a saddle point and pure strategies solve it.
+If MaxiMin &ne; MiniMax, mixed strategies are required.</div>
+
+    <h4>Part 2: numerical</h4>
+    <div class="scroll">
+    <table class="data">
+      <caption>Increase in market share of A (in %), so a decrease for B</caption>
+      <tr><th class="l">A \ B</th><th>B&#8321; Give prizes</th><th>B&#8322; Decrease price</th><th>B&#8323; Maintain present</th><th>B&#8324; Increase advertising</th></tr>
+      <tr><td class="l">A&#8321; Give prizes</td><td>25</td><td>20</td><td>14</td><td>30</td></tr>
+      <tr><td class="l">A&#8322; Decrease price</td><td>27</td><td>16</td><td>12</td><td>14</td></tr>
+      <tr><td class="l">A&#8323; Maintain present</td><td>35</td><td>8</td><td>15</td><td>19</td></tr>
+      <tr><td class="l">A&#8324; Increase advertising</td><td>-2</td><td>8</td><td>13</td><td>0</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: saddle point test</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">A \ B</th><th>B&#8321;</th><th>B&#8322;</th><th>B&#8323;</th><th>B&#8324;</th><th>Row minimum</th></tr>
+      <tr><td class="l">A&#8321;</td><td>25</td><td>20</td><td>14</td><td>30</td><td class="alloc">14 &nbsp;(MaxiMin)</td></tr>
+      <tr><td class="l">A&#8322;</td><td>27</td><td>16</td><td>12</td><td>14</td><td>12</td></tr>
+      <tr><td class="l">A&#8323;</td><td>35</td><td>8</td><td>15</td><td>19</td><td>8</td></tr>
+      <tr><td class="l">A&#8324;</td><td>-2</td><td>8</td><td>13</td><td>0</td><td>-2</td></tr>
+      <tr class="total"><td class="l">Column maximum</td><td>35</td><td>20</td><td class="alloc">15 (MiniMax)</td><td>30</td><td></td></tr>
+    </table>
+    </div>
+    <div class="fml">MaxiMin = 14,  MiniMax = 15
+MaxiMin &ne; MiniMax  &rarr;  <b>no saddle point</b>, so mixed strategies are needed.
+The value of the game must lie between 14 and 15.</div>
+
+    <h4>Step 2: reduce by the dominance rule</h4>
+    <div class="fml">Row A&#8324; (-2, 8, 13, 0) &le; Row A&#8321; (25, 20, 14, 30)   &rarr;  delete A&#8324;
+Column B&#8321; (25, 27, 35) &ge; Column B&#8322; (20, 16, 8)     &rarr;  delete B&#8321;
+Column B&#8324; (30, 14, 19) &ge; Column B&#8323; (14, 12, 15)    &rarr;  delete B&#8324;
+Row A&#8322; (16, 12) &le; Row A&#8321; (20, 14)                    &rarr;  delete A&#8322;</div>
+    <p>The game reduces to a 2 &times; 2 matrix:</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">A \ B</th><th>B&#8322; Decrease price</th><th>B&#8323; Maintain present</th></tr>
+      <tr><td class="l">A&#8321; Give prizes</td><td>a = 20</td><td>b = 14</td></tr>
+      <tr><td class="l">A&#8323; Maintain present</td><td>c = 8</td><td>d = 15</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 3: solve the 2 &times; 2 game algebraically</h4>
+    <div class="fml">Denominator = a + d - b - c = 20 + 15 - 14 - 8 = 13
+
+p  = probability A plays A&#8321; = (d - c) / 13 = (15 - 8) / 13 = <b>7/13</b>
+1-p = probability A plays A&#8323; = <b>6/13</b>
+
+q  = probability B plays B&#8322; = (d - b) / 13 = (15 - 14) / 13 = <b>1/13</b>
+1-q = probability B plays B&#8323; = <b>12/13</b>
+
+V = (a d - b c) / 13 = (20&times;15 - 14&times;8) / 13 = (300 - 112) / 13 = 188 / 13 = <b>14.46</b></div>
+
+    <h4>Step 4: verification</h4>
+    <div class="fml">If B plays B&#8322;: A's expected gain = 20(7/13) + 8(6/13) = (140 + 48)/13 = 188/13 &check;
+If B plays B&#8323;: A's expected gain = 14(7/13) + 15(6/13) = (98 + 90)/13 = 188/13 &check;
+Both give the same value, and 14 &lt; 14.46 &lt; 15 as required.</div>
+
+    <div class="key"><strong>Answer:</strong><br>
+    Manufacturer A should mix <b>Give prizes</b> with probability 7/13 &asymp; 0.538 and <b>Maintain present strategy</b> with probability 6/13 &asymp; 0.462, and should never decrease price or increase advertising.<br>
+    Manufacturer B should mix <b>Decrease price</b> with probability 1/13 &asymp; 0.077 and <b>Maintain present strategy</b> with probability 12/13 &asymp; 0.923, and should never give prizes or increase advertising.<br>
+    <strong>Value of the game V = 188/13 &asymp; 14.46 %</strong>, that is A gains about 14.46 % of market share and B loses the same.</div>
+  </div>
+</article>
+
+<!-- C4 -->
+<article class="q long" id="c4">
+  <div class="qhead"><span class="qno">Q 20</span>
+  <p class="qtext">A city corporation has decided to carry out maintenance work in the city. There are 4 tasks to be completed using 5 contractors. Which contractors should be assigned which tasks? Solve the assignment problem to get the best result.</p></div>
+  <p class="meta"><b>[10]</b> &nbsp;&middot;&nbsp; Unit 3 &nbsp;&middot;&nbsp; asked in 2023</p>
+  <div class="ans">
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Contractor</th><th>Task 1</th><th>Task 2</th><th>Task 3</th><th>Task 4</th></tr>
+      <tr><td class="l">A</td><td>19</td><td>24</td><td>29</td><td>25</td></tr>
+      <tr><td class="l">B</td><td>17</td><td>27</td><td>30</td><td>29</td></tr>
+      <tr><td class="l">C</td><td>19</td><td>28</td><td>31</td><td>28</td></tr>
+      <tr><td class="l">D</td><td>20</td><td>12</td><td>28</td><td>29</td></tr>
+      <tr><td class="l">E</td><td>20</td><td>25</td><td>31</td><td>26</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 1: balance the problem</h4>
+    <p>There are 5 contractors (rows) but only 4 tasks (columns), so the problem is <b>unbalanced</b>. Add a <b>dummy task T5</b> with zero cost for every contractor. The contractor who ends up assigned to T5 simply gets no work.</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5 (dummy)</th></tr>
+      <tr><td class="l">A</td><td>19</td><td>24</td><td>29</td><td>25</td><td>0</td></tr>
+      <tr><td class="l">B</td><td>17</td><td>27</td><td>30</td><td>29</td><td>0</td></tr>
+      <tr><td class="l">C</td><td>19</td><td>28</td><td>31</td><td>28</td><td>0</td></tr>
+      <tr><td class="l">D</td><td>20</td><td>12</td><td>28</td><td>29</td><td>0</td></tr>
+      <tr><td class="l">E</td><td>20</td><td>25</td><td>31</td><td>26</td><td>0</td></tr>
+    </table>
+    </div>
+
+    <h4>Step 2: row reduction</h4>
+    <p>The minimum element of every row is 0 (the dummy column), so subtracting it leaves the matrix unchanged.</p>
+
+    <h4>Step 3: column reduction</h4>
+    <p>Column minima are 17, 12, 28, 25 and 0. Subtract each from its column.</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr>
+      <tr><td class="l">A</td><td>2</td><td>12</td><td>1</td><td class="alloc">0</td><td>0</td></tr>
+      <tr><td class="l">B</td><td class="alloc">0</td><td>15</td><td>2</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">C</td><td>2</td><td>16</td><td>3</td><td>3</td><td>0</td></tr>
+      <tr><td class="l">D</td><td>3</td><td class="alloc">0</td><td class="alloc">0</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">E</td><td>3</td><td>13</td><td>3</td><td>1</td><td>0</td></tr>
+    </table>
+    </div>
+    <p>Only 4 independent assignments can be made (rows C and E both need the dummy column), so the solution is not yet optimal. The zeros can be covered by 4 lines: column T5, column T4, column T1 and row D.</p>
+
+    <h4>Step 4: first revision</h4>
+    <p>Smallest uncovered element = 1 (cell A-T3). Subtract 1 from every uncovered element and add 1 to every element covered twice (row D against columns T1, T4, T5).</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr>
+      <tr><td class="l">A</td><td>2</td><td>11</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td class="l">B</td><td>0</td><td>14</td><td>1</td><td>4</td><td>0</td></tr>
+      <tr><td class="l">C</td><td>2</td><td>15</td><td>2</td><td>3</td><td>0</td></tr>
+      <tr><td class="l">D</td><td>4</td><td>0</td><td>0</td><td>5</td><td>1</td></tr>
+      <tr><td class="l">E</td><td>3</td><td>12</td><td>2</td><td>1</td><td>0</td></tr>
+    </table>
+    </div>
+    <p>Still only 4 assignments (C and E again compete for T5). Minimum cover is 4 lines: column T5, row A, column T1 and row D.</p>
+
+    <h4>Step 5: second revision</h4>
+    <p>Smallest uncovered element = 1 (cells B-T3 and E-T4). Subtract 1 from every uncovered element and add 1 at the intersections of rows A and D with columns T1 and T5.</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l"></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr>
+      <tr><td class="l">A</td><td>3</td><td>11</td><td class="alloc">0</td><td>0</td><td>1</td></tr>
+      <tr><td class="l">B</td><td class="alloc">0</td><td>13</td><td>0</td><td>3</td><td>0</td></tr>
+      <tr><td class="l">C</td><td>2</td><td>14</td><td>1</td><td>2</td><td class="alloc">0</td></tr>
+      <tr><td class="l">D</td><td>5</td><td class="alloc">0</td><td>0</td><td>5</td><td>2</td></tr>
+      <tr><td class="l">E</td><td>3</td><td>11</td><td>1</td><td class="alloc">0</td><td>0</td></tr>
+    </table>
+    </div>
+    <p>Now 5 independent zeros can be boxed, one in every row and every column, so the number of assignments (5) equals the number of rows (5) and the solution is <b>optimal</b>.</p>
+
+    <h4>Step 6: read the assignment from the original cost matrix</h4>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Contractor</th><th class="l">Task</th><th>Cost (Rs.)</th></tr>
+      <tr><td class="l">A</td><td class="l">Task 3</td><td>29</td></tr>
+      <tr><td class="l">B</td><td class="l">Task 1</td><td>17</td></tr>
+      <tr><td class="l">C</td><td class="l">Task 5 (dummy, no work)</td><td>0</td></tr>
+      <tr><td class="l">D</td><td class="l">Task 2</td><td>12</td></tr>
+      <tr><td class="l">E</td><td class="l">Task 4</td><td>26</td></tr>
+      <tr class="total"><td class="l">Total</td><td class="l"></td><td>84</td></tr>
+    </table>
+    </div>
+
+    <div class="key"><strong>Answer:</strong> assign contractor <strong>A to Task 3, B to Task 1, D to Task 2 and E to Task 4</strong>. Contractor <strong>C is not assigned any task</strong> because he was matched with the dummy column. The <strong>minimum total cost is Rs. 84</strong>.</div>
+  </div>
+</article>
+
+<!-- C5 -->
+<article class="q long" id="c5">
+  <div class="qhead"><span class="qno">Q 21</span>
+  <p class="qtext">Use duality to solve the following LPP: Minimize z = 4x&#8321; + 2x&#8322; + 3x&#8323;, subject to 2x&#8321; + 4x&#8323; &ge; 5, 2x&#8321; + 3x&#8322; + x&#8323; &ge; 4, x&#8321;, x&#8322;, x&#8323; &ge; 0.</p></div>
+  <p class="meta"><b>[10]</b> &nbsp;&middot;&nbsp; Unit 2 &nbsp;&middot;&nbsp; asked in 2021</p>
+  <div class="ans">
+    <h4>Why use the dual here</h4>
+    <p>The primal is a minimization problem with two &ge; constraints and three variables. Solving it directly needs surplus and artificial variables and the Big M or Two Phase method. Its dual has only <b>two variables</b>, so it can be solved quickly and even graphically. By the duality theorem the two optimal values are equal, so solving the dual answers the primal.</p>
+
+    <h4>Step 1: write the primal in canonical form</h4>
+    <div class="fml">PRIMAL
+Min z = 4x&#8321; + 2x&#8322; + 3x&#8323;
+subject to
+    2x&#8321; + 0x&#8322; + 4x&#8323; &ge; 5     &rarr; dual variable y&#8321;
+    2x&#8321; + 3x&#8322; +  x&#8323; &ge; 4     &rarr; dual variable y&#8322;
+    x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
+    <p>It is already canonical for a minimization problem (all constraints &ge;, all variables non negative).</p>
+
+    <h4>Step 2: form the dual</h4>
+    <p>Two constraints give two dual variables, three variables give three dual constraints, Min becomes Max and &ge; becomes &le;. The RHS values 5 and 4 become the dual objective coefficients, and the primal objective coefficients 4, 2, 3 become the dual RHS.</p>
+    <div class="fml">DUAL
+Max W = 5y&#8321; + 4y&#8322;
+subject to
+    2y&#8321; + 2y&#8322; &le; 4      (from x&#8321;)
+    0y&#8321; + 3y&#8322; &le; 2      (from x&#8322;)
+    4y&#8321; +  y&#8322; &le; 3      (from x&#8323;)
+    y&#8321;, y&#8322; &ge; 0</div>
+
+    <h4>Step 3: solve the dual graphically</h4>
+    <p>The three constraints simplify to y&#8321; + y&#8322; &le; 2, y&#8322; &le; 2/3 and 4y&#8321; + y&#8322; &le; 3. Evaluating W = 5y&#8321; + 4y&#8322; at every corner of the feasible region:</p>
+    <div class="scroll">
+    <table class="data">
+      <tr><th class="l">Corner point (y&#8321;, y&#8322;)</th><th class="l">How it arises</th><th>W = 5y&#8321; + 4y&#8322;</th></tr>
+      <tr><td class="l">(0, 0)</td><td class="l">origin</td><td>0</td></tr>
+      <tr><td class="l">(3/4, 0)</td><td class="l">4y&#8321; + y&#8322; = 3 meets the y&#8321; axis</td><td>3.75</td></tr>
+      <tr class="total"><td class="l">(7/12, 2/3)</td><td class="l">4y&#8321; + y&#8322; = 3 meets 3y&#8322; = 2</td><td>67/12 = 5.583 &nbsp;&larr; maximum</td></tr>
+      <tr><td class="l">(0, 2/3)</td><td class="l">3y&#8322; = 2 meets the y&#8322; axis</td><td>8/3 = 2.667</td></tr>
+    </table>
+    </div>
+    <div class="fml">Max W = <b>67/12 &asymp; 5.583</b> at y&#8321; = 7/12, y&#8322; = 2/3
+(check y&#8321; + y&#8322; = 7/12 + 8/12 = 1.25 &le; 2, so the first constraint is satisfied and slack)</div>
+
+    <h4>Step 4: recover the primal solution (complementary slackness)</h4>
+    <div class="fml">Dual constraint 1: 2(7/12) + 2(2/3) = 2.5 &lt; 4  &rarr; slack  &rarr; <b>x&#8321; = 0</b>
+Dual constraint 2: 3(2/3) = 2 = 2               &rarr; tight  &rarr; x&#8322; may be positive
+Dual constraint 3: 4(7/12) + 2/3 = 3 = 3        &rarr; tight  &rarr; x&#8323; may be positive
+
+y&#8321; &gt; 0 and y&#8322; &gt; 0, so both primal constraints hold as equalities:
+    2x&#8321; + 4x&#8323; = 5   with x&#8321; = 0  &rarr;  x&#8323; = 5/4
+    2x&#8321; + 3x&#8322; + x&#8323; = 4  &rarr;  3x&#8322; = 4 - 5/4 = 11/4  &rarr;  x&#8322; = 11/12</div>
+
+    <h4>Step 5: verify with the duality theorem</h4>
+    <div class="fml">z = 4(0) + 2(11/12) + 3(5/4) = 11/6 + 15/4 = 22/12 + 45/12 = 67/12
+Min z = Max W = 67/12  &check;  (the duality theorem is satisfied)</div>
+
+    <div class="key"><strong>Answer:</strong> x&#8321; = 0, x&#8322; = 11/12 &asymp; 0.917, x&#8323; = 5/4 = 1.25, and <strong>Min z = 67/12 &asymp; 5.583</strong>. The dual variables y&#8321; = 7/12 and y&#8322; = 2/3 are the shadow prices, that is the rate at which the objective falls if the RHS of the first or second constraint is relaxed by one unit.</div>
+  </div>
+</article>
+
+<!-- ================= FORMULA SHEET ================= -->
+<div class="group"><h2>Formula sheet</h2><span>For the last hour before the exam</span></div>
+
+<section class="sheet" id="sheet">
+
+  <h3>Linear programming</h3>
+  <div class="fml">Standard form (max) : Max Z = c&#8321;x&#8321; + ... + c<sub>n</sub>x<sub>n</sub>,  Ax &le; b,  x &ge; 0
+&le; constraint &rarr; add slack S      x + y &le; 10  &rarr;  x + y + S = 10
+&ge; constraint &rarr; subtract surplus, add artificial   x + y &ge; 5  &rarr;  x + y - S + A = 5
+= constraint  &rarr; add artificial only
+Big M penalty : -M&middot;A for maximization,  +M&middot;A for minimization
+Optimality : Max stops when all Z<sub>j</sub> - C<sub>j</sub> &ge; 0,  Min stops when all C<sub>j</sub> - Z<sub>j</sub> &ge; 0
+Unbounded : entering column has no positive coefficient
+Multiple optima : Z<sub>j</sub> - C<sub>j</sub> = 0 for a non basic variable
+Degeneracy : tie in the minimum ratio
+Infeasible : an artificial variable stays in the basis with a positive value</div>
+
+  <h3>Transportation</h3>
+  <div class="fml">Balanced when total supply = total demand, else add a dummy row or column at zero cost
+Basic feasible solution must have m + n - 1 occupied cells, else it is degenerate (add &epsilon;)
+Initial solution : North West Corner, Least Cost, Vogel's Approximation (VAM is closest to optimal)
+VAM penalty = second smallest cost - smallest cost, in each row and column
+MODI : for occupied cells  c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub>   (set u<sub>i</sub> = 0 for the row with most allocations)
+       for empty cells     d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>)
+Optimal when every d<sub>ij</sub> &ge; 0. If any d<sub>ij</sub> &lt; 0, take the most negative and draw a closed loop.
+Maximization : subtract every element from the largest element, then minimise</div>
+
+  <h3>Assignment</h3>
+  <div class="fml">Square up the matrix with a dummy row or column at zero cost
+Row reduction &rarr; column reduction &rarr; cover all zeros with minimum lines
+Lines = order of matrix  &rarr; optimal
+Otherwise : subtract the smallest uncovered element from all uncovered elements,
+            add it to the elements covered twice, then repeat
+Maximization : subtract every element from the largest element
+Restricted cell : put cost M or &infin; so it can never be chosen</div>
+
+  <h3>Queueing, model (M / M / 1) : (&infin; / FCFS)</h3>
+  <div class="fml">&lambda; = mean arrival rate,  &mu; = mean service rate,  &rho; = &lambda; / &mu;  (needs &rho; &lt; 1)
+
+P&#8320;  = 1 - &rho;                     probability the system is empty
+P<sub>n</sub>  = &rho;&#8319;(1 - &rho;)                 probability of exactly n customers
+P(n &ge; k) = &rho;&#8342;                  probability of at least k customers
+L<sub>s</sub>  = &lambda; / (&mu; - &lambda;)              average number in the system
+L<sub>q</sub>  = &lambda;&sup2; / [&mu;(&mu; - &lambda;)]           average number in the queue  (= L<sub>s</sub> - &rho;)
+W<sub>s</sub>  = 1 / (&mu; - &lambda;)                average time in the system
+W<sub>q</sub>  = &lambda; / [&mu;(&mu; - &lambda;)]            average time in the queue  (= W<sub>s</sub> - 1/&mu;)
+Little's law : L<sub>s</sub> = &lambda;W<sub>s</sub>  and  L<sub>q</sub> = &lambda;W<sub>q</sub>
+Multi server stability : &rho; = &lambda; / (S&mu;) &lt; 1</div>
+
+  <h3>Inventory</h3>
+  <div class="fml">EOQ  Q* = &radic;(2 D C&#8320; / C<sub>h</sub>)      where C<sub>h</sub> = i &times; unit price
+Number of orders per year = D / Q*
+Ordering cost per year = (D / Q) &times; C&#8320;
+Carrying cost per year = (Q / 2) &times; C<sub>h</sub>
+Total annual cost = purchase + ordering + carrying
+At the EOQ, ordering cost = carrying cost   (use this as your check)
+Quantity discount : recompute C<sub>h</sub> from the discounted price, compare total costs, accept if lower
+ABC : A = 10 to 20 % of items and 70 to 80 % of value, B = 20 to 30 % and 15 to 20 %,
+      C = 50 to 70 % and 5 to 10 %</div>
+
+  <h3>Replacement</h3>
+  <div class="fml">Deteriorating item :
+    Total cost up to year n = capital or depreciation cost + cumulative running cost
+    Average annual cost = total cost / n
+    Replace in the year where the average annual cost is minimum
+
+Items that fail suddenly :
+    p<sub>i</sub> = probability of failure in period i = (cumulative i) - (cumulative i-1)
+    Mean life = &Sigma; i &middot; p<sub>i</sub>
+    Average failures per period = N / mean life
+    Individual replacement cost per period = (N / mean life) &times; cost per item
+    Group replacement is better when its cost per period is lower</div>
+
+  <h3>Game theory</h3>
+  <div class="fml">MaxiMin = maximum of the row minima      MiniMax = minimum of the column maxima
+If MaxiMin = MiniMax there is a saddle point, the game is pure and V = that value.
+
+Dominance :  delete row i if row i &le; row j        (A wants bigger payoffs)
+             delete column i if column i &ge; column j (B wants smaller payoffs)
+             average dominance uses the average of two rows or two columns
+
+2 &times; 2 game without a saddle point,   matrix  [ a  b ; c  d ]
+    p     = (d - c) / (a + d - b - c)      probability of row 1 for A
+    1 - p = probability of row 2
+    q     = (d - b) / (a + d - b - c)      probability of column 1 for B
+    1 - q = probability of column 2
+    V     = (a d - b c) / (a + d - b - c)
+Always check MaxiMin &le; V &le; MiniMax</div>
+
+</section>
+
+<footer>
+  <p>Prepared from the Unit 1 to Unit 7 class notes and the 2021, 2023 and 2024 past papers.<br>
+  To save as PDF, press Ctrl + P (or Cmd + P), choose "Save as PDF", paper size A4 and enable background graphics.</p>
+</footer>
+
+</div>
+</body>
+</html>

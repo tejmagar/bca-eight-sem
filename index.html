@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Preparation - BCA</title>
+<style>
+  :root{
+    --ink:#1c1b19;--ink-soft:#5a564e;--paper:#faf8f3;--card:#fff;--rule:#ddd6c8;
+    --accent:#8a5a2b;--accent-soft:#f3e9db;--blue:#2b5d8a;--green:#3d6b45;--green-soft:#e7f0e8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 70px}
+
+  header.top{text-align:center;padding:44px 0 20px;border-bottom:3px double var(--ink);margin-bottom:34px}
+  .uni{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:Georgia,serif;font-size:2.1rem;margin:8px 0 6px}
+  header.top p{margin:0;color:var(--ink-soft);font-size:.92rem}
+
+  h2.sec{font-family:Georgia,serif;font-size:1.05rem;margin:34px 0 14px;
+    color:var(--ink-soft);font-weight:normal;letter-spacing:.02em;
+    display:flex;align-items:center;gap:12px}
+  h2.sec::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+
+  .card{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--accent);
+    border-radius:10px;padding:18px 20px 16px;display:flex;flex-direction:column;
+    text-decoration:none;color:inherit;transition:transform .12s ease,box-shadow .12s ease}
+  a.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.09);border-left-color:var(--blue)}
+  .card .tag{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+    color:var(--green);background:var(--green-soft);border-radius:20px;padding:2px 9px;align-self:flex-start}
+  .card h3{font-family:Georgia,serif;font-size:1.25rem;margin:10px 0 4px}
+  .card .code{font-size:.76rem;color:var(--ink-soft);letter-spacing:.05em;margin:0 0 10px}
+  .card p.desc{margin:0 0 12px;font-size:.9rem;color:var(--ink-soft)}
+  .card ul{margin:0 0 14px;padding-left:18px;font-size:.85rem;color:var(--ink-soft)}
+  .card li{margin:2px 0}
+  .card .go{margin-top:auto;font-size:.85rem;font-weight:700;color:var(--accent)}
+  a.card:hover .go{color:var(--blue)}
+
+  .card.soon{border-left-color:var(--rule);border-style:dashed;background:transparent}
+  .card.soon .tag{color:var(--ink-soft);background:var(--accent-soft)}
+  .card.soon h3{color:var(--ink-soft)}
+
+  .extras{margin-top:12px;font-size:.85rem}
+  .extras a{color:var(--blue);text-decoration:none;border-bottom:1px dotted currentColor}
+  .extras a:hover{border-bottom-style:solid}
+
+  .howto{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+    padding:16px 20px;font-size:.86rem;color:var(--ink-soft)}
+  .howto h3{margin:0 0 8px;font-size:.95rem;color:var(--ink);font-family:Georgia,serif}
+  .howto code{font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:.85em;
+    background:var(--accent-soft);padding:1px 5px;border-radius:4px;color:var(--accent)}
+  .howto ol{margin:8px 0 0;padding-left:20px}
+  .howto li{margin:4px 0}
+
+  footer{margin-top:38px;text-align:center;font-size:.8rem;color:var(--ink-soft)}
+
+  @media (prefers-color-scheme:dark){
+    :root{--ink:#ece7dd;--ink-soft:#b3aca0;--paper:#161513;--card:#201f1c;--rule:#3a3833;
+      --accent:#d9a86a;--accent-soft:#2a241b;--blue:#8ab6dd;--green:#8fc79a;--green-soft:#1b2620}
+  }
+  @media print{
+    body{background:#fff;color:#000}
+    .card{break-inside:avoid;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="uni">Bachelor of Computer Application &nbsp;&middot;&nbsp; Tribhuvan University</div>
+  <h1>Exam Preparation</h1>
+  <p>Model question sets with ready to write answers, built from the class notes and the past papers</p>
+</header>
+
+<h2 class="sec">Subjects</h2>
+
+<div class="grid">
+
+  <!-- ===== One subject = one card. Copy the block below to add another. ===== -->
+  <a class="card" href="or/index.html">
+    <span class="tag">Ready</span>
+    <h3>Operational Research</h3>
+    <p class="code">7 units &nbsp;&middot;&nbsp; Full marks 60 &nbsp;&middot;&nbsp; 3 hours</p>
+    <p class="desc">Linear programming, transportation and assignment, queuing, inventory, replacement and game theory.</p>
+    <ul>
+      <li>10 model question sets</li>
+      <li>64 questions with full answers</li>
+      <li>Filter by set or by question number</li>
+      <li>Hide answers to practise, then compare</li>
+    </ul>
+    <span class="go">Open the question sets &rarr;</span>
+  </a>
+  <!-- ===== End of a subject card ===== -->
+
+  <div class="card soon">
+    <span class="tag">Coming later</span>
+    <h3>Next subject</h3>
+    <p class="code">Not added yet</p>
+    <p class="desc">Another subject can be added beside this one. Each subject lives in its own folder with its own question sets and its own copy of the notes.</p>
+    <span class="go">Add it when the notes are ready</span>
+  </div>
+
+</div>
+
+<p class="extras">
+  Operational Research also has a <a href="or/OR-Exam-QA.html">single page version</a>
+  with one long list of questions and answers, if you prefer to scroll instead of filtering.
+</p>
+
+<h2 class="sec">Adding a subject later</h2>
+
+<div class="howto">
+  <h3>Three steps</h3>
+  <ol>
+    <li>Make a new folder beside <code>or</code>, for example <code>dbms</code>, and put that subject's
+        <code>index.html</code> and its note PDFs inside it.</li>
+    <li>Copy the marked subject card in this file, the block between the two comment lines, and paste it
+        inside <code>&lt;div class="grid"&gt;</code>.</li>
+    <li>Change the <code>href</code>, the heading, the description and the list items. Delete the
+        <code>Coming later</code> card once there is nothing left to add.</li>
+  </ol>
+</div>
+
+<footer>
+  Everything here is static HTML, so it works from a local folder and from GitHub Pages with no build step.
+</footer>
+
+</div>
+</body>
+</html>
