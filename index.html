@@ -10,8 +10,10 @@
     --accent:#8a5a2b;--accent-soft:#f3e9db;--blue:#2b5d8a;--green:#3d6b45;--green-soft:#e7f0e8;
   }
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6}
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
   .wrap{max-width:880px;margin:0 auto;padding:0 20px 70px}
 
   header.top{text-align:center;padding:44px 0 20px;border-bottom:3px double var(--ink);margin-bottom:34px}
@@ -24,7 +26,16 @@
     display:flex;align-items:center;gap:12px}
   h2.sec::after{content:"";flex:1;height:1px;background:var(--rule)}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  @media (max-width:640px){
+    body{font-size:15px}
+    .wrap{padding:0 14px 56px}
+    header.top{padding:28px 0 16px;margin-bottom:24px}
+    h1{font-size:1.6rem}
+    .grid{grid-template-columns:1fr;gap:13px}
+    .card{padding:15px 16px 14px}
+    .card h3{font-size:1.12rem}
+  }
 
   .card{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--accent);
     border-radius:10px;padding:18px 20px 16px;display:flex;flex-direction:column;

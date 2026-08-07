@@ -11,8 +11,18 @@
     --green:#3d6b45;--green-soft:#e7f0e8;
   }
   *{box-sizing:border-box}
+  /* iOS Safari inflates text inside wide blocks unless this is pinned */
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6}
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+  .fallback{max-width:640px;margin:40px auto;padding:20px 24px;background:var(--card);
+    border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:10px}
+  .fallback h2{font-family:Georgia,serif;font-size:1.1rem;margin:0 0 10px}
+  .fallback ol{padding-left:20px;margin:10px 0 0}
+  .fallback li{margin:6px 0}
+  .fallback code{font-family:Consolas,monospace;font-size:.85em;background:var(--accent-soft);
+    padding:1px 5px;border-radius:4px;color:var(--accent)}
   .wrap{max-width:940px;margin:0 auto;padding:0 20px 80px}
 
   .back{display:block;padding:10px 0 0;font-size:.78rem;color:var(--ink-soft);text-decoration:none}
@@ -88,6 +98,9 @@
     border-radius:8px;padding:16px 20px 18px;margin:0 0 16px}
   article.q.long{border-left-color:var(--blue)}
   .qhead{display:flex;gap:11px;align-items:flex-start}
+  /* a flex item defaults to min-width:auto, so a wide table inside it would
+     refuse to shrink and push the whole page past the width of a phone */
+  .qhead>div{min-width:0;flex:1 1 auto}
   .qno{flex:0 0 auto;background:var(--accent);color:#fff;font-size:.75rem;font-weight:700;
     padding:3px 9px;border-radius:5px;margin-top:3px;white-space:nowrap}
   article.q.long .qno{background:var(--blue)}
@@ -123,8 +136,41 @@
   table.data td.l,table.data th.l{text-align:left}
   table.data tr.total td{background:#f7f3ea;font-weight:700}
   .alloc{background:#eef5ef;font-weight:700}
-  .scroll{overflow-x:auto}
+  .scroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+  table.data{max-width:100%}
+  article.q,.ans,.qtext{min-width:0;overflow-wrap:break-word}
   footer{margin-top:40px;text-align:center;font-size:.8rem;color:var(--ink-soft)}
+
+  /* phones */
+  @media (max-width:640px){
+    body{font-size:15px}
+    .wrap{padding:0 12px 60px}
+    h1{font-size:1.35rem}
+    header.top p{font-size:.8rem}
+    .uni{font-size:.62rem;letter-spacing:.16em}
+    .sources a{font-size:.72rem;padding:2px 8px}
+    .controls{padding:6px 0}
+    .panel{padding:0 9px}
+    .bar{min-height:auto;gap:6px}
+    .sep{display:none}
+    .paper{padding:12px 14px;margin:18px 0 14px}
+    .paper h2{font-size:1.15rem}
+    .paper .marks{gap:10px;font-size:.74rem}
+    .group{padding:8px 12px;margin:20px 0 12px}
+    .group h3{font-size:.92rem}
+    .group span{font-size:.76rem}
+    article.q{padding:13px 13px 15px;border-left-width:3px}
+    .qhead{gap:8px}
+    .qtext{font-size:.97rem}
+    .qno{font-size:.7rem;padding:3px 7px}
+    .ans h4{font-size:.9rem}
+    .ans ul,.ans ol{padding-left:19px}
+    .fml{font-size:.94rem;line-height:1.85;padding-left:12px}
+    .ind{padding-left:1.1em}
+    table.data{font-size:.76rem}
+    table.data th,table.data td{padding:4px 5px}
+    .key,.tip{padding:8px 11px;font-size:.88rem}
+  }
 
   @media (prefers-color-scheme:dark){
     :root{--ink:#ece7dd;--ink-soft:#b3aca0;--paper:#161513;--card:#201f1c;--rule:#3a3833;
@@ -198,6 +244,19 @@
   </div>
  </div>
 </div>
+
+<noscript>
+  <div class="fallback">
+    <h2>This page needs JavaScript to be switched on</h2>
+    <p>The question sets are built on the page itself, so nothing appears without it.</p>
+    <ol>
+      <li>On iPhone, open <b>Settings</b>, then <b>Apps</b> or <b>Safari</b>, then <b>Advanced</b>,
+          and turn <b>JavaScript</b> on.</li>
+      <li>If you tapped the file inside the <b>Files</b> app, that is only a preview and it does not run
+          scripts. Tap <b>Share</b> and choose <b>Open in Safari</b>, or open the hosted web address instead.</li>
+    </ol>
+  </div>
+</noscript>
 
 <main id="out"></main>
 
@@ -3296,7 +3355,19 @@ function render(scrollTop){
   document.getElementById('count').textContent = n+(n===1?' question':' questions')+
     (state.ans?'' : ', answers hidden');
 }
-render();
+
+/* Show any failure on the page itself, since a phone has no console to read. */
+try{
+  render();
+  if(!document.querySelectorAll('article.q').length) throw new Error('no questions were rendered');
+}catch(err){
+  document.getElementById('out').innerHTML =
+    '<div class="fallback"><h2>The page could not build the question sets</h2>' +
+    '<p>Please send this line so it can be fixed:</p>' +
+    '<p><code>' + String(err && err.message ? err.message : err) + '</code></p>' +
+    '<p>If you opened this file from the Files app on a phone, that is only a preview and it does not run ' +
+    'scripts. Tap Share, then Open in Safari, or open the hosted web address instead.</p></div>';
+}
 </script>
 </body>
 </html>
