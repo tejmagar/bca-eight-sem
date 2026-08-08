@@ -9,6 +9,7 @@
     --ink:#1c1b19;--ink-soft:#5a564e;--paper:#faf8f3;--card:#fff;--rule:#ddd6c8;
     --accent:#8a5a2b;--accent-soft:#f3e9db;--blue:#2b5d8a;--blue-soft:#e6eef6;
     --green:#3d6b45;--green-soft:#e7f0e8;
+    --trap-bg:#fdf3ef;--trap-bd:#f0dcd2;--trap-ink:#a8492a;
   }
   *{box-sizing:border-box}
   /* iOS Safari inflates text inside wide blocks unless this is pinned */
@@ -110,8 +111,42 @@
   article.q.long .meta b{color:var(--blue)}
 
   .ans{border-top:1px dashed var(--rule);margin-top:13px;padding-top:12px}
+  .anshead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
   .anslabel{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-soft);font-weight:700;margin-bottom:6px}
+    color:var(--ink-soft);font-weight:700}
+  .mbtn{margin-left:auto;font-family:inherit;font-size:.76rem;font-weight:700;cursor:pointer;
+    color:var(--blue);background:var(--blue-soft);border:1px solid #cfdfee;
+    border-radius:20px;padding:4px 12px;white-space:nowrap}
+  .mbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  /* method modal */
+  .modal[hidden]{display:none}
+  .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px}
+  .modalbg{position:absolute;inset:0;background:rgba(20,18,14,.55)}
+  .modalcard{position:relative;background:var(--card);border:1px solid var(--rule);
+    border-radius:12px;max-width:760px;width:100%;max-height:88vh;display:flex;flex-direction:column;
+    box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .modalhead{display:flex;align-items:center;gap:12px;padding:14px 18px;
+    border-bottom:1px solid var(--rule);flex:0 0 auto}
+  .modalhead h3{margin:0;font-family:Georgia,serif;font-size:1.05rem;flex:1}
+  .modalhead button{font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;
+    border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:7px;padding:6px 12px}
+  .modalhead button:hover{border-color:var(--accent);color:var(--accent)}
+  .modalbody{overflow-y:auto;padding:16px 18px 22px;-webkit-overflow-scrolling:touch}
+  .modalbody h4{margin:18px 0 6px;font-family:Georgia,serif;font-size:1rem;color:var(--blue)}
+  .modalbody h4:first-child{margin-top:0}
+  .modalbody h5{margin:14px 0 4px;font-size:.88rem;color:var(--accent)}
+  .modalbody p{margin:7px 0}
+  .modalbody ol,.modalbody ul{margin:7px 0;padding-left:22px}
+  .modalbody li{margin:4px 0}
+  .modalbody .mtitle{background:var(--blue-soft);border-left:4px solid var(--blue);
+    border-radius:0 7px 7px 0;padding:7px 12px;margin:22px 0 10px;font-weight:700;
+    font-family:Georgia,serif;font-size:1.02rem}
+  .modalbody .mtitle:first-child{margin-top:0}
+  .trap{background:var(--trap-bg);border:1px solid var(--trap-bd);
+    border-left:4px solid var(--trap-ink);color:var(--ink);
+    border-radius:0 7px 7px 0;padding:9px 13px;margin:11px 0;font-size:.9rem}
+  .trap strong{color:var(--trap-ink)}
   .ans h4{margin:15px 0 5px;font-size:.94rem;color:var(--accent);font-family:Georgia,serif}
   article.q.long .ans h4{color:var(--blue)}
   .ans h4:first-of-type{margin-top:0}
@@ -126,7 +161,21 @@
     font-family:Cambria,Georgia,"Times New Roman",serif;font-size:1.04rem;
     line-height:2.05;white-space:pre-wrap;overflow-x:auto;letter-spacing:.01em}
   .fml b{font-weight:700}
-  .ind{padding-left:2.2em;display:block}
+  .ind{padding-left:2.2em;display:block;margin:.1em 0}
+
+  /* stacked fractions and square roots, written the way they go on paper.
+     No external library, so they work offline and cannot fail to load. */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;
+    text-align:center;margin:0 .22em;line-height:1.18;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 .4em .1em}
+  .frac>span:last-child{padding:.12em .4em 0}
+  .sqrt{display:inline-flex;align-items:flex-start;white-space:nowrap;margin:0 .1em}
+  .sqrt>span:first-child{font-size:1.28em;line-height:1.05}
+  .sqrt>span:last-child{border-top:1.3px solid currentColor;padding:.14em .28em 0;margin-left:-.1em}
+  /* a radicand holding a fraction is two lines tall, so the sign grows to match */
+  .sqrt.tall>span:first-child{font-size:2.2em;line-height:.9;margin-top:-.04em}
+  .sqrt.tall>span:last-child{padding-top:.2em}
+  .fml .frac{font-size:.94em}
   .key{background:var(--green-soft);border:1px solid #cfe0d2;border-left:4px solid var(--green);
     border-radius:6px;padding:9px 13px;margin:11px 0;font-size:.94rem}
   .key strong{color:var(--green)}
@@ -170,12 +219,17 @@
     table.data{font-size:.76rem}
     table.data th,table.data td{padding:4px 5px}
     .key,.tip{padding:8px 11px;font-size:.88rem}
+    .modal{padding:0}
+    .modalcard{max-height:100vh;border-radius:0;border:none}
+    .modalbody{padding:14px 14px 30px}
+    .mbtn{margin-left:0}
   }
 
   @media (prefers-color-scheme:dark){
     :root{--ink:#ece7dd;--ink-soft:#b3aca0;--paper:#161513;--card:#201f1c;--rule:#3a3833;
       --accent:#d9a86a;--accent-soft:#2a241b;--blue:#8ab6dd;--blue-soft:#1c2530;
-      --green:#8fc79a;--green-soft:#1b2620}
+      --green:#8fc79a;--green-soft:#1b2620;
+      --trap-bg:#2b1e18;--trap-bd:#4a3226;--trap-ink:#e8a184}
     .group{background:#2c2a26}.qno{color:#161513}.pill.on{color:#161513}
     .btn{color:#161513}table.data th{background:#2a2823}table.data tr.total td{background:#26241f}
     .alloc{background:#243026}.fml{background:#1d1c19;border-left-color:var(--accent)}
@@ -259,6 +313,17 @@
 </noscript>
 
 <main id="out"></main>
+
+<div class="modal" id="modal" hidden>
+  <div class="modalbg" id="modalbg"></div>
+  <div class="modalcard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modalhead">
+      <h3 id="modalTitle">How the method works</h3>
+      <button id="modalClose" type="button">Close</button>
+    </div>
+    <div class="modalbody" id="modalBody"></div>
+  </div>
+</div>
 
 <footer>
   Uncheck <b>Show answers</b> to practise, then check it back to compare.
@@ -454,26 +519,72 @@ a:`<h4>Meaning of mathematical formulation of an LPP</h4>
 <div class="fml"><b>Maximize  Z = 50x&#8321; + 40x&#8322; + 70x&#8323;</b></div>
 
 <h4>Step 3: Raw material constraints</h4>
-<p>One unit of A, B and C consumes 6, 5 and 9 kg of raw material P, and only 5000 kg of P is available. Similarly for Q.</p>
-<div class="fml">6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000     (raw material P)
-4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000     (raw material Q)</div>
+<p>One unit of A, B and C consumes 6, 5 and 9 kg of raw material P, and only 5000 kg of P is available. Taking raw material Q in the same way,</p>
+<div class="fml"><span class="ind">6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000     (raw material P)</span>
 
-<h4>Step 4: Demand constraints</h4>
-<div class="fml">x&#8321; &ge; 300     (minimum demand of A)
-x&#8322; &ge; 250     (minimum demand of B)
-x&#8323; &ge; 200     (minimum demand of C)</div>
+<span class="ind">4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000     (raw material Q)</span></div>
 
-<h4>Step 5: Non negativity restriction</h4>
-<div class="fml">x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
+<h4>Step 4: Production time constraint</h4>
+<p>Let t be the time required to manufacture one unit of A. The time for A is twice that for B and thrice that for C, so</p>
+<div class="fml"><span class="ind">time for one unit of B = <fr>t|2</fr></span>
+
+<span class="ind">time for one unit of C = <fr>t|3</fr></span></div>
+<p>If the whole capacity is engaged in manufacturing A alone, 1600 units of A can be produced. Therefore the total time available is 1600t, and the time actually used cannot exceed it.</p>
+<div class="fml"><span class="ind">t x&#8321; + <fr>t|2</fr> x&#8322; + <fr>t|3</fr> x&#8323; &le; 1600 t</span>
+
+Dividing both sides by t,
+
+<span class="ind">x&#8321; + <fr>x&#8322;|2</fr> + <fr>x&#8323;|3</fr> &le; 1600</span>
+
+Multiplying throughout by 6,
+
+<span class="ind"><b>6x&#8321; + 3x&#8322; + 2x&#8323; &le; 9600</b></span></div>
+
+<h4>Step 5: Production ratio constraints</h4>
+<p>The three products are to be produced in the ratio 3 : 4 : 5, that is</p>
+<div class="fml"><span class="ind">x&#8321; : x&#8322; : x&#8323; = 3 : 4 : 5</span>
+
+<span class="ind"><fr>x&#8321;|3</fr> = <fr>x&#8322;|4</fr> = <fr>x&#8323;|5</fr></span>
+
+Taking the first two,
+
+<span class="ind">4x&#8321; = 3x&#8322;,  that is  <b>4x&#8321; - 3x&#8322; = 0</b></span>
+
+Taking the last two,
+
+<span class="ind">5x&#8322; = 4x&#8323;,  that is  <b>5x&#8322; - 4x&#8323; = 0</b></span></div>
+
+<h4>Step 6: Demand constraints</h4>
+<div class="fml"><span class="ind">x&#8321; &ge; 300     (minimum demand of A)</span>
+
+<span class="ind">x&#8322; &ge; 250     (minimum demand of B)</span>
+
+<span class="ind">x&#8323; &ge; 200     (minimum demand of C)</span></div>
+
+<h4>Step 7: Non negativity restriction</h4>
+<div class="fml"><span class="ind">x&#8321;, x&#8322;, x&#8323; &ge; 0</span></div>
 
 <h4>The complete LPP model</h4>
 <div class="fml"><b>Maximize  Z = 50x&#8321; + 40x&#8322; + 70x&#8323;</b>
+
 subject to
-     6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000
-     4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000
-     x&#8321; &ge; 300,  x&#8322; &ge; 250,  x&#8323; &ge; 200
-     x&#8321;, x&#8322;, x&#8323; &ge; 0</div>
-<div class="key"><strong>Note:</strong> the time ratio and the production ratio 3 : 4 : 5 do not create any constraint here because no machine hour limit has been given, and the statement that 1600 units of A alone could be produced is only additional information which is already covered by the two raw material constraints.</div>`},
+
+<span class="ind">6x&#8321; + 5x&#8322; + 9x&#8323; &le; 5000     (raw material P)</span>
+
+<span class="ind">4x&#8321; + 6x&#8322; + 8x&#8323; &le; 6000     (raw material Q)</span>
+
+<span class="ind">6x&#8321; + 3x&#8322; + 2x&#8323; &le; 9600     (production time)</span>
+
+<span class="ind">4x&#8321; - 3x&#8322; = 0              (ratio of A to B)</span>
+
+<span class="ind">5x&#8322; - 4x&#8323; = 0              (ratio of B to C)</span>
+
+<span class="ind">x&#8321; &ge; 300,  x&#8322; &ge; 250,  x&#8323; &ge; 200</span>
+
+<span class="ind">x&#8321;, x&#8322;, x&#8323; &ge; 0</span></div>
+<div class="key"><strong>Why the 1600 units gives a time constraint and not a material one.</strong> If 1600 units of A were made, raw material P alone would need 6 &times; 1600 = 9600 kg while only 5000 kg is available, so 1600 units cannot come out of the raw material at all. The figure therefore describes the <b>production capacity in time</b>, which is exactly what the sentence about A taking twice the time of B and thrice that of C is there to convert. Every piece of data in the question is used in the model above.</div>
+<p style="font-size:.86rem;color:var(--ink-soft);border-top:1px solid var(--rule);padding-top:8px">
+<b>Note.</b> Some solution sheets drop the time and ratio constraints and give only the material and demand constraints. That shorter model leaves the time relationship, the ratio 3 : 4 : 5 and the 1600 units completely unused, so the full model above is the safer one to write. Show the derivation in Steps 4 and 5 and the marks are earned either way.</p>`},
 
 'lp-form-chair':{u:2,yr:'2023',mk:'[5]',
 q:`A chair manufacturing company produces two types of chairs A and B by using three machines X, Y and Z. The time required for each chair on each machine and the maximum time available per week are given below. The profit is Rs. 500 per chair of type A and Rs. 300 per chair of type B. Formulate the problem as an LPP and solve it graphically.
@@ -932,7 +1043,7 @@ subject to
 <tr class="total"><td class="l">(7/12, 2/3)</td><td class="l">4y&#8321; + y&#8322; = 3 meets 3y&#8322; = 2</td><td>67 / 12 = 5.583 &nbsp; maximum</td></tr>
 <tr><td class="l">(0, 2/3)</td><td class="l">3y&#8322; = 2 meets the y&#8322; axis</td><td>8 / 3 = 2.667</td></tr>
 </table></div>
-<div class="fml">Max W = <b>67 / 12 = 5.583</b>  at  y&#8321; = 7/12,  y&#8322; = 2/3
+<div class="fml">Max W = <b><fr>67|12</fr> = 5.583</b>  at  y&#8321; = 7/12,  y&#8322; = 2/3
 Check the first constraint: y&#8321; + y&#8322; = 7/12 + 8/12 = 1.25 &le; 2, so it is satisfied and slack.</div>
 
 <h4>Step 5: Recover the primal solution using complementary slackness</h4>
@@ -947,7 +1058,7 @@ Since y&#8321; &gt; 0 and y&#8322; &gt; 0, both primal constraints hold as equal
 <h4>Step 6: Verify by the duality theorem</h4>
 <div class="fml">z = 4(0) + 2(11/12) + 3(5/4) = 11/6 + 15/4 = 22/12 + 45/12 = 67/12
 Min z = Max W = 67/12, so the duality theorem is satisfied.</div>
-<div class="key"><strong>Answer:</strong> x&#8321; = 0, x&#8322; = 11/12 = 0.917, x&#8323; = 5/4 = 1.25 and <strong>Min z = 67/12 = 5.583</strong>. The dual variables y&#8321; = 7/12 and y&#8322; = 2/3 are the shadow prices of the two constraints.</div>`},
+<div class="key"><strong>Answer:</strong> x&#8321; = 0, x&#8322; = 11/12 = 0.917, x&#8323; = 5/4 = 1.25 and <strong>Min z = <fr>67|12</fr> = 5.583</strong>. The dual variables y&#8321; = 7/12 and y&#8322; = 2/3 are the shadow prices of the two constraints.</div>`},
 
 'lp-dual-2023':{u:2,yr:'2023',mk:'[10]',
 q:`Solve the following problem using duality.
@@ -995,17 +1106,17 @@ R&#8322;(new) = R&#8322;(old) - 6 &times; R&#8321;(new)</div>
 </table></div>
 <p>All Z<sub>j</sub> - C<sub>j</sub> are greater than or equal to zero, so the optimal solution of the dual has been reached.</p>
 <div class="fml">y&#8321; = 5/9 = 0.556,  y&#8322; = 0,  y&#8323; = 0
-Max W = 600 &times; 5/9 = 1000/3 = 333.33</div>
+Max W = 600 &times; 5/9 = <fr>1000|3</fr> = 333.33</div>
 
 <h4>Step 5: Read the primal solution from the final table</h4>
 <p>The values of the primal variables appear in the net evaluation row under the slack columns of the dual.</p>
-<div class="fml">x&#8321; = entry under S&#8321; = 50/3 = 16.67
+<div class="fml">x&#8321; = entry under S&#8321; = <fr>50|3</fr> = 16.67
 x&#8322; = entry under S&#8322; = 0
-Min Z = Max W = 1000/3 = 333.33
+Min Z = Max W = <fr>1000|3</fr> = 333.33
 
 Verification: Z = 20(50/3) + 40(0) = 1000/3 &nbsp;and&nbsp; 36(50/3) + 6(0) = 600 &ge; 600 &check;
              3(50/3) = 50 &ge; 36 &check;,   20(50/3) = 333.3 &ge; 100 &check;</div>
-<div class="key"><strong>Answer:</strong> x&#8321; = 50/3 = 16.67, x&#8322; = 0 and <strong>Min Z = 1000/3 = Rs. 333.33</strong>. Only the first constraint is binding, so only its shadow price y&#8321; = 5/9 is positive, while y&#8322; and y&#8323; are zero because those two constraints have surplus.</div>`},
+<div class="key"><strong>Answer:</strong> x&#8321; = <fr>50|3</fr> = 16.67, x&#8322; = 0 and <strong>Min Z = 1000/3 = Rs. 333.33</strong>. Only the first constraint is binding, so only its shadow price y&#8321; = 5/9 is positive, while y&#8322; and y&#8323; are zero because those two constraints have surplus.</div>`},
 
 'lp-graph-long':{u:2,mk:'[5 + 5]',
 q:`Explain the graphical method of solving a linear programming problem. Solve the following problems graphically.
@@ -1154,12 +1265,89 @@ q:`Find the optimal solution for the following transportation problem using any 
 <tr class="total"><td class="l">Demand</td><td>20</td><td>40</td><td>30</td><td>9</td><td>100 / 99</td></tr>
 </table></div>`,
 a:`<h4>Step 1: Check whether the problem is balanced</h4>
-<div class="fml">Total supply = 30 + 50 + 20 = 100
-Total demand = 20 + 40 + 30 + 9 = 99
-Supply is greater than demand, so the problem is <b>unbalanced</b>.
-Add a dummy destination D<sub>dummy</sub> with demand 1 and zero transportation cost.</div>
+<div class="fml"><span class="ind">Total supply = 30 + 50 + 20 = 100</span>
+
+<span class="ind">Total demand = 20 + 40 + 30 + 9 = 99</span>
+
+Supply is greater than demand by 1 unit, so the problem is <b>unbalanced</b>.
+A dummy destination D<sub>dummy</sub> is added with demand 1 and zero cost in every cell.</div>
+<div class="scroll"><table class="data">
+<tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>D<sub>dummy</sub></th><th>Supply</th></tr>
+<tr><td class="l">S&#8321;</td><td>1</td><td>2</td><td>1</td><td>4</td><td>0</td><td>30</td></tr>
+<tr><td class="l">S&#8322;</td><td>3</td><td>3</td><td>2</td><td>1</td><td>0</td><td>50</td></tr>
+<tr><td class="l">S&#8323;</td><td>4</td><td>2</td><td>5</td><td>9</td><td>0</td><td>20</td></tr>
+<tr class="total"><td class="l">Demand</td><td>20</td><td>40</td><td>30</td><td>9</td><td>1</td><td>100</td></tr>
+</table></div>
 
 <h4>Step 2: Initial basic feasible solution by Vogel's Approximation Method</h4>
+<p>In each round the penalty of a row or column is the second smallest cost minus the smallest cost in that line. The line with the largest penalty is chosen and its cheapest cell is filled.</p>
+
+<p><b>Round 1.</b> All rows and columns are present.</p>
+<div class="fml"><span class="ind">Row penalties    : S&#8321; = 1 - 0 = 1,  S&#8322; = 1 - 0 = 1,  S&#8323; = 2 - 0 = 2</span>
+
+<span class="ind">Column penalties : D&#8321; = 3 - 1 = 2,  D&#8322; = 2 - 2 = 0,  D&#8323; = 2 - 1 = 1,</span>
+
+<span class="ind">                   D&#8324; = 4 - 1 = <b>3</b>,  D<sub>dummy</sub> = 0 - 0 = 0</span>
+
+The largest penalty is 3 in column D&#8324;. Its cheapest cell is S&#8322;D&#8324; with cost 1.
+
+<span class="ind">Allocate min(50, 9) = <b>9</b> to S&#8322;D&#8324;</span>
+
+Column D&#8324; is satisfied and is crossed out. Supply of S&#8322; falls to 50 - 9 = 41.</div>
+
+<p><b>Round 2.</b> Columns D&#8321;, D&#8322;, D&#8323; and D<sub>dummy</sub> remain.</p>
+<div class="fml"><span class="ind">Row penalties    : S&#8321; = 1 - 0 = 1,  S&#8322; = 2 - 0 = 2,  S&#8323; = 2 - 0 = 2</span>
+
+<span class="ind">Column penalties : D&#8321; = 3 - 1 = 2,  D&#8322; = 0,  D&#8323; = 1,  D<sub>dummy</sub> = 0</span>
+
+Three lines tie at 2, so the tie is broken by taking the line in which the
+largest allocation can be made. Column D&#8321; allows 20 units, the others only 1.
+
+Cheapest cell of D&#8321; is S&#8321;D&#8321; with cost 1.
+
+<span class="ind">Allocate min(30, 20) = <b>20</b> to S&#8321;D&#8321;</span>
+
+Column D&#8321; is satisfied. Supply of S&#8321; falls to 30 - 20 = 10.</div>
+
+<p><b>Round 3.</b> Columns D&#8322;, D&#8323; and D<sub>dummy</sub> remain.</p>
+<div class="fml"><span class="ind">Row penalties    : S&#8321; = 1 - 0 = 1,  S&#8322; = 2 - 0 = 2,  S&#8323; = 2 - 0 = 2</span>
+
+<span class="ind">Column penalties : D&#8322; = 0,  D&#8323; = 1,  D<sub>dummy</sub> = 0</span>
+
+Rows S&#8322; and S&#8323; tie at 2. Taking S&#8322;, which has the larger remaining supply,
+its cheapest cell is S&#8322;D<sub>dummy</sub> with cost 0.
+
+<span class="ind">Allocate min(41, 1) = <b>1</b> to S&#8322;D<sub>dummy</sub></span>
+
+The dummy column is satisfied. Supply of S&#8322; falls to 41 - 1 = 40.</div>
+
+<p><b>Round 4.</b> Columns D&#8322; and D&#8323; remain.</p>
+<div class="fml"><span class="ind">Row penalties    : S&#8321; = 2 - 1 = 1,  S&#8322; = 3 - 2 = 1,  S&#8323; = 5 - 2 = <b>3</b></span>
+
+<span class="ind">Column penalties : D&#8322; = 2 - 2 = 0,  D&#8323; = 2 - 1 = 1</span>
+
+The largest penalty is 3 in row S&#8323;, whose cheapest cell is S&#8323;D&#8322; with cost 2.
+
+<span class="ind">Allocate min(20, 40) = <b>20</b> to S&#8323;D&#8322;</span>
+
+Row S&#8323; is exhausted. Demand of D&#8322; falls to 40 - 20 = 20.</div>
+
+<p><b>Round 5.</b> Rows S&#8321; and S&#8322; against columns D&#8322; and D&#8323;.</p>
+<div class="fml"><span class="ind">Row penalties    : S&#8321; = 2 - 1 = 1,  S&#8322; = 3 - 2 = 1</span>
+
+<span class="ind">Column penalties : D&#8322; = 3 - 2 = 1,  D&#8323; = 2 - 1 = 1</span>
+
+Everything ties at 1, so the cheapest cell among the candidates is taken,
+which is S&#8321;D&#8323; with cost 1.
+
+<span class="ind">Allocate min(10, 30) = <b>10</b> to S&#8321;D&#8323;</span>
+
+Row S&#8321; is exhausted. Demand of D&#8323; falls to 30 - 10 = 20.</div>
+
+<p><b>Round 6.</b> Only row S&#8322; is left, with 40 units against D&#8322; = 20 and D&#8323; = 20.</p>
+<div class="fml"><span class="ind">Allocate <b>20</b> to S&#8322;D&#8322;  and  <b>20</b> to S&#8322;D&#8323;</span></div>
+
+<p><b>The initial basic feasible solution</b></p>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>D<sub>dummy</sub></th><th>Supply</th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">1 (20)</td><td>2</td><td class="alloc">1 (10)</td><td>4</td><td>0</td><td>30</td></tr>
@@ -1167,17 +1355,48 @@ Add a dummy destination D<sub>dummy</sub> with demand 1 and zero transportation 
 <tr><td class="l">S&#8323;</td><td>4</td><td class="alloc">2 (20)</td><td>5</td><td>9</td><td>0</td><td>20</td></tr>
 <tr class="total"><td class="l">Demand</td><td>20</td><td>40</td><td>30</td><td>9</td><td>1</td><td>100</td></tr>
 </table></div>
-<div class="fml">Total cost = 1&times;20 + 1&times;10 + 3&times;20 + 2&times;20 + 1&times;9 + 0&times;1 + 2&times;20
-           = 20 + 10 + 60 + 40 + 9 + 0 + 40 = <b>Rs. 179</b>
+<div class="fml"><span class="ind">Total cost = 1(20) + 1(10) + 3(20) + 2(20) + 1(9) + 0(1) + 2(20)</span>
 
-Number of allocated cells = 7 = m + n - 1 = 3 + 5 - 1 = 7
-Therefore the solution is non degenerate and the optimality test can be applied.</div>
+<span class="ind">           = 20 + 10 + 60 + 40 + 9 + 0 + 40</span>
+
+<span class="ind">           = <b>Rs. 179</b></span>
+
+Number of allocated cells = 7, and m + n - 1 = 3 + 5 - 1 = 7.
+The two are equal, so the solution is <b>non degenerate</b> and the optimality
+test can be applied to it.</div>
 
 <h4>Step 3: Optimality test by the MODI or u-v method</h4>
-<p>For every occupied cell put c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub>, starting with u&#8322; = 0 because row S&#8322; has the largest number of allocations.</p>
-<div class="fml">u&#8321; = -1,  u&#8322; = 0,  u&#8323; = -1
-v&#8321; =  2,  v&#8322; = 3,  v&#8323; = 2,  v&#8324; = 1,  v&#8325; = 0</div>
-<p>For every unoccupied cell compute d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>). These are shown in square brackets.</p>
+<p>Row S&#8322; carries the largest number of allocations, so put u&#8322; = 0. For every <b>occupied</b> cell, c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub>.</p>
+<div class="fml"><span class="ind">Cell S&#8322;D&#8322; : 3 = u&#8322; + v&#8322; = 0 + v&#8322;   &rarr;  v&#8322; = 3</span>
+
+<span class="ind">Cell S&#8322;D&#8323; : 2 = 0 + v&#8323;             &rarr;  v&#8323; = 2</span>
+
+<span class="ind">Cell S&#8322;D&#8324; : 1 = 0 + v&#8324;             &rarr;  v&#8324; = 1</span>
+
+<span class="ind">Cell S&#8322;D<sub>d</sub> : 0 = 0 + v&#8325;             &rarr;  v&#8325; = 0</span>
+
+<span class="ind">Cell S&#8321;D&#8323; : 1 = u&#8321; + v&#8323; = u&#8321; + 2    &rarr;  u&#8321; = -1</span>
+
+<span class="ind">Cell S&#8321;D&#8321; : 1 = u&#8321; + v&#8321; = -1 + v&#8321;   &rarr;  v&#8321; = 2</span>
+
+<span class="ind">Cell S&#8323;D&#8322; : 2 = u&#8323; + v&#8322; = u&#8323; + 3    &rarr;  u&#8323; = -1</span></div>
+<p>Now for every <b>unoccupied</b> cell compute d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>).</p>
+<div class="fml"><span class="ind">d&#8321;&#8322; = 2 - (-1 + 3) = 2 - 2 = 0</span>
+
+<span class="ind">d&#8321;&#8324; = 4 - (-1 + 1) = 4 - 0 = 4</span>
+
+<span class="ind">d&#8321;&#8325; = 0 - (-1 + 0) = 0 + 1 = 1</span>
+
+<span class="ind">d&#8322;&#8321; = 3 - ( 0 + 2) = 3 - 2 = 1</span>
+
+<span class="ind">d&#8323;&#8321; = 4 - (-1 + 2) = 4 - 1 = 3</span>
+
+<span class="ind">d&#8323;&#8323; = 5 - (-1 + 2) = 5 - 1 = 4</span>
+
+<span class="ind">d&#8323;&#8324; = 9 - (-1 + 1) = 9 - 0 = 9</span>
+
+<span class="ind">d&#8323;&#8325; = 0 - (-1 + 0) = 0 + 1 = 1</span></div>
+<p>These values are entered in square brackets in the table below.</p>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>D<sub>dummy</sub></th><th>u<sub>i</sub></th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">1 (20)</td><td>2 [0]</td><td class="alloc">1 (10)</td><td>4 [4]</td><td>0 [1]</td><td>-1</td></tr>
@@ -1265,20 +1484,79 @@ a:`<h4>Meaning</h4>
 <li>At the end epsilon is treated as zero, so it does not change the total transportation cost.</li>
 </ol>
 
-<h4>Example</h4>
+<h4>Worked example</h4>
+<div class="scroll"><table class="data">
+<tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>Supply</th></tr>
+<tr><td class="l">S&#8321;</td><td>8</td><td>5</td><td>6</td><td>120</td></tr>
+<tr><td class="l">S&#8322;</td><td>15</td><td>10</td><td>12</td><td>80</td></tr>
+<tr><td class="l">S&#8323;</td><td>3</td><td>9</td><td>10</td><td>80</td></tr>
+<tr class="total"><td class="l">Demand</td><td>150</td><td>80</td><td>50</td><td>280</td></tr>
+</table></div>
+<p>Total supply = total demand = 280, so the problem is balanced. Solving it by VAM,</p>
+<div class="fml"><b>Round 1</b>
+
+<span class="ind">Row penalties    : S&#8321; = 6 - 5 = 1,  S&#8322; = 12 - 10 = 2,  S&#8323; = 9 - 3 = <b>6</b></span>
+
+<span class="ind">Column penalties : D&#8321; = 8 - 3 = 5,  D&#8322; = 9 - 5 = 4,  D&#8323; = 10 - 6 = 4</span>
+
+<span class="ind">Largest is 6 in S&#8323;, cheapest cell S&#8323;D&#8321; = 3, allocate min(80, 150) = <b>80</b>.</span>
+<span class="ind">S&#8323; is exhausted, D&#8321; needs 70 more.</span>
+
+<b>Round 2</b>
+
+<span class="ind">Row penalties    : S&#8321; = 6 - 5 = 1,  S&#8322; = 12 - 10 = 2</span>
+
+<span class="ind">Column penalties : D&#8321; = 15 - 8 = <b>7</b>,  D&#8322; = 10 - 5 = 5,  D&#8323; = 12 - 6 = 6</span>
+
+<span class="ind">Largest is 7 in D&#8321;, cheapest cell S&#8321;D&#8321; = 8, allocate min(120, 70) = <b>70</b>.</span>
+<span class="ind">D&#8321; is satisfied, S&#8321; has 50 left.</span>
+
+<b>Round 3</b>
+
+<span class="ind">Row penalties    : S&#8321; = 6 - 5 = 1,  S&#8322; = 12 - 10 = 2</span>
+
+<span class="ind">Column penalties : D&#8322; = 10 - 5 = 5,  D&#8323; = 12 - 6 = <b>6</b></span>
+
+<span class="ind">Largest is 6 in D&#8323;, cheapest cell S&#8321;D&#8323; = 6, allocate min(50, 50) = <b>50</b>.</span>
+<span class="ind">Here row S&#8321; and column D&#8323; are exhausted <b>at the same moment</b>, which is</span>
+<span class="ind">exactly where the degeneracy comes from.</span>
+
+<b>Round 4</b>
+
+<span class="ind">Only S&#8322; and D&#8322; are left, so S&#8322;D&#8322; = <b>80</b>.</span></div>
+<div class="fml"><span class="ind">Total cost = 3(80) + 8(70) + 6(50) + 10(80)</span>
+
+<span class="ind">           = 240 + 560 + 300 + 800 = <b>Rs. 1900</b></span>
+
+Number of allocated cells = 4, but m + n - 1 = 3 + 3 - 1 = 5.
+Since 4 is less than 5, this solution is <b>degenerate</b>.</div>
+<p>To remove the degeneracy, epsilon is placed in the cheapest empty cell that forms no closed loop with the present allocations. The empty cells cost 5, 15, 12, 9 and 10, so the cheapest is S&#8321;D&#8322; at 5, and it closes no loop.</p>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>Supply</th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">8 (70)</td><td class="alloc">5 (&epsilon;)</td><td class="alloc">6 (50)</td><td>120</td></tr>
 <tr><td class="l">S&#8322;</td><td>15</td><td class="alloc">10 (80)</td><td>12</td><td>80</td></tr>
 <tr><td class="l">S&#8323;</td><td class="alloc">3 (80)</td><td>9</td><td>10</td><td>80</td></tr>
-<tr class="total"><td class="l">Demand</td><td>150</td><td>80</td><td>50</td><td></td></tr>
+<tr class="total"><td class="l">Demand</td><td>150</td><td>80</td><td>50</td><td>280</td></tr>
 </table></div>
-<div class="fml">VAM gave only 4 allocations, but m + n - 1 = 3 + 3 - 1 = 5, so the solution is degenerate.
-Epsilon is placed at cell (1, 2) because it has the least cost among the empty cells and it forms no closed loop.
-Now there are 5 occupied cells and the MODI test can be applied.
+<p>There are now 5 occupied cells, so the MODI test can run. Taking u&#8321; = 0,</p>
+<div class="fml"><span class="ind">S&#8321;D&#8321; :  8 = 0 + v&#8321;   &rarr;  v&#8321; = 8</span>
 
-Total cost = 8&times;70 + 5&times;0 + 6&times;50 + 10&times;80 + 3&times;80 = <b>Rs. 1900</b></div>
-<div class="key"><strong>Conclusion:</strong> degeneracy does not change the cost of the solution, it only blocks the optimality test. Adding epsilon restores the required number of occupied cells so that the test can proceed.</div>`},
+<span class="ind">S&#8321;D&#8322; :  5 = 0 + v&#8322;   &rarr;  v&#8322; = 5</span>
+
+<span class="ind">S&#8321;D&#8323; :  6 = 0 + v&#8323;   &rarr;  v&#8323; = 6</span>
+
+<span class="ind">S&#8322;D&#8322; : 10 = u&#8322; + 5  &rarr;  u&#8322; = 5</span>
+
+<span class="ind">S&#8323;D&#8321; :  3 = u&#8323; + 8  &rarr;  u&#8323; = -5</span>
+
+and for the empty cells,
+
+<span class="ind">d&#8322;&#8321; = 15 - (5 + 8) = 2        d&#8322;&#8323; = 12 - (5 + 6) = 1</span>
+
+<span class="ind">d&#8323;&#8322; =  9 - (-5 + 5) = 9       d&#8323;&#8323; = 10 - (-5 + 6) = 9</span>
+
+All d<sub>ij</sub> are greater than or equal to zero, so the solution is optimal.</div>
+<div class="key"><strong>Conclusion:</strong> the minimum total cost is <strong>Rs. 1900</strong>. Degeneracy never changes the cost, it only blocks the optimality test. Adding epsilon restores the required m + n - 1 occupied cells so that the test can be carried out, and since epsilon is worth zero it drops out of the final total.</div>`},
 
 'tp-unbalanced':{u:3,mk:'[5]',
 q:`What is an unbalanced transportation problem? How is it converted into a balanced one? Also explain how a profit maximisation transportation problem is solved.`,
@@ -1293,10 +1571,63 @@ a:`<h4>1. Unbalanced transportation problem</h4>
 <li>Solve the balanced problem in the normal way. The quantity that ends up in the dummy row or column represents unsatisfied demand or unused supply.</li>
 </ul>
 
-<h4>Example</h4>
-<div class="fml">Total supply = 76 + 82 + 77 = 235
-Total demand = 72 + 102 + 41 = 215
-Supply exceeds demand by 20, so a dummy destination with demand 20 and zero cost is added.</div>
+<h4>Worked example</h4>
+<div class="scroll"><table class="data">
+<tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>Supply</th></tr>
+<tr><td class="l">S&#8321;</td><td>4</td><td>8</td><td>8</td><td>76</td></tr>
+<tr><td class="l">S&#8322;</td><td>16</td><td>24</td><td>16</td><td>82</td></tr>
+<tr><td class="l">S&#8323;</td><td>8</td><td>16</td><td>24</td><td>77</td></tr>
+<tr class="total"><td class="l">Demand</td><td>72</td><td>102</td><td>41</td><td></td></tr>
+</table></div>
+<div class="fml"><span class="ind">Total supply = 76 + 82 + 77 = 235</span>
+
+<span class="ind">Total demand = 72 + 102 + 41 = 215</span>
+
+Supply exceeds demand by 235 - 215 = 20, so a <b>dummy destination</b> is added
+with a demand of 20 and a cost of zero in every cell.</div>
+<p>Solving the balanced table by VAM,</p>
+<div class="fml"><b>Round 1</b>
+
+<span class="ind">Row penalties    : S&#8321; = 4 - 0 = 4,  S&#8322; = <b>16</b> - 0 = 16,  S&#8323; = 8 - 0 = 8</span>
+
+<span class="ind">Column penalties : D&#8321; = 8 - 4 = 4,  D&#8322; = 16 - 8 = 8,  D&#8323; = 16 - 8 = 8,  D<sub>d</sub> = 0</span>
+
+<span class="ind">Largest is 16 in S&#8322;, cheapest cell S&#8322;D<sub>dummy</sub> = 0, allocate min(82, 20) = <b>20</b>.</span>
+<span class="ind">The dummy column is satisfied, S&#8322; has 62 left.</span>
+
+<b>Round 2</b>
+
+<span class="ind">Row penalties    : S&#8321; = 8 - 4 = 4,  S&#8322; = 16 - 16 = 0,  S&#8323; = 16 - 8 = 8</span>
+
+<span class="ind">Column penalties : D&#8321; = 8 - 4 = 4,  D&#8322; = 16 - 8 = 8,  D&#8323; = 16 - 8 = 8</span>
+
+<span class="ind">Three lines tie at 8, so the one allowing the largest allocation is taken,</span>
+<span class="ind">which is D&#8322; with 76 units. Its cheapest cell is S&#8321;D&#8322; = 8.</span>
+
+<span class="ind">Allocate min(76, 102) = <b>76</b>. S&#8321; is exhausted, D&#8322; needs 26 more.</span>
+
+<b>Round 3</b>
+
+<span class="ind">Row penalties    : S&#8322; = 16 - 16 = 0,  S&#8323; = 16 - 8 = 8</span>
+
+<span class="ind">Column penalties : D&#8321; = 16 - 8 = 8,  D&#8322; = 24 - 16 = 8,  D&#8323; = 24 - 16 = 8</span>
+
+<span class="ind">Again a tie at 8, and the largest allocation is 72 in D&#8321;, cheapest cell S&#8323;D&#8321; = 8.</span>
+
+<span class="ind">Allocate min(77, 72) = <b>72</b>. D&#8321; is satisfied, S&#8323; has 5 left.</span>
+
+<b>Round 4</b>
+
+<span class="ind">Row penalties    : S&#8322; = 24 - 16 = 8,  S&#8323; = 24 - 16 = 8</span>
+
+<span class="ind">Column penalties : D&#8322; = 24 - 16 = 8,  D&#8323; = 24 - 16 = 8</span>
+
+<span class="ind">Everything ties, so the largest allocation is taken, which is 41 in D&#8323;,</span>
+<span class="ind">cheapest cell S&#8322;D&#8323; = 16. Allocate <b>41</b>. D&#8323; is satisfied, S&#8322; has 21 left.</span>
+
+<b>Round 5</b>
+
+<span class="ind">Only column D&#8322; is left with 26 units, so S&#8322;D&#8322; = <b>21</b> and S&#8323;D&#8322; = <b>5</b>.</span></div>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D<sub>dummy</sub></th><th>Supply</th></tr>
 <tr><td class="l">S&#8321;</td><td>4</td><td class="alloc">8 (76)</td><td>8</td><td>0</td><td>76</td></tr>
@@ -1304,8 +1635,13 @@ Supply exceeds demand by 20, so a dummy destination with demand 20 and zero cost
 <tr><td class="l">S&#8323;</td><td class="alloc">8 (72)</td><td class="alloc">16 (5)</td><td>24</td><td>0</td><td>77</td></tr>
 <tr class="total"><td class="l">Demand</td><td>72</td><td>102</td><td>41</td><td>20</td><td>235</td></tr>
 </table></div>
-<div class="fml">Total cost = 8&times;76 + 24&times;21 + 16&times;41 + 0&times;20 + 8&times;72 + 16&times;5 = <b>Rs. 2424</b>
-Allocated cells = 6 = m + n - 1 = 3 + 4 - 1, so the solution is non degenerate.</div>
+<div class="fml"><span class="ind">Total cost = 8(76) + 24(21) + 16(41) + 0(20) + 8(72) + 16(5)</span>
+
+<span class="ind">           = 608 + 504 + 656 + 0 + 576 + 80 = <b>Rs. 2424</b></span>
+
+Allocated cells = 6 = m + n - 1 = 3 + 4 - 1, so the solution is non degenerate.
+The 20 units sitting in the dummy column are the goods that stay with S&#8322;
+and are never despatched, because demand is short by that amount.</div>
 
 <h4>3. Profit maximisation transportation problem</h4>
 <p>The transportation algorithm is built for minimisation. When the table contains profits instead of costs, the problem is first converted into a minimisation problem.</p>
@@ -1481,7 +1817,18 @@ a:`<h4>Step 0: Check the balance</h4>
 The problem is balanced. A basic feasible solution must have m + n - 1 = 3 + 4 - 1 = 6 allocations.</div>
 
 <h4>Step 1: North West Corner Method</h4>
-<p>Start at the top left cell and allocate the smaller of the supply and the demand, then move on.</p>
+<p>Start at the top left cell and allocate the smaller of the supply and the demand, then cross out whichever is exhausted and move to the new top left cell.</p>
+<div class="fml"><span class="ind">Cell S&#8321;D&#8321; : allocate min(7, 5) = 5.  D&#8321; is satisfied, S&#8321; has 2 left.</span>
+
+<span class="ind">Cell S&#8321;D&#8322; : allocate min(2, 8) = 2.  S&#8321; is exhausted, D&#8322; needs 6 more.</span>
+
+<span class="ind">Cell S&#8322;D&#8322; : allocate min(9, 6) = 6.  D&#8322; is satisfied, S&#8322; has 3 left.</span>
+
+<span class="ind">Cell S&#8322;D&#8323; : allocate min(3, 7) = 3.  S&#8322; is exhausted, D&#8323; needs 4 more.</span>
+
+<span class="ind">Cell S&#8323;D&#8323; : allocate min(18, 4) = 4. D&#8323; is satisfied, S&#8323; has 14 left.</span>
+
+<span class="ind">Cell S&#8323;D&#8324; : allocate min(14, 14) = 14. Both are exhausted together.</span></div>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>Supply</th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">19 (5)</td><td class="alloc">30 (2)</td><td>50</td><td>10</td><td>7</td></tr>
@@ -1489,10 +1836,25 @@ The problem is balanced. A basic feasible solution must have m + n - 1 = 3 + 4 -
 <tr><td class="l">S&#8323;</td><td>40</td><td>8</td><td class="alloc">70 (4)</td><td class="alloc">20 (14)</td><td>18</td></tr>
 <tr class="total"><td class="l">Demand</td><td>5</td><td>8</td><td>7</td><td>14</td><td>34</td></tr>
 </table></div>
-<div class="fml">Total cost = 5&times;19 + 2&times;30 + 6&times;30 + 3&times;40 + 4&times;70 + 14&times;20 = <b>Rs. 1015</b></div>
+<div class="fml"><span class="ind">Total cost = 19(5) + 30(2) + 30(6) + 40(3) + 70(4) + 20(14)</span>
+
+<span class="ind">           = 95 + 60 + 180 + 120 + 280 + 280 = <b>Rs. 1015</b></span></div>
 
 <h4>Step 2: Least Cost Method</h4>
-<p>Always allocate to the cell having the smallest unit cost in the remaining table.</p>
+<p>Always allocate to the cell having the smallest unit cost anywhere in the remaining table.</p>
+<div class="fml"><span class="ind">Smallest cost in the table is 8 at S&#8323;D&#8322;. Allocate min(18, 8) = 8.</span>
+<span class="ind">     D&#8322; is satisfied, S&#8323; has 10 left.</span>
+
+<span class="ind">Next smallest is 10 at S&#8321;D&#8324;. Allocate min(7, 14) = 7.</span>
+<span class="ind">     S&#8321; is exhausted, D&#8324; needs 7 more.</span>
+
+<span class="ind">Next smallest is 20 at S&#8323;D&#8324;. Allocate min(10, 7) = 7.</span>
+<span class="ind">     D&#8324; is satisfied, S&#8323; has 3 left.</span>
+
+<span class="ind">Next smallest is 40, at S&#8323;D&#8321; and at S&#8322;D&#8323;. Taking S&#8323;D&#8321;, allocate min(3, 5) = 3.</span>
+<span class="ind">     S&#8323; is exhausted, D&#8321; needs 2 more.</span>
+
+<span class="ind">Only row S&#8322; is left, so S&#8322;D&#8321; = 2 and S&#8322;D&#8323; = 7.</span></div>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>Supply</th></tr>
 <tr><td class="l">S&#8321;</td><td>19</td><td>30</td><td>50</td><td class="alloc">10 (7)</td><td>7</td></tr>
@@ -1500,11 +1862,55 @@ The problem is balanced. A basic feasible solution must have m + n - 1 = 3 + 4 -
 <tr><td class="l">S&#8323;</td><td class="alloc">40 (3)</td><td class="alloc">8 (8)</td><td>70</td><td class="alloc">20 (7)</td><td>18</td></tr>
 <tr class="total"><td class="l">Demand</td><td>5</td><td>8</td><td>7</td><td>14</td><td>34</td></tr>
 </table></div>
-<div class="fml">Total cost = 7&times;10 + 2&times;70 + 7&times;40 + 3&times;40 + 8&times;8 + 7&times;20 = <b>Rs. 814</b>
-This is lower than the cost obtained by the north west corner method.</div>
+<div class="fml"><span class="ind">Total cost = 8(8) + 10(7) + 20(7) + 40(3) + 70(2) + 40(7)</span>
+
+<span class="ind">           = 64 + 70 + 140 + 120 + 140 + 280 = <b>Rs. 814</b></span>
+
+This is lower than the cost given by the north west corner method, because
+the least cost method at least looks at the costs while allocating.</div>
 
 <h4>Step 3: Vogel's Approximation Method</h4>
-<p>Compute the row and column penalties, that is the difference between the two smallest costs, select the largest penalty and allocate to the least cost cell of that row or column, then recompute.</p>
+<p>In each round the penalty of a line is the second smallest cost minus the smallest cost in that line. The line with the largest penalty is chosen and its cheapest cell is filled.</p>
+<div class="fml"><b>Round 1</b>
+
+<span class="ind">Row penalties    : S&#8321; = 19 - 10 = 9,  S&#8322; = 40 - 30 = 10,  S&#8323; = 20 - 8 = 12</span>
+
+<span class="ind">Column penalties : D&#8321; = 40 - 19 = 21,  D&#8322; = 30 - 8 = <b>22</b>,</span>
+<span class="ind">                   D&#8323; = 50 - 40 = 10,  D&#8324; = 20 - 10 = 10</span>
+
+<span class="ind">Largest is 22 in D&#8322;, cheapest cell S&#8323;D&#8322; = 8, allocate min(18, 8) = <b>8</b>.</span>
+<span class="ind">D&#8322; is satisfied, S&#8323; has 10 left.</span>
+
+<b>Round 2</b>  (columns D&#8321;, D&#8323;, D&#8324; remain)
+
+<span class="ind">Row penalties    : S&#8321; = 19 - 10 = 9,  S&#8322; = 60 - 40 = 20,  S&#8323; = 40 - 20 = 20</span>
+
+<span class="ind">Column penalties : D&#8321; = 40 - 19 = <b>21</b>,  D&#8323; = 50 - 40 = 10,  D&#8324; = 20 - 10 = 10</span>
+
+<span class="ind">Largest is 21 in D&#8321;, cheapest cell S&#8321;D&#8321; = 19, allocate min(7, 5) = <b>5</b>.</span>
+<span class="ind">D&#8321; is satisfied, S&#8321; has 2 left.</span>
+
+<b>Round 3</b>  (columns D&#8323;, D&#8324; remain)
+
+<span class="ind">Row penalties    : S&#8321; = 50 - 10 = 40,  S&#8322; = 60 - 40 = 20,  S&#8323; = 70 - 20 = <b>50</b></span>
+
+<span class="ind">Column penalties : D&#8323; = 50 - 40 = 10,  D&#8324; = 20 - 10 = 10</span>
+
+<span class="ind">Largest is 50 in S&#8323;, cheapest cell S&#8323;D&#8324; = 20, allocate min(10, 14) = <b>10</b>.</span>
+<span class="ind">S&#8323; is exhausted, D&#8324; needs 4 more.</span>
+
+<b>Round 4</b>  (rows S&#8321;, S&#8322; against columns D&#8323;, D&#8324;)
+
+<span class="ind">Row penalties    : S&#8321; = 50 - 10 = 40,  S&#8322; = 60 - 40 = 20</span>
+
+<span class="ind">Column penalties : D&#8323; = 50 - 40 = 10,  D&#8324; = 60 - 10 = <b>50</b></span>
+
+<span class="ind">Largest is 50 in D&#8324;, cheapest cell S&#8321;D&#8324; = 10, allocate min(2, 4) = <b>2</b>.</span>
+<span class="ind">S&#8321; is exhausted, D&#8324; needs 2 more.</span>
+
+<b>Round 5</b>
+
+<span class="ind">Only row S&#8322; is left, so S&#8322;D&#8323; = <b>7</b> and S&#8322;D&#8324; = <b>2</b>.</span></div>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>Supply</th><th class="l">Row penalties</th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">19 (5)</td><td>30</td><td>50</td><td class="alloc">10 (2)</td><td>7</td><td class="l">9, 9, 40, 40</td></tr>
@@ -1512,24 +1918,72 @@ This is lower than the cost obtained by the north west corner method.</div>
 <tr><td class="l">S&#8323;</td><td>40</td><td class="alloc">8 (8)</td><td>70</td><td class="alloc">20 (10)</td><td>18</td><td class="l">12, 20, 50</td></tr>
 <tr class="total"><td class="l">Demand</td><td>5</td><td>8</td><td>7</td><td>14</td><td>34</td><td class="l"></td></tr>
 </table></div>
-<div class="fml">Total cost = 5&times;19 + 2&times;10 + 7&times;40 + 2&times;60 + 8&times;8 + 10&times;20 = <b>Rs. 779</b>
-Allocated cells = 6 = m + n - 1, so the solution is non degenerate.
-VAM gives the lowest starting cost of the three methods.</div>
+<div class="fml"><span class="ind">Total cost = 19(5) + 10(2) + 40(7) + 60(2) + 8(8) + 20(10)</span>
+
+<span class="ind">           = 95 + 20 + 280 + 120 + 64 + 200 = <b>Rs. 779</b></span>
+
+Allocated cells = 6 = m + n - 1 = 3 + 4 - 1, so the solution is non degenerate.
+VAM has given the lowest starting cost of the three methods.</div>
 
 <h4>Step 4: Optimality test by the MODI method</h4>
-<p>Using c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub> for the occupied cells,</p>
-<div class="fml">u&#8321; = 10,  u&#8322; = 60,  u&#8323; = 20
-v&#8321; = 9,   v&#8322; = -12,  v&#8323; = -20,  v&#8324; = 0
+<p>Column D&#8324; carries the most allocations, so put v&#8324; = 0 and use c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub> on the occupied cells.</p>
+<div class="fml"><span class="ind">S&#8321;D&#8324; : 10 = u&#8321; + 0    &rarr;  u&#8321; = 10</span>
 
-d<sub>ij</sub> for the empty cells:
-     d&#8321;&#8322; = 30 - (10 - 12) = 32        d&#8321;&#8323; = 50 - (10 - 20) = 60
-     d&#8322;&#8321; = 70 - (60 + 9) = 1          d&#8322;&#8322; = 30 - (60 - 12) = <b>-18</b>
-     d&#8323;&#8321; = 40 - (20 + 9) = 11         d&#8323;&#8323; = 70 - (20 - 20) = 70</div>
-<p>The most negative value is d&#8322;&#8322; = -18, so the cell (S&#8322;, D&#8322;) must enter the solution. The closed loop is</p>
-<div class="fml">S&#8322;D&#8322; (+)  &rarr;  S&#8322;D&#8324; (-)  &rarr;  S&#8323;D&#8324; (+)  &rarr;  S&#8323;D&#8322; (-)
-The smallest allocation among the minus cells is 2, so 2 is added to the plus cells and subtracted from the minus cells.</div>
+<span class="ind">S&#8322;D&#8324; : 60 = u&#8322; + 0    &rarr;  u&#8322; = 60</span>
+
+<span class="ind">S&#8323;D&#8324; : 20 = u&#8323; + 0    &rarr;  u&#8323; = 20</span>
+
+<span class="ind">S&#8321;D&#8321; : 19 = 10 + v&#8321;  &rarr;  v&#8321; = 9</span>
+
+<span class="ind">S&#8322;D&#8323; : 40 = 60 + v&#8323;  &rarr;  v&#8323; = -20</span>
+
+<span class="ind">S&#8323;D&#8322; :  8 = 20 + v&#8322;  &rarr;  v&#8322; = -12</span></div>
+<p>Now d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>) for each empty cell.</p>
+<div class="fml"><span class="ind">d&#8321;&#8322; = 30 - (10 - 12) = 30 - (-2) = 32</span>
+
+<span class="ind">d&#8321;&#8323; = 50 - (10 - 20) = 50 - (-10) = 60</span>
+
+<span class="ind">d&#8322;&#8321; = 70 - (60 + 9) = 70 - 69 = 1</span>
+
+<span class="ind">d&#8322;&#8322; = 30 - (60 - 12) = 30 - 48 = <b>-18</b></span>
+
+<span class="ind">d&#8323;&#8321; = 40 - (20 + 9) = 40 - 29 = 11</span>
+
+<span class="ind">d&#8323;&#8323; = 70 - (20 - 20) = 70 - 0 = 70</span></div>
+<p>One value is negative, so the solution is not yet optimal. The most negative is d&#8322;&#8322; = -18, so the cell S&#8322;D&#8322; must enter the solution.</p>
+<div class="fml">Closed loop starting from S&#8322;D&#8322;, turning only on occupied cells:
+
+<span class="ind">S&#8322;D&#8322; (+)  &rarr;  S&#8322;D&#8324; (-)  &rarr;  S&#8323;D&#8324; (+)  &rarr;  S&#8323;D&#8322; (-)  &rarr;  back to S&#8322;D&#8322;</span>
+
+Allocations on the minus corners are S&#8322;D&#8324; = 2 and S&#8323;D&#8322; = 8, so the smallest is <b>2</b>.
+
+<span class="ind">Add 2 to the plus corners : S&#8322;D&#8322; = 0 + 2 = 2,  S&#8323;D&#8324; = 10 + 2 = 12</span>
+
+<span class="ind">Subtract 2 from the minus corners : S&#8322;D&#8324; = 2 - 2 = 0,  S&#8323;D&#8322; = 8 - 2 = 6</span>
+
+Cell S&#8322;D&#8324; becomes empty and S&#8322;D&#8322; becomes occupied, so the count is still 6.</div>
 
 <h4>Step 5: Improved solution and second test</h4>
+<p>Repeating the MODI calculation on the new table, this time with u&#8321; = 0,</p>
+<div class="fml"><span class="ind">S&#8321;D&#8321; : 19 = 0 + v&#8321;    &rarr;  v&#8321; = 19</span>
+
+<span class="ind">S&#8321;D&#8324; : 10 = 0 + v&#8324;    &rarr;  v&#8324; = 10</span>
+
+<span class="ind">S&#8323;D&#8324; : 20 = u&#8323; + 10   &rarr;  u&#8323; = 10</span>
+
+<span class="ind">S&#8323;D&#8322; :  8 = 10 + v&#8322;   &rarr;  v&#8322; = -2</span>
+
+<span class="ind">S&#8322;D&#8322; : 30 = u&#8322; - 2    &rarr;  u&#8322; = 32</span>
+
+<span class="ind">S&#8322;D&#8323; : 40 = 32 + v&#8323;   &rarr;  v&#8323; = 8</span>
+
+and for the empty cells,
+
+<span class="ind">d&#8321;&#8322; = 30 - (0 - 2) = 32        d&#8321;&#8323; = 50 - (0 + 8) = 42</span>
+
+<span class="ind">d&#8322;&#8321; = 70 - (32 + 19) = 19      d&#8322;&#8324; = 60 - (32 + 10) = 18</span>
+
+<span class="ind">d&#8323;&#8321; = 40 - (10 + 19) = 11      d&#8323;&#8323; = 70 - (10 + 8) = 52</span></div>
 <div class="scroll"><table class="data">
 <tr><th></th><th>D&#8321;</th><th>D&#8322;</th><th>D&#8323;</th><th>D&#8324;</th><th>u<sub>i</sub></th></tr>
 <tr><td class="l">S&#8321;</td><td class="alloc">19 (5)</td><td>30 [32]</td><td>50 [42]</td><td class="alloc">10 (2)</td><td>0</td></tr>
@@ -1701,7 +2155,7 @@ a:`<p>A queueing model is written in Kendall's notation as <b>(a / b / c) : (d /
 <p><b>Model I : (M / M / 1) : (&infin; / FCFS)</b></p>
 <ul>
 <li><b>Meaning:</b> Poisson arrivals, exponential service time, one server, infinite waiting space and first come first served discipline.</li>
-<li><b>Characteristics:</b> no customer is ever turned away, and the system is stable only if the traffic intensity &rho; = &lambda; / &mu; is less than 1.</li>
+<li><b>Characteristics:</b> no customer is ever turned away, and the system is stable only if the traffic intensity &rho; = <fr>&lambda;|&mu;</fr> is less than 1.</li>
 <li><b>Example:</b> a single ATM in a 24 hour bank lobby. Customers arrive at random, transaction times vary, nobody is refused entry and they are served in order of arrival.</li>
 </ul>
 <p><b>Model II : (M / M / 1) : (N / FCFS)</b></p>
@@ -1715,7 +2169,7 @@ a:`<p>A queueing model is written in Kendall's notation as <b>(a / b / c) : (d /
 <p><b>Model III : (M / M / S) : (&infin; / FCFS)</b></p>
 <ul>
 <li><b>Meaning:</b> Poisson arrivals, exponential service, S parallel servers, one common queue and infinite capacity.</li>
-<li><b>Characteristics:</b> customers wait in a single queue and go to the first server that becomes free. The system is stable if &rho; = &lambda; / (S&mu;) is less than 1.</li>
+<li><b>Characteristics:</b> customers wait in a single queue and go to the first server that becomes free. The system is stable if &rho; = <fr>&lambda;|S&mu;</fr> is less than 1.</li>
 <li><b>Example:</b> a bank with 4 tellers and a single common queue.</li>
 </ul>
 <p><b>Model IV : (M / M / S) : (N / FCFS)</b></p>
@@ -1804,20 +2258,20 @@ a:`<h4>Meaning</h4>
 <h4>The characteristics for the model (M / M / 1) : (&infin; / FCFS)</h4>
 <div class="scroll"><table class="data">
 <tr><th class="l">Characteristic</th><th class="l">Formula</th><th class="l">Meaning</th></tr>
-<tr><td class="l">Traffic intensity or utilisation, &rho;</td><td class="l">&rho; = &lambda; / &mu;</td><td class="l">The fraction of time the server is busy</td></tr>
+<tr><td class="l">Traffic intensity or utilisation, &rho;</td><td class="l">&rho; = <fr>&lambda;|&mu;</fr></td><td class="l">The fraction of time the server is busy</td></tr>
 <tr><td class="l">Probability of an empty system, P&#8320;</td><td class="l">P&#8320; = 1 - &rho;</td><td class="l">The fraction of time the server is idle</td></tr>
 <tr><td class="l">Probability of exactly n customers, P<sub>n</sub></td><td class="l">P<sub>n</sub> = &rho;&#8319; (1 - &rho;)</td><td class="l">Chance of finding n customers present</td></tr>
 <tr><td class="l">Probability of at least k customers</td><td class="l">P(n &ge; k) = &rho;&#8342;</td><td class="l">Chance of finding k or more customers</td></tr>
-<tr><td class="l">System length, L<sub>s</sub></td><td class="l">L<sub>s</sub> = &lambda; / (&mu; - &lambda;)</td><td class="l">Average number of customers in the queue and in service</td></tr>
-<tr><td class="l">Queue length, L<sub>q</sub></td><td class="l">L<sub>q</sub> = &lambda;&sup2; / [&mu;(&mu; - &lambda;)]</td><td class="l">Average number of customers waiting only</td></tr>
-<tr><td class="l">Waiting time in the system, W<sub>s</sub></td><td class="l">W<sub>s</sub> = 1 / (&mu; - &lambda;)</td><td class="l">Average time in the queue plus the service time</td></tr>
-<tr><td class="l">Waiting time in the queue, W<sub>q</sub></td><td class="l">W<sub>q</sub> = &lambda; / [&mu;(&mu; - &lambda;)]</td><td class="l">Average time spent waiting before service starts</td></tr>
+<tr><td class="l">System length, L<sub>s</sub></td><td class="l">L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr></td><td class="l">Average number of customers in the queue and in service</td></tr>
+<tr><td class="l">Queue length, L<sub>q</sub></td><td class="l">L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr></td><td class="l">Average number of customers waiting only</td></tr>
+<tr><td class="l">Waiting time in the system, W<sub>s</sub></td><td class="l">W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr></td><td class="l">Average time in the queue plus the service time</td></tr>
+<tr><td class="l">Waiting time in the queue, W<sub>q</sub></td><td class="l">W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr></td><td class="l">Average time spent waiting before service starts</td></tr>
 </table></div>
 
 <h4>Useful relations</h4>
 <div class="fml">L<sub>q</sub> = L<sub>s</sub> - &rho;              W<sub>s</sub> = W<sub>q</sub> + 1 / &mu;
 Little's law:  L<sub>s</sub> = &lambda; W<sub>s</sub>   and   L<sub>q</sub> = &lambda; W<sub>q</sub>
-Stability condition: &rho; &lt; 1 for a single server, and &rho; = &lambda; / (S&mu;) &lt; 1 for S servers.
+Stability condition: &rho; &lt; 1 for a single server, and &rho; = <fr>&lambda;|S&mu;</fr> &lt; 1 for S servers.
 If &rho; is greater than or equal to 1 the queue grows without limit.</div>
 <div class="key"><strong>Use:</strong> these measures convert into money. L<sub>q</sub> multiplied by the cost of waiting per customer gives the waiting cost, and P&#8320; multiplied by the cost of an idle server gives the idle cost. The best number of servers is the one at which the total of the two is least.</div>`},
 
@@ -1836,14 +2290,14 @@ a:`<h4>Meaning</h4>
 <li>The <b>queue discipline is first come first served</b>.</li>
 <li>The waiting space is <b>infinite</b>, so no customer is turned away and there is no balking or reneging.</li>
 <li>The population of customers is infinite, and arrivals are independent of one another.</li>
-<li>The system is in a <b>steady state</b>, and for stability &rho; = &lambda; / &mu; must be less than 1. If &lambda; is greater than or equal to &mu; the queue grows indefinitely.</li>
+<li>The system is in a <b>steady state</b>, and for stability &rho; = <fr>&lambda;|&mu;</fr> must be less than 1. If &lambda; is greater than or equal to &mu; the queue grows indefinitely.</li>
 <li>Both the arrival process and the service process are <b>memoryless</b>, which means the chance of the next event does not depend on how long one has already waited.</li>
 </ol>
 
 <h4>Operating characteristics</h4>
-<div class="fml">&rho; = &lambda; / &mu;              P&#8320; = 1 - &rho;              P(n &ge; k) = &rho;&#8342;
-L<sub>s</sub> = &lambda; / (&mu; - &lambda;)         L<sub>q</sub> = &lambda;&sup2; / [&mu;(&mu; - &lambda;)]
-W<sub>s</sub> = 1 / (&mu; - &lambda;)          W<sub>q</sub> = &lambda; / [&mu;(&mu; - &lambda;)]</div>
+<div class="fml">&rho; = <fr>&lambda;|&mu;</fr>              P&#8320; = 1 - &rho;              P(n &ge; k) = &rho;&#8342;
+L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr>         L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr>
+W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr>          W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr></div>
 
 <h4>Example</h4>
 <p>A single ATM in a 24 hour bank lobby is a single channel system. Customers arrive randomly, the transaction time varies from person to person, there is no limit on how many may wait and they use the machine in the order in which they arrive.</p>
@@ -1872,7 +2326,7 @@ Service time = 10 minutes per customer, therefore the service rate is
 
 Traffic intensity,
 
-<span class="ind">&rho; = &lambda; / &mu; = 5 / 6 = 0.8333</span>
+<span class="ind">&rho; = <fr>&lambda;|&mu;</fr> = <fr>5|6</fr> = 0.8333</span>
 
 Since &rho; is less than 1, the system is stable.</div>
 
@@ -1887,13 +2341,13 @@ Since &rho; is less than 1, the system is stable.</div>
 
 <h4>(b) Average number of customers</h4>
 <p>The average number of customers in the system is</p>
-<div class="fml"><span class="ind">L<sub>s</sub> = &lambda; &divide; (&mu; - &lambda;)</span>
+<div class="fml"><span class="ind">L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr></span>
 
 <span class="ind">   = 5 &divide; (6 - 5)</span>
 
 <span class="ind">   = <b>5 customers</b></span></div>
 <p>The average number of customers waiting in the queue is</p>
-<div class="fml"><span class="ind">L<sub>q</sub> = &lambda;&sup2; &divide; [ &mu; (&mu; - &lambda;) ]</span>
+<div class="fml"><span class="ind">L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr></span>
 
 <span class="ind">   = 25 &divide; (6 &times; 1)</span>
 
@@ -1903,13 +2357,13 @@ This may be checked from L<sub>q</sub> = L<sub>s</sub> - &rho; = 5 - 0.8333 = 4.
 
 <h4>(c) Average time spent by a customer</h4>
 <p>The average time spent in the system is</p>
-<div class="fml"><span class="ind">W<sub>s</sub> = 1 &divide; (&mu; - &lambda;)</span>
+<div class="fml"><span class="ind">W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr></span>
 
 <span class="ind">   = 1 &divide; (6 - 5) = 1 hour</span>
 
 <span class="ind">   = <b>60 minutes</b></span></div>
 <p>The average time spent waiting in the queue is</p>
-<div class="fml"><span class="ind">W<sub>q</sub> = &lambda; &divide; [ &mu; (&mu; - &lambda;) ]</span>
+<div class="fml"><span class="ind">W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr></span>
 
 <span class="ind">   = 5 &divide; (6 &times; 1) = 5/6 hour</span>
 
@@ -1921,9 +2375,9 @@ This may be checked from W<sub>s</sub> = W<sub>q</sub> + 1/&mu; = 50 + 10 = 60 m
 <p>The probability of finding k or more customers in the system is &rho; raised to the power k. Putting k = 5,</p>
 <div class="fml"><span class="ind">P(n &ge; 5) = &rho;&#8309;</span>
 
-<span class="ind">          = (5/6)&#8309;</span>
+<span class="ind">          = (<fr>5|6</fr>)&#8309;</span>
 
-<span class="ind">          = 3125 / 7776</span>
+<span class="ind">          = <fr>3125|7776</fr></span>
 
 <span class="ind">          = <b>0.4019, that is 40.19 percent</b></span></div>
 
@@ -1938,7 +2392,7 @@ a:`<h4>Given</h4>
 <span class="ind">Service rate,  &mu; = 20 customers per hour</span></div>
 
 <h4>1. Traffic intensity</h4>
-<div class="fml"><span class="ind">&rho; = &lambda; / &mu;</span>
+<div class="fml"><span class="ind">&rho; = <fr>&lambda;|&mu;</fr></span>
 
 <span class="ind">  = 15 / 20 = <b>0.75</b></span></div>
 <p>Since &rho; is less than 1 the system is stable, and the teller remains busy for 75 percent of the time.</p>
@@ -1951,13 +2405,13 @@ a:`<h4>Given</h4>
 
 <h4>3. Average number of customers</h4>
 <p>The average number of customers in the system is</p>
-<div class="fml"><span class="ind">L<sub>s</sub> = &lambda; &divide; (&mu; - &lambda;)</span>
+<div class="fml"><span class="ind">L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr></span>
 
 <span class="ind">   = 15 &divide; (20 - 15) = 15 / 5</span>
 
 <span class="ind">   = <b>3 customers</b></span></div>
 <p>The average number of customers waiting in the queue is</p>
-<div class="fml"><span class="ind">L<sub>q</sub> = &lambda;&sup2; &divide; [ &mu; (&mu; - &lambda;) ]</span>
+<div class="fml"><span class="ind">L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr></span>
 
 <span class="ind">   = 225 &divide; (20 &times; 5) = 225 / 100</span>
 
@@ -1967,13 +2421,13 @@ This may be checked from L<sub>q</sub> = L<sub>s</sub> - &rho; = 3 - 0.75 = 2.25
 
 <h4>4. Average waiting time</h4>
 <p>The average time a customer spends in the system is</p>
-<div class="fml"><span class="ind">W<sub>s</sub> = 1 &divide; (&mu; - &lambda;)</span>
+<div class="fml"><span class="ind">W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr></span>
 
 <span class="ind">   = 1 &divide; 5 hour = 0.2 hour</span>
 
 <span class="ind">   = <b>12 minutes</b></span></div>
 <p>The average time a customer spends waiting in the queue is</p>
-<div class="fml"><span class="ind">W<sub>q</sub> = &lambda; &divide; [ &mu; (&mu; - &lambda;) ]</span>
+<div class="fml"><span class="ind">W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr></span>
 
 <span class="ind">   = 15 &divide; (20 &times; 5) = 0.15 hour</span>
 
@@ -2012,18 +2466,18 @@ exponential service, unlimited queue and first come first served discipline.</di
 
 <h4>4. Numerical</h4>
 <div class="fml">Given  &lambda; = 5 per hour,  service time = 10 minutes  &rarr;  &mu; = 60 / 10 = 6 per hour
-&rho; = &lambda; / &mu; = 5 / 6 = 0.8333, which is less than 1, so the system is stable.</div>
+&rho; = <fr>&lambda;|&mu;</fr> = <fr>5|6</fr> = 0.8333, which is less than 1, so the system is stable.</div>
 <p><b>(a) Proportion of time the shop is empty</b></p>
 <div class="fml">P&#8320; = 1 - &rho; = 1 - 5/6 = 1/6 = <b>0.1667, that is 16.67 percent</b></div>
 <p><b>(b) Average number of customers</b></p>
-<div class="fml">L<sub>s</sub> = &lambda; / (&mu; - &lambda;) = 5 / 1 = <b>5 customers in the system</b>
-L<sub>q</sub> = &lambda;&sup2; / [&mu;(&mu; - &lambda;)] = 25 / 6 = <b>4.17 customers in the queue</b></div>
+<div class="fml">L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr> = 5 / 1 = <b>5 customers in the system</b>
+L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr> = 25 / 6 = <b>4.17 customers in the queue</b></div>
 <p><b>(c) Average time spent by a customer</b></p>
-<div class="fml">W<sub>s</sub> = 1 / (&mu; - &lambda;) = 1 hour = <b>60 minutes in the system</b>
-W<sub>q</sub> = &lambda; / [&mu;(&mu; - &lambda;)] = 5/6 hour = <b>50 minutes in the queue</b>
+<div class="fml">W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr> = 1 hour = <b>60 minutes in the system</b>
+W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr> = 5/6 hour = <b>50 minutes in the queue</b>
 Check: W<sub>s</sub> = W<sub>q</sub> + 1/&mu; = 50 + 10 = 60 minutes &check;</div>
 <p><b>(d) Probability of at least five customers</b></p>
-<div class="fml">P(n &ge; 5) = &rho;&#8309; = (5/6)&#8309; = 3125 / 7776 = <b>0.4019, that is 40.19 percent</b></div>
+<div class="fml">P(n &ge; 5) = &rho;&#8309; = (<fr>5|6</fr>)&#8309; = <fr>3125|7776</fr> = <b>0.4019, that is 40.19 percent</b></div>
 
 <div class="key"><strong>Interpretation:</strong> the repairman is idle only about 10 minutes in an hour, yet a customer waits 50 minutes for a 10 minute job, and there is a 40 percent chance of finding five or more sets waiting. The shop is close to saturation, so a second repairman or a faster service method is justified.</div>`}
 
@@ -2038,7 +2492,7 @@ a:`<h4>Meaning</h4>
 <p><b>Economic Order Quantity</b> is that size of order which minimises the <b>total inventory cost</b>, made up of the ordering cost and the carrying cost. The ordering cost falls as the order size increases, because fewer orders are placed in the year, while the carrying cost rises, because more stock is held in the store. The quantity at which the sum of these two opposing costs is least is called the economic order quantity.</p>
 
 <h4>Formula</h4>
-<div class="fml"><b>EOQ,  Q* = &radic;(2 D C&#8320; / C<sub>h</sub>)</b>
+<div class="fml"><b>EOQ,  Q* = <sq><fr>2 D C&#8320;|C<sub>h</sub></fr></sq></b>
 
 where  D  = annual demand in units
        C&#8320; = ordering cost per order
@@ -2046,8 +2500,8 @@ where  D  = annual demand in units
 
 Number of orders per year   = D / Q*
 Time between two orders     = 12 / (D / Q*) months
-Annual ordering cost        = (D / Q) &times; C&#8320;
-Annual carrying cost        = (Q / 2) &times; C<sub>h</sub>
+Annual ordering cost        = <fr>D|Q</fr> &times; C&#8320;
+Annual carrying cost        = <fr>Q|2</fr> &times; C<sub>h</sub>
 Total inventory cost        = purchase cost + ordering cost + carrying cost</div>
 
 <h4>Assumptions of the EOQ model</h4>
@@ -2080,7 +2534,7 @@ Carrying cost      C<sub>h</sub> = i &times; C = 0.25 &times; 25 = Rs. 6.25 per 
 
 <h4>Step 1: Economic Order Quantity</h4>
 <p>We know that</p>
-<div class="fml"><span class="ind">EOQ = &radic; ( 2 D C&#8320; &divide; C<sub>h</sub> )</span>
+<div class="fml"><span class="ind">EOQ = <sq><fr>2 D C&#8320;|C<sub>h</sub></fr></sq></span>
 
 Putting the given values,
 
@@ -2309,7 +2763,7 @@ i  = 25 percent per annum
 C<sub>h</sub> = 0.25 &times; 25 = Rs. 6.25 per unit per year</div>
 
 <p><b>Economic order quantity</b></p>
-<div class="fml">EOQ = &radic;(2 D C&#8320; / C<sub>h</sub>) = &radic;(2 &times; 18000 &times; 250 / 6.25)
+<div class="fml">EOQ = <sq><fr>2 D C&#8320;|C<sub>h</sub></fr></sq> = &radic;(2 &times; 18000 &times; 250 / 6.25)
     = &radic;1,440,000 = <b>1,200 units</b>
 Number of orders per year = 18,000 / 1,200 = 15
 Time between two orders = 12 / 15 = 0.8 month, that is about 24 days</div>
@@ -2364,7 +2818,7 @@ a:`<h4>Method</h4>
 
 Average annual cost
 
-<span class="ind">= total cost up to year n &divide; n</span>
+<span class="ind">= <fr>total cost up to year n|n</fr></span>
 
 Here the depreciation given is the depreciation <b>during</b> each year, so it has to be
 cumulated first. The cumulative depreciation is the fall in value of the scooter from
@@ -2414,9 +2868,9 @@ a:`<h4>Step 1: Probability of failure in each week</h4>
 
 <h4>Step 3: Average number of failures per week in the steady state</h4>
 <p>In the long run, the number of bulbs replaced every week is the total number of bulbs divided by the mean life of one bulb.</p>
-<div class="fml"><span class="ind">Average number of replacements per week = N &divide; mean life</span>
+<div class="fml"><span class="ind">Average number of replacements per week = <fr>N|mean life</fr></span>
 
-<span class="ind">                                        = 3000 &divide; 3.4</span>
+<span class="ind">                                        = <fr>3000|3.4</fr></span>
 
 <span class="ind">                                        = <b>882.35, that is about 882 bulbs</b></span></div>
 
@@ -2504,7 +2958,7 @@ a:`<h4>1. Meaning of replacement theory</h4>
 
 <span class="ind">= cumulative depreciation up to year n + cumulative running cost up to year n</span>
 
-Average annual cost = total cost &divide; n
+Average annual cost = <fr>total cost|n</fr>
 
 The scooter is replaced in the year in which the average annual cost is least.
 The depreciation given is the depreciation during each year, so it is cumulated first.</div>
@@ -2550,9 +3004,9 @@ a:`<h4>Part 1: Individual versus group replacement</h4>
 <span class="ind">                    = <b>3.4 weeks</b></span></div>
 
 <h4>Part 3: Cost of the individual replacement policy</h4>
-<div class="fml"><span class="ind">Average failures per week = N &divide; mean life</span>
+<div class="fml"><span class="ind">Average failures per week = <fr>N|mean life</fr></span>
 
-<span class="ind">                          = 3000 &divide; 3.4 = 882.35 bulbs</span>
+<span class="ind">                          = <fr>3000|3.4</fr> = 882.35 bulbs</span>
 
 Therefore,
 
@@ -2674,33 +3128,33 @@ Row A&#8322; = (2, 4) &le; (2, 4)             &rarr;  <b>delete A&#8322;</b></di
 
 <span class="ind">a + d - b - c = 4 + 8 - 0 - 0 = 12</span></div>
 <p>Let p be the probability with which player A plays A&#8323;, so that he plays A&#8324; with probability 1 - p. Then</p>
-<div class="fml"><span class="ind">p = (d - c) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">p = <fr>d - c|a + d - b - c</fr></span>
 
 <span class="ind">  = (8 - 0) &divide; 12</span>
 
-<span class="ind">  = 8 / 12 = <b>2/3</b></span>
+<span class="ind">  = <fr>8|12</fr> = <b><fr>2|3</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - p = 1 - 2/3 = <b>1/3</b></span></div>
+<span class="ind">1 - p = 1 - <fr>2|3</fr> = <b><fr>1|3</fr></b></span></div>
 <p>Similarly, let q be the probability with which player B plays B&#8323;, so that he plays B&#8324; with probability 1 - q. Then</p>
-<div class="fml"><span class="ind">q = (d - b) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">q = <fr>d - b|a + d - b - c</fr></span>
 
 <span class="ind">  = (8 - 0) &divide; 12</span>
 
-<span class="ind">  = 8 / 12 = <b>2/3</b></span>
+<span class="ind">  = <fr>8|12</fr> = <b><fr>2|3</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - q = 1 - 2/3 = <b>1/3</b></span></div>
+<span class="ind">1 - q = 1 - <fr>2|3</fr> = <b><fr>1|3</fr></b></span></div>
 <p>Again, the value of the game is given by</p>
-<div class="fml"><span class="ind">V = (ad - bc) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">V = <fr>ad - bc|a + d - b - c</fr></span>
 
 <span class="ind">  = (4 &times; 8 - 0 &times; 0) &divide; 12</span>
 
-<span class="ind">  = 32 / 12</span>
+<span class="ind">  = <fr>32|12</fr></span>
 
-<span class="ind">  = <b>8/3 = 2.67</b></span></div>
+<span class="ind">  = <b><fr>8|3</fr> = 2.67</b></span></div>
 
 <h4>Step 6: Verification</h4>
 <p>The expected gain of player A must be the same whichever strategy B chooses.</p>
@@ -2767,33 +3221,33 @@ Column B&#8321; (3, 5, 3) &ge; Column B&#8324; (2, 4, 2)   &rarr;  <b>delete B&#
 
 <span class="ind">a + d - b - c = 2 + 2 - 4 - 5 = -5</span></div>
 <p>Let p be the probability with which player A plays A&#8322;. Then</p>
-<div class="fml"><span class="ind">p = (d - c) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">p = <fr>d - c|a + d - b - c</fr></span>
 
 <span class="ind">  = (2 - 5) &divide; (-5)</span>
 
-<span class="ind">  = (-3) / (-5) = <b>3/5</b></span>
+<span class="ind">  = <fr>-3|-5</fr> = <b><fr>3|5</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - p = 1 - 3/5 = <b>2/5</b>,  which is the probability of A&#8324;</span></div>
+<span class="ind">1 - p = 1 - <fr>3|5</fr> = <b><fr>2|5</fr></b>,  which is the probability of A&#8324;</span></div>
 <p>Let q be the probability with which player B plays B&#8323;. Then</p>
-<div class="fml"><span class="ind">q = (d - b) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">q = <fr>d - b|a + d - b - c</fr></span>
 
 <span class="ind">  = (2 - 4) &divide; (-5)</span>
 
-<span class="ind">  = (-2) / (-5) = <b>2/5</b></span>
+<span class="ind">  = <fr>-2|-5</fr> = <b><fr>2|5</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - q = 1 - 2/5 = <b>3/5</b>,  which is the probability of B&#8324;</span></div>
+<span class="ind">1 - q = 1 - <fr>2|5</fr> = <b><fr>3|5</fr></b>,  which is the probability of B&#8324;</span></div>
 <p>Again, the value of the game is</p>
-<div class="fml"><span class="ind">V = (ad - bc) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">V = <fr>ad - bc|a + d - b - c</fr></span>
 
 <span class="ind">  = (2 &times; 2 - 4 &times; 5) &divide; (-5)</span>
 
 <span class="ind">  = (4 - 20) / (-5)</span>
 
-<span class="ind">  = (-16) / (-5) = <b>16/5 = 3.2</b></span></div>
+<span class="ind">  = <fr>-16|-5</fr> = <b><fr>16|5</fr> = 3.2</b></span></div>
 
 <h4>Step 6: Verification</h4>
 <div class="fml">When B plays B&#8323;,
@@ -2854,7 +3308,7 @@ So the oddments of A are in the ratio A&#8322; : A&#8323; = 4 : 3, and their tot
 
 Therefore,
 
-<span class="ind">probability of A&#8322; = <b>4/7</b>    and    probability of A&#8323; = <b>3/7</b></span></div>
+<span class="ind">probability of A&#8322; = <b><fr>4|7</fr></b>    and    probability of A&#8323; = <b><fr>3|7</fr></b></span></div>
 <p>Doing the same for the columns,</p>
 <div class="fml"><span class="ind">Difference of column B&#8322; = | 12 - 14 | = 2,  written against B&#8323;</span>
 
@@ -2864,20 +3318,20 @@ So the oddments of B are in the ratio B&#8322; : B&#8323; = 5 : 2, and their tot
 
 Therefore,
 
-<span class="ind">probability of B&#8322; = <b>5/7</b>    and    probability of B&#8323; = <b>2/7</b></span></div>
+<span class="ind">probability of B&#8322; = <b><fr>5|7</fr></b>    and    probability of B&#8323; = <b><fr>2|7</fr></b></span></div>
 
 <h4>Step 4: Value of the game</h4>
 <div class="fml">When B plays B&#8322;,
 
-<span class="ind">expected gain of A = 12 &times; (4/7) + 14 &times; (3/7) = (48 + 42)/7 = 90/7</span>
+<span class="ind">expected gain of A = 12 &times; (4/7) + 14 &times; (3/7) = <fr>48 + 42|7</fr> = <fr>90|7</fr></span>
 
 When B plays B&#8323;,
 
-<span class="ind">expected gain of A = 15 &times; (4/7) + 10 &times; (3/7) = (60 + 30)/7 = 90/7</span>
+<span class="ind">expected gain of A = 15 &times; (4/7) + 10 &times; (3/7) = <fr>60 + 30|7</fr> = <fr>90|7</fr></span>
 
 Both are equal, therefore
 
-<span class="ind">V = <b>90/7 = 12.86</b></span>
+<span class="ind">V = <b><fr>90|7</fr> = 12.86</b></span>
 
 This lies between the maximin 12 and the minimax 14, so the answer is correct.</div>
 <div class="key"><strong>Answer:</strong><br>
@@ -2951,33 +3405,33 @@ Row A&#8322; (16, 12) &le; Row A&#8321; (20, 14)                    &rarr;  dele
 
 <span class="ind">a + d - b - c = 20 + 15 - 14 - 8 = 13</span></div>
 <p>Let p be the probability with which manufacturer A gives prizes, that is plays A&#8321;. Then</p>
-<div class="fml"><span class="ind">p = (d - c) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">p = <fr>d - c|a + d - b - c</fr></span>
 
 <span class="ind">  = (15 - 8) &divide; 13</span>
 
-<span class="ind">  = <b>7/13</b></span>
+<span class="ind">  = <b><fr>7|13</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - p = 1 - 7/13 = <b>6/13</b>,  the probability of maintaining the present strategy</span></div>
+<span class="ind">1 - p = 1 - <fr>7|13</fr> = <b><fr>6|13</fr></b>,  the probability of maintaining the present strategy</span></div>
 <p>Let q be the probability with which manufacturer B decreases the price, that is plays B&#8322;. Then</p>
-<div class="fml"><span class="ind">q = (d - b) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">q = <fr>d - b|a + d - b - c</fr></span>
 
 <span class="ind">  = (15 - 14) &divide; 13</span>
 
-<span class="ind">  = <b>1/13</b></span>
+<span class="ind">  = <b><fr>1|13</fr></b></span>
 
 Therefore,
 
-<span class="ind">1 - q = 1 - 1/13 = <b>12/13</b>,  the probability of maintaining the present strategy</span></div>
+<span class="ind">1 - q = 1 - <fr>1|13</fr> = <b><fr>12|13</fr></b>,  the probability of maintaining the present strategy</span></div>
 <p>Again, the value of the game is</p>
-<div class="fml"><span class="ind">V = (ad - bc) &divide; (a + d - b - c)</span>
+<div class="fml"><span class="ind">V = <fr>ad - bc|a + d - b - c</fr></span>
 
 <span class="ind">  = (20 &times; 15 - 14 &times; 8) &divide; 13</span>
 
-<span class="ind">  = (300 - 112) / 13</span>
+<span class="ind">  = <fr>300 - 112|13</fr></span>
 
-<span class="ind">  = <b>188/13 = 14.46</b></span></div>
+<span class="ind">  = <b><fr>188|13</fr> = 14.46</b></span></div>
 
 <p><b>Step 4: Verification</b></p>
 <div class="fml">When B decreases the price,
@@ -3064,13 +3518,13 @@ q:`Write short notes on any two of the following.
 <br>(a) EOQ &nbsp;&nbsp; (b) Kendall's notation for queueing models &nbsp;&nbsp; (c) Duality theorem`,
 a:`<h4>(a) EOQ, Economic Order Quantity</h4>
 <p>EOQ is that order size which minimises the <b>total inventory cost</b>, made up of the ordering cost and the carrying cost. The ordering cost falls as the order size grows, because fewer orders are placed, while the carrying cost rises, because more stock is held. The quantity at which the sum of the two is least is the EOQ.</p>
-<div class="fml">EOQ,  Q* = &radic;(2 D C&#8320; / C<sub>h</sub>)
+<div class="fml">EOQ,  Q* = <sq><fr>2 D C&#8320;|C<sub>h</sub></fr></sq>
 
 D  = annual demand,  C&#8320; = ordering cost per order
 C<sub>h</sub> = carrying cost per unit per year, usually i &times; unit price
 
 Number of orders per year = D / Q*
-Annual ordering cost = (D / Q) C&#8320;,   annual carrying cost = (Q / 2) C<sub>h</sub>
+Annual ordering cost = <fr>D|Q</fr> C&#8320;,   annual carrying cost = <fr>Q|2</fr> C<sub>h</sub>
 At the EOQ the ordering cost equals the carrying cost.</div>
 <p><b>Assumptions:</b> demand is known and uniform, replenishment is instantaneous, lead time is constant and taken as zero, the price is constant with no discount, the two costs are known and constant, and shortages are not allowed.</p>
 
@@ -3136,8 +3590,8 @@ a:`<h4>(a) Queueing theory</h4>
 the queue discipline and the customer behaviour.
 
 For the model (M / M / 1) : (&infin; / FCFS)
-&rho; = &lambda; / &mu;      P&#8320; = 1 - &rho;      L<sub>s</sub> = &lambda; / (&mu; - &lambda;)      L<sub>q</sub> = &lambda;&sup2; / [&mu;(&mu; - &lambda;)]
-W<sub>s</sub> = 1 / (&mu; - &lambda;)                     W<sub>q</sub> = &lambda; / [&mu;(&mu; - &lambda;)]</div>
+&rho; = <fr>&lambda;|&mu;</fr>      P&#8320; = 1 - &rho;      L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr>      L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr>
+W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr>                     W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr></div>
 <p><b>Applications:</b> bank counters and ATMs, supermarket checkouts, hospital patient flow, call centres, traffic signals and assembly lines.</p>
 
 <h4>(b) ABC analysis</h4>
@@ -3165,6 +3619,400 @@ If Maximin = Minimax, that common value is the saddle point and V = that value.<
 
 });
 /*BANK*/
+
+/* Which explainers belong to which question. */
+const METHOD_MAP = {
+  'lp-form-abc':['lpform'], 'lp-form-chair':['lpform','graphical'],
+  'lp-simplex-max':['simplex'], 'lp-simplex-min':['simplex','bigm'],
+  'lp-simplex-num':['simplex'], 'lp-simplex-long':['simplex'],
+  'lp-duality':['duality'], 'lp-dual-2021':['duality','graphical'],
+  'lp-dual-2023':['duality','simplex'], 'lp-econ-long':['duality','graphical'],
+  'lp-bigm':['bigm'], 'lp-twophase':['bigm'], 'lp-graphical':['graphical'],
+  'lp-graph-long':['graphical'], 'lp-special':['graphical','simplex'], 'lp-slack':['simplex'],
+  'tp-2021':['vam','modi'], 'tp-methods':['nwcm','vam'], 'tp-methods-long':['nwcm','vam','modi'],
+  'tp-modi':['modi'], 'tp-degeneracy':['degeneracy','modi'], 'tp-unbalanced':['vam'],
+  'tp-2023-long':['vam','modi','degeneracy'], 'tp-transship':['vam'],
+  'ap-hungarian':['hungarian'], 'ap-carew':['hungarian'],
+  'ap-contract-long':['hungarian'], 'ap-crew':['hungarian'],
+  'q-mm1-radio':['mm1'], 'q-bank':['mm1'], 'q-long':['mm1'],
+  'q-charact':['mm1'], 'q-single':['mm1'], 'q-classify':['mm1'],
+  'inv-eoq-note':['eoq'], 'inv-eoq-spark':['eoq'], 'inv-abc':['abc'],
+  'inv-abc-eoq-long':['abc','eoq'], 'inv-costs-abc-long':['abc'],
+  'rep-scooter':['replace'], 'rep-long':['replace'],
+  'rep-lamps':['repgroup'], 'rep-group-long':['repgroup'], 'rep-groupind':['repgroup'],
+  'gt-saddle':['saddle'], 'gt-dom-2024':['saddle','dominance','game2x2'],
+  'gt-dom-2':['saddle','dominance','game2x2'], 'gt-arith':['dominance','game2x2'],
+  'gt-market-long':['saddle','dominance','game2x2'], 'gt-theory-long':['saddle','dominance','game2x2'],
+  'note-1':['eoq','duality'], 'note-2':['degeneracy','hungarian'], 'note-3':['mm1','abc','saddle']
+};
+
+/* =======================  METHOD EXPLAINERS  =======================
+   Opened by the "How the method works" button on an answer.            */
+const METHODS = {
+
+'lpform':{t:'Formulating an LPP',h:`
+<h4>What the examiner is checking</h4>
+<p>That you can turn a paragraph of English into four mathematical parts. Marks are given for the parts, not for a final number, so never skip a heading even if that part is trivial.</p>
+<h4>The four parts, always in this order</h4>
+<ol>
+<li><b>Decision variables.</b> Write "Let x&#8321; = number of units of A produced" in full words. One variable for each thing the firm decides.</li>
+<li><b>Objective function.</b> Profit means Maximize, cost or time means Minimize. Multiply each variable by its profit or cost per unit.</li>
+<li><b>Constraints.</b> One inequality per limited resource. Read each row of the data table as one constraint.</li>
+<li><b>Non negativity.</b> Always write x&#8321;, x&#8322;, x&#8323; &ge; 0. It is a free mark.</li>
+</ol>
+<h4>Turning each English phrase into a symbol</h4>
+<ul>
+<li>"available", "capacity", "at most", "not more than" &rarr; <b>&le;</b></li>
+<li>"demand for at least", "minimum", "must produce" &rarr; <b>&ge;</b></li>
+<li>"exactly", "must be used fully", a fixed ratio &rarr; <b>=</b></li>
+<li>"in the ratio 3 : 4 : 5" &rarr; write x&#8321;/3 = x&#8322;/4 = x&#8323;/5, then split it into two equations 4x&#8321; - 3x&#8322; = 0 and 5x&#8322; - 4x&#8323; = 0</li>
+<li>"A takes twice the time of B" &rarr; let the time for A be t, so B takes t/2. If the whole capacity on A gives N units, total time is Nt, and the constraint is t x&#8321; + (t/2) x&#8322; + ... &le; N t. Divide by t to clear it.</li>
+</ul>
+<div class="trap"><strong>The trap.</strong> Every number in the question must appear somewhere in the model. If a sentence has not been used, you have missed a constraint. Before writing the final model, tick off each figure in the question one by one.</div>`},
+
+'graphical':{t:'Graphical method',h:`
+<h4>When it can be used</h4>
+<p>Only when there are exactly <b>two</b> decision variables. With three or more you must use simplex.</p>
+<h4>Steps</h4>
+<ol>
+<li><b>Convert each inequality into an equation</b> and find the two intercepts. Put x = 0 to get the y intercept, then y = 0 to get the x intercept. Write these as a small two row table for each line.</li>
+<li><b>Plot the lines</b> and join each pair of intercepts.</li>
+<li><b>Test the origin (0, 0)</b> in each original inequality.
+  <ul><li>If it is satisfied, the region on the origin side is the correct one.</li>
+  <li>If it is not satisfied, take the far side.</li>
+  <li>A &le; constraint almost always contains the origin, a &ge; constraint almost always does not.</li></ul></li>
+<li><b>Shade the common region</b>, which is the feasible region.</li>
+<li><b>Find the corner points.</b> The intercepts are corners, and where two lines cross you must <b>solve those two equations simultaneously</b>. Show that algebra, it carries marks.</li>
+<li><b>Test every corner in Z</b> using a two column table. The largest value wins for a maximization problem, the smallest for a minimization problem.</li>
+</ol>
+<h4>The three special cases</h4>
+<ul>
+<li><b>Multiple optimal solutions:</b> two different corners give the same best Z. Then every point on the edge between them is optimal, and you should say so.</li>
+<li><b>Unbounded:</b> the region is open in the direction of improvement, so Z can grow forever and no finite optimum exists.</li>
+<li><b>Infeasible:</b> the shaded regions never overlap, so no point satisfies all the constraints.</li>
+</ul>
+<div class="trap"><strong>The trap.</strong> A corner is only a corner if it satisfies <b>every</b> constraint. After solving two lines together, substitute the point back into the constraints you did not use. If it fails even one, throw the point away and do not put it in the table.</div>`},
+
+'simplex':{t:'Simplex method',h:`
+<h4>Getting to standard form</h4>
+<ul>
+<li>The objective must be a <b>maximization</b>. For a minimization use Min Z = Max (-Z), solve, then flip the sign back at the end.</li>
+<li>Every constraint must become an <b>equation</b>: add a slack S for &le;, subtract a surplus S and add an artificial A for &ge;, add only an artificial A for =.</li>
+<li>Slack and surplus get a coefficient of 0 in the objective row.</li>
+</ul>
+<h4>The loop, repeated until it stops</h4>
+<ol>
+<li><b>Build the table.</b> Columns are C<sub>j</sub>, the basis, C<sub>B</sub>, b, then one column per variable. The slack variables start in the basis, so the first solution is x = 0 and S = b.</li>
+<li><b>Compute Z<sub>j</sub> for each column</b> as the sum of C<sub>B</sub> multiplied by the entries of that column, then write the row Z<sub>j</sub> - C<sub>j</sub> underneath.</li>
+<li><b>Optimality test.</b> For a maximization you stop when every Z<sub>j</sub> - C<sub>j</sub> is &ge; 0.</li>
+<li><b>Entering variable</b> is the column with the most negative Z<sub>j</sub> - C<sub>j</sub>. Mark it with an arrow.</li>
+<li><b>Leaving variable</b> is found by the minimum ratio b divided by the entry in that column. <b>Ignore zero and negative entries</b> when taking ratios. The smallest non negative ratio wins.</li>
+<li><b>Pivot.</b> The crossing point is the key element. Divide the whole pivot row by it so it becomes 1, then for every other row use
+  <br>New row = old row - (its entry in the pivot column) &times; (new pivot row).</li>
+<li>Swap the leaving variable for the entering one in the basis column and repeat.</li>
+</ol>
+<h4>Reading the finished table</h4>
+<p>A variable in the basis takes the b value on its row. Every variable not in the basis is zero. Z is C<sub>B</sub> times b.</p>
+<div class="trap"><strong>Traps.</strong> If the entering column has no positive entry at all, the solution is <b>unbounded</b>. If a non basic variable finishes with Z<sub>j</sub> - C<sub>j</sub> = 0 there are <b>multiple optima</b>. If two rows tie on the minimum ratio that is <b>degeneracy</b>, break it arbitrarily. If an artificial variable is still in the basis at a positive value the problem is <b>infeasible</b>.</div>`},
+
+'bigm':{t:'Big M and Two Phase',h:`
+<h4>Why they exist</h4>
+<p>A &ge; or an = constraint has no slack variable to put in the starting basis, so an <b>artificial variable</b> is added just to get started. It is not real and it must leave before the end.</p>
+<h4>Big M method</h4>
+<ol>
+<li>Convert: x + y &ge; 5 becomes x + y - S&#8321; + A&#8321; = 5, and x + y = 8 becomes x + y + A&#8322; = 8.</li>
+<li>Penalise the artificials in the objective. Use <b>-M A</b> for a maximization and <b>+M A</b> for a minimization, where M is a huge positive number.</li>
+<li>Run the ordinary simplex. Treat M as enormous, so a term like 7M - 5 is positive and 4M - 3 is positive, and compare two such terms by their M parts first.</li>
+<li>The penalty drives the artificials out of the basis first, which is exactly the point.</li>
+</ol>
+<h4>Two Phase method</h4>
+<ol>
+<li><b>Phase 1.</b> Ignore the real objective. Maximize Z* = -A&#8321; - A&#8322;, that is minimise the sum of the artificials. Run simplex.</li>
+<li>If Phase 1 ends with Z* = 0 and no artificial left in the basis, you have a feasible starting point. If it does not reach zero, stop, the problem is <b>infeasible</b>.</li>
+<li><b>Phase 2.</b> Delete the artificial columns, bring back the real objective and run simplex again from that table.</li>
+</ol>
+<div class="trap"><strong>The trap.</strong> Once an artificial variable leaves the basis you may delete its whole column, and you should, because it can never usefully return. Carrying it makes the arithmetic twice as long.</div>`},
+
+'duality':{t:'Duality',id:'duality',h:`
+<h4>The rules for writing the dual</h4>
+<ul>
+<li>Number of dual variables = number of primal <b>constraints</b>. Number of dual constraints = number of primal <b>variables</b>.</li>
+<li>Max becomes Min and the inequality signs flip.</li>
+<li>The right hand side numbers of the primal become the <b>objective coefficients</b> of the dual.</li>
+<li>The objective coefficients of the primal become the <b>right hand sides</b> of the dual.</li>
+<li>The coefficient matrix is <b>transposed</b>, so the primal rows become the dual columns.</li>
+<li>Put the primal into canonical form first: all &le; for a Max primal, all &ge; for a Min primal. Multiply a wrong facing constraint by -1, and split an equality into a &le; and a &ge;.</li>
+</ul>
+<h4>Duality theorem</h4>
+<p>If the primal has an optimal solution then so does the dual, and <b>Max Z = Min W</b>. That equality is your check, and it also lets you solve whichever of the two is smaller.</p>
+<h4>Reading the primal answer out of the dual table</h4>
+<p>When you solve the dual by simplex, the values of the primal variables sit in the final <b>Z<sub>j</sub> - C<sub>j</sub> row under the slack columns</b>, in order. This saves solving the primal separately, and examiners like seeing it.</p>
+<h4>Complementary slackness, when solving graphically</h4>
+<ul>
+<li>If a dual constraint is <b>slack</b> at the optimum, the matching primal variable is <b>zero</b>.</li>
+<li>If a dual variable is <b>positive</b>, the matching primal constraint is <b>tight</b>, so it holds as an equation.</li>
+<li>Turn those tight constraints into simultaneous equations and solve for the primal variables.</li>
+</ul>
+<div class="trap"><strong>The trap.</strong> Do not transpose before fixing the inequality directions. Put every constraint the right way round first, then transpose, or the signs will come out wrong.</div>`},
+
+'nwcm':{t:'Starting solutions: North West Corner and Least Cost',h:`
+<h4>Before anything else</h4>
+<p>Check <b>total supply against total demand</b>. If they differ, add a dummy row or dummy column with <b>zero costs</b> to absorb the difference. Only then start allocating.</p>
+<h4>North West Corner Method</h4>
+<ol>
+<li>Start at the top left cell.</li>
+<li>Allocate the smaller of that row's supply and that column's demand.</li>
+<li>Subtract the allocation from both. Cross out the row if its supply hit zero, or the column if its demand hit zero.</li>
+<li>Move to the new top left of what remains and repeat.</li>
+</ol>
+<p>It ignores cost entirely, so the answer is usually poor. It is asked because it is quick to mark.</p>
+<h4>Least Cost Method</h4>
+<ol>
+<li>Find the <b>cheapest cell</b> anywhere in the table. Break a tie any way you like.</li>
+<li>Allocate as much as possible there, that is the smaller of the supply and the demand.</li>
+<li>Cross out whichever is exhausted and repeat on what is left.</li>
+</ol>
+<div class="trap"><strong>Always count your allocations.</strong> A proper basic feasible solution has exactly <b>m + n - 1</b> occupied cells. Fewer means degeneracy and you must add an epsilon before the MODI test.</div>`},
+
+'vam':{t:"Vogel's Approximation Method",h:`
+<h4>Why VAM</h4>
+<p>It looks one step ahead by asking what it would cost you to <b>not</b> use the cheapest cell in a row or column. The answer it gives is usually optimal or one step away, so MODI finishes quickly.</p>
+<h4>Steps for each round</h4>
+<ol>
+<li><b>Balance first.</b> Unequal supply and demand means a dummy row or column at zero cost.</li>
+<li><b>Compute a penalty for every row and every column:</b> the second smallest cost minus the smallest cost in that line. With only one cell left in a line the penalty is that cost itself.</li>
+<li><b>Pick the line with the largest penalty.</b> On a tie, choose the one where you can allocate the most, or the one with the smallest cost.</li>
+<li>Inside that line find its <b>cheapest cell</b> and allocate min(supply, demand) there.</li>
+<li>Subtract from the supply and the demand. Cross out the exhausted row or column. If both hit zero at once cross out only one of them, and leave a zero allocation in the other so the count stays right.</li>
+<li><b>Recompute all penalties on what is left</b> and go again until everything is allocated.</li>
+</ol>
+<h4>How to present it</h4>
+<p>Write the successive penalties as a list beside each row and under each column, one number per round, so the examiner can follow which line you chose each time. Then add a line for the total cost, cost multiplied by allocation, summed across the occupied cells.</p>
+<div class="trap"><strong>Traps.</strong> Penalties must be <b>recomputed every round</b> on the reduced table, not carried over. And a crossed out line takes no further part in penalty calculations.</div>`},
+
+'modi':{t:'MODI or u-v optimality test',h:`
+<h4>What it does</h4>
+<p>It tests whether a starting solution can be improved, and improves it if so. It is the transportation version of the simplex optimality test.</p>
+<h4>Steps</h4>
+<ol>
+<li><b>Check the count first.</b> You need exactly m + n - 1 occupied cells. If short, place an epsilon in a cheap empty cell that does not close a loop.</li>
+<li><b>Find u<sub>i</sub> and v<sub>j</sub>.</b> Set u = 0 for the row with the most allocations, then use c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub> on the <b>occupied</b> cells only, one at a time, until all are known.</li>
+<li><b>For every empty cell compute d<sub>ij</sub> = c<sub>ij</sub> - (u<sub>i</sub> + v<sub>j</sub>)</b> and write it in square brackets in the cell.</li>
+<li><b>If every d<sub>ij</sub> &ge; 0 the solution is optimal.</b> Stop and state the total cost.</li>
+<li>Otherwise take the <b>most negative</b> d<sub>ij</sub>. That cell enters the solution.</li>
+</ol>
+<h4>Drawing the closed loop</h4>
+<ol>
+<li>Start at the entering cell and move only horizontally and vertically.</li>
+<li>You may only turn a corner <b>on an occupied cell</b>, and you must return to where you began.</li>
+<li>Mark the corners alternately + and -, starting with + at the entering cell.</li>
+<li>Take the <b>smallest allocation sitting on a minus corner</b>. Add it to every plus corner and subtract it from every minus corner.</li>
+<li>The entering cell is now occupied and one minus cell has become empty. Recompute u, v and d, and repeat.</li>
+</ol>
+<div class="trap"><strong>Traps.</strong> A d<sub>ij</sub> of exactly 0 in the final table means an <b>alternative optimal solution</b> exists, worth a mark if you say so. And you may pass straight through a cell without turning on it, so a loop is not always a neat rectangle.</div>`},
+
+'degeneracy':{t:'Degeneracy in transportation',h:`
+<h4>How to spot it</h4>
+<p>Count the occupied cells. A transportation solution needs exactly <b>m + n - 1</b> of them. Fewer than that is degeneracy.</p>
+<h4>Why it matters</h4>
+<p>The MODI test builds u<sub>i</sub> and v<sub>j</sub> from the equations c<sub>ij</sub> = u<sub>i</sub> + v<sub>j</sub> written on the occupied cells. With too few occupied cells there are too few equations and some u or v cannot be found, so the test cannot even start.</p>
+<h4>The cure</h4>
+<ol>
+<li>Choose an <b>empty cell with a low cost</b>.</li>
+<li>Check it does <b>not</b> close a loop with the cells that are already occupied.</li>
+<li>Put a token amount, written as epsilon and treated as zero, into it.</li>
+<li>Repeat until the count reaches m + n - 1, then run MODI normally.</li>
+<li>At the end epsilon is worth nothing, so it never changes the total cost.</li>
+</ol>
+<h4>When it appears</h4>
+<ul>
+<li>At the start, when one allocation empties a row and a column at the same moment.</li>
+<li>In the middle, when two minus corners of a loop tie for the smallest allocation, so two cells empty at once.</li>
+</ul>`},
+
+'hungarian':{t:'Hungarian method',h:`
+<h4>Steps</h4>
+<ol>
+<li><b>Square the matrix.</b> Unequal rows and columns means a dummy row or column of zeros. Whoever is matched with the dummy simply gets no work.</li>
+<li><b>Row reduction.</b> Subtract the smallest number in each row from that whole row.</li>
+<li><b>Column reduction.</b> Do the same down each column of the result. Now every row and column holds at least one zero.</li>
+<li><b>Try to assign.</b> Scan the rows: a row with exactly one zero gets that zero boxed, and its column is then struck out. Skip rows with two or more zeros for now. Repeat down the columns. Continue until every zero is boxed or struck.</li>
+<li><b>Count.</b> If the number of boxes equals the order of the matrix, you are done.</li>
+<li><b>Otherwise revise.</b> Cover all zeros with the fewest possible lines, then
+  <ul>
+  <li>find the <b>smallest uncovered</b> number,</li>
+  <li><b>subtract</b> it from every uncovered number,</li>
+  <li><b>add</b> it to every number covered by <b>two</b> lines,</li>
+  <li>leave numbers under a single line alone,</li>
+  </ul>
+  and go back to step 4.</li>
+<li><b>Total the original costs</b> of the boxed cells, not the reduced ones.</li>
+</ol>
+<h4>Two variants</h4>
+<ul>
+<li><b>Maximization:</b> subtract every element from the largest element in the whole matrix, then minimise as usual.</li>
+<li><b>Prohibited assignment:</b> a worker who cannot do a job gets cost M or infinity, so that cell can never be chosen.</li>
+</ul>
+<div class="trap"><strong>The trap.</strong> The revision step is where marks are lost. Only the <b>doubly covered</b> numbers go up, and the singly covered ones do not change at all. Redraw the whole matrix each round rather than editing in place.</div>`},
+
+'mm1':{t:'M / M / 1 queueing',h:`
+<h4>Getting the two rates right</h4>
+<p>Everything follows from &lambda; and &mu;, and both must be in the <b>same time unit</b>. A service time of 10 minutes per customer means &mu; = 60/10 = 6 customers per hour. Converting this wrongly is the single biggest cause of lost marks.</p>
+<h4>The formulas</h4>
+<ul>
+<li>&rho; = <fr>&lambda;|&mu;</fr>, the fraction of time the server is busy. It must be less than 1 or the queue grows forever, so say that.</li>
+<li>P&#8320; = 1 - &rho;, the chance the system is empty.</li>
+<li>P<sub>n</sub> = &rho;&#8319;(1 - &rho;), exactly n customers present. P(n &ge; k) = &rho;&#8342;.</li>
+<li>L<sub>s</sub> = <fr>&lambda;|&mu; - &lambda;</fr>, average number in the system.</li>
+<li>L<sub>q</sub> = <fr>&lambda;&sup2;|&mu;(&mu; - &lambda;)</fr>, average number waiting.</li>
+<li>W<sub>s</sub> = <fr>1|&mu; - &lambda;</fr>, average time in the system.</li>
+<li>W<sub>q</sub> = <fr>&lambda;|&mu;(&mu; - &lambda;)</fr>, average time waiting.</li>
+</ul>
+<h4>Checks that cost nothing and earn marks</h4>
+<ul>
+<li>L<sub>q</sub> = L<sub>s</sub> - &rho;</li>
+<li>W<sub>s</sub> = W<sub>q</sub> + 1/&mu;</li>
+<li>Little's law: L<sub>s</sub> = &lambda; W<sub>s</sub> and L<sub>q</sub> = &lambda; W<sub>q</sub></li>
+</ul>
+<div class="trap"><strong>The trap.</strong> W comes out in <b>hours</b> if &lambda; and &mu; were per hour. Convert to minutes before writing the final answer, and always state the unit.</div>`},
+
+'eoq':{t:'EOQ and quantity discounts',h:`
+<h4>The formula and what feeds it</h4>
+<p>EOQ = <sq><fr>2 D C&#8320;|C<sub>h</sub></fr></sq>, where D is annual demand, C&#8320; is the cost of placing one order, and C<sub>h</sub> is the cost of holding one unit for a year.</p>
+<p>When the carrying cost is quoted as a <b>percentage</b>, it is a percentage of the unit price: C<sub>h</sub> = i &times; price. A 25 percent rate on a Rs. 25 item gives C<sub>h</sub> = 6.25.</p>
+<h4>The three cost pieces</h4>
+<ul>
+<li>Purchase cost = D &times; price</li>
+<li>Ordering cost = <fr>D|Q</fr> &times; C&#8320;</li>
+<li>Carrying cost = <fr>Q|2</fr> &times; C<sub>h</sub>, because average stock is half the order size</li>
+</ul>
+<div class="trap"><strong>Free check.</strong> At the true EOQ the ordering cost and the carrying cost come out <b>equal</b>. If they do not match, your EOQ is wrong. Use it every time.</div>
+<h4>Deciding on a discount offer</h4>
+<ol>
+<li>Work out the EOQ and the <b>total annual cost</b> at the normal price, including the purchase cost.</li>
+<li>Recompute C<sub>h</sub> from the <b>discounted</b> price, since holding a cheaper item ties up less money.</li>
+<li>Work out the total annual cost at the offered quantity.</li>
+<li>Compare the two totals and accept the offer only if the total falls. State the saving as a number.</li>
+</ol>
+<div class="trap"><strong>The trap.</strong> You must include the <b>purchase cost</b> in both totals. Leave it out and the discount looks worse than useless, because you would only be comparing ordering and carrying costs, which the discount makes worse.</div>`},
+
+'abc':{t:'ABC analysis',h:`
+<h4>The idea</h4>
+<p>It applies the Pareto rule, that roughly 80 percent of the money sits in roughly 20 percent of the items. Effort is then spent where the money is.</p>
+<h4>Steps</h4>
+<ol>
+<li>For each item work out <b>annual consumption value = annual usage &times; unit cost</b>.</li>
+<li>Add them up to get the grand total.</li>
+<li>Express each item as a <b>percentage</b> of that total.</li>
+<li><b>Rank</b> the items in descending order of that percentage.</li>
+<li><b>Cumulate</b> the percentages down the ranked list.</li>
+<li>Cut the list: the first 70 to 80 percent of cumulative value is <b>A</b>, the next 15 to 20 percent is <b>B</b>, the rest is <b>C</b>.</li>
+</ol>
+<h4>What each class means in practice</h4>
+<ul>
+<li><b>A:</b> few items, most of the money. Tight control, frequent review, small safety stock, negotiate hard with the supplier.</li>
+<li><b>B:</b> routine monitoring, ordinary ordering rules.</li>
+<li><b>C:</b> many items, little money. Order in bulk once or twice a year and keep a generous buffer.</li>
+</ul>
+<div class="trap"><strong>The trap.</strong> Rank by <b>value</b>, never by usage or by unit price on their own. A cheap item used in huge quantity can easily outrank an expensive one bought twice a year.</div>`},
+
+'replace':{t:'Replacement of an item that deteriorates',h:`
+<h4>The principle</h4>
+<p>As the item ages the running cost climbs while the capital cost spreads over more years. Total cost per year therefore falls, bottoms out and rises again. You replace at the bottom.</p>
+<h4>Building the table, column by column</h4>
+<ol>
+<li>Year, n</li>
+<li>Running or maintenance cost for that year</li>
+<li><b>Cumulative</b> running cost</li>
+<li>Depreciation, that is capital cost minus scrap value at the end of year n. If the question gives depreciation <b>during each year</b>, you must <b>cumulate it</b> first.</li>
+<li>Total cost = column 3 + column 4</li>
+<li><b>Average annual cost = <fr>total cost|n</fr></b></li>
+</ol>
+<h4>The decision</h4>
+<p>Replace at the end of the year where the average annual cost in the last column is <b>smallest</b>. Say in one sentence why it turns, namely that the rise in running cost has started to outweigh the fall in depreciation.</p>
+<div class="trap"><strong>The trap.</strong> Dividing by n, not by anything else, and cumulating <b>both</b> the running cost and the depreciation. Using a single year's depreciation instead of the cumulative figure leaves the purchase price unaccounted for and gives the wrong year.</div>`},
+
+'repgroup':{t:'Individual and group replacement',h:`
+<h4>Step 1, the probability of failing in each period</h4>
+<p>If the question gives <b>cumulative</b> probabilities, subtract each from the one before it to get p<sub>i</sub>, the chance of failing during period i. Check that the p values add to 1.</p>
+<h4>Step 2, the individual policy</h4>
+<ul>
+<li>Mean life = &Sigma; i &times; p<sub>i</sub></li>
+<li>Failures per period in the steady state = <fr>N|mean life</fr></li>
+<li>Cost per period = that number &times; the individual replacement cost</li>
+</ul>
+<h4>Step 3, expected failures period by period</h4>
+<p>A bulb fitted as a replacement can itself fail later, so each period picks up failures from every earlier batch:</p>
+<ul>
+<li>N&#8321; = N&#8320; p&#8321;</li>
+<li>N&#8322; = N&#8320; p&#8322; + N&#8321; p&#8321;</li>
+<li>N&#8323; = N&#8320; p&#8323; + N&#8321; p&#8322; + N&#8322; p&#8321;</li>
+<li>and so on, each new term pairing the oldest batch with the newest probability</li>
+</ul>
+<h4>Step 4, the group policy</h4>
+<p>For a group replacement every t periods,</p>
+<ul>
+<li>Total cost = N &times; group cost per item + individual cost &times; failures during the first t - 1 periods</li>
+<li>Cost per period = that total &divide; t</li>
+</ul>
+<p>Tabulate for t = 1, 2, 3, 4 and pick the smallest. Then compare that against the individual policy figure from step 2 and recommend the cheaper one.</p>
+<div class="trap"><strong>The trap.</strong> Use the <b>cumulative</b> failures over the first t - 1 periods in the group cost, not the failures of period t alone.</div>`},
+
+'saddle':{t:'Saddle point and pure strategy',h:`
+<h4>The two principles</h4>
+<ul>
+<li><b>Maximin, for player A</b> who wants a large payoff. Write the <b>minimum of each row</b> in a new column, then take the <b>largest</b> of those. A is asking, if the worst happens on each of my choices, which worst is best.</li>
+<li><b>Minimax, for player B</b> who wants a small payoff. Write the <b>maximum of each column</b> in a new row, then take the <b>smallest</b> of those.</li>
+</ul>
+<h4>The test</h4>
+<p>If maximin = minimax, that cell is a <b>saddle point</b>, the common value is the <b>value of the game V</b>, and both players use a single <b>pure strategy</b>, namely the row and the column it sits in.</p>
+<p>If they are not equal there is no saddle point and you must go on to mixed strategies through dominance and the 2 &times; 2 formulas.</p>
+<div class="trap"><strong>Always write both extra lines.</strong> Show the row minimum column and the column maximum row even when the answer is obvious. The marks are for the method. And remember maximin &le; V &le; minimax always holds, which checks any mixed strategy answer you get later.</div>`},
+
+'dominance':{t:'Dominance rule',h:`
+<h4>The two rules, and why they point opposite ways</h4>
+<ul>
+<li><b>Rows.</b> Player A wants big numbers. If every entry of row i is <b>less than or equal to</b> the matching entry of row j, then row i can never be better, so <b>delete row i</b>.</li>
+<li><b>Columns.</b> Player B wants small numbers, since the table shows A's gains. If every entry of column i is <b>greater than or equal to</b> the matching entry of column j, then column i can never be better for B, so <b>delete column i</b>.</li>
+</ul>
+<p>Remember it as: delete the <b>smaller row</b>, delete the <b>bigger column</b>.</p>
+<h4>Average dominance, when plain dominance runs out</h4>
+<p>Compare one line against the <b>average of two others</b>:</p>
+<ul>
+<li>If row i &le; the average of rows j and k, delete row i.</li>
+<li>If column i &ge; the average of columns j and k, delete column i.</li>
+</ul>
+<h4>How to work</h4>
+<ol>
+<li>Test for a saddle point first. If one exists there is nothing to reduce.</li>
+<li>Delete one line at a time and <b>redraw the reduced matrix</b> after each deletion.</li>
+<li>Alternate between rows and columns until only 2 &times; 2 is left, then use the algebraic formulas.</li>
+<li>In the final answer, give a probability of <b>0</b> to every row and column you deleted, listed in the original order.</li>
+</ol>
+<div class="trap"><strong>The trap.</strong> The comparison must hold for <b>every single entry</b>, not most of them. One entry going the wrong way kills the dominance.</div>`},
+
+'game2x2':{t:'Solving a 2 x 2 game',h:`
+<h4>Label the matrix first</h4>
+<p>Write the reduced matrix as a, b on the top row and c, d on the bottom row, and note the denominator once:</p>
+<p style="text-align:center"><b>denominator = a + d - b - c</b></p>
+<h4>Algebraic method</h4>
+<ul>
+<li>p, the probability A plays the <b>first row</b> = <fr>d - c|denominator</fr>, and the second row gets 1 - p.</li>
+<li>q, the probability B plays the <b>first column</b> = <fr>d - b|denominator</fr>, and the second column gets 1 - q.</li>
+<li>V = <fr>ad - bc|denominator</fr>.</li>
+</ul>
+<p>A negative denominator is perfectly normal. Keep the signs and let them cancel, and every probability will still come out positive.</p>
+<h4>Arithmetic method, the oddments short cut</h4>
+<ol>
+<li>Take the difference of the two numbers in row 1 and write it against <b>row 2</b>. Take the difference of row 2 and write it against <b>row 1</b>. Ignore signs.</li>
+<li>Do the same for the columns, each difference written against the <b>other</b> column.</li>
+<li>Divide each number by the total of its pair to get the probabilities.</li>
+</ol>
+<p>It gives exactly the same answer as the formulas, so use whichever the question names.</p>
+<h4>Finding V and checking it</h4>
+<p>Compute A's expected gain against each of B's pure strategies. Both must give the <b>same</b> number, and that number is V. Finally confirm that maximin &le; V &le; minimax from the original matrix.</p>
+<div class="trap"><strong>The trap.</strong> The probabilities belong to the <b>original</b> game. Write the full list including a 0 for every strategy removed by dominance, for example A = (0, 0, 2/3, 1/3), not just the surviving pair.</div>`}
+};
 
 /* =======================  THE 10 SETS  =======================
    index 0        -> Q1  Group A [10]
@@ -3306,6 +4154,29 @@ function slotInfo(i){
   return {no:'Q '+(i+1), grp:'C', marks:'[10]', long:true};
 }
 
+/* The working blocks use white-space:pre-wrap, and each .ind line is itself a
+   block. The newlines written around those lines in the source would therefore
+   add a second break on top of the block break, leaving big empty gaps.
+   Strip whitespace that sits directly against an .ind line. */
+function tidyWork(h){
+  return h
+    /* <fr>numerator|denominator</fr> becomes a real stacked fraction,
+       <sq>...</sq> becomes a square root with an overbar. */
+    /* the parts may contain markup such as C<sub>h</sub>, so do not exclude tags */
+    .replace(/<fr>([\s\S]*?)\|([\s\S]*?)<\/fr>/g,
+             '<span class="frac"><span>$1</span><span>$2</span></span>')
+    /* the radicand may itself contain a fraction, so allow markup inside and
+       grow the radical sign when it does */
+    .replace(/<sq>([\s\S]*?)<\/sq>/g, function(_, inner){
+      const tall = inner.indexOf('class="frac"') > -1 ? ' tall' : '';
+      return '<span class="sqrt'+tall+'"><span>&radic;</span><span>'+inner+'</span></span>';
+    })
+    .replace(/\s*<span class="ind">/g, '<span class="ind">')
+    .replace(/<\/span>\s*(?=<span class="ind">)/g, '</span>')
+    .replace(/<\/span>\s*<\/div>/g, '</span></div>')
+    .replace(/<\/span>\n[ \t]*\n/g, '</span>\n');
+}
+
 function qCard(id, i){
   const it=BANK[id];
   const s=slotInfo(i);
@@ -3316,10 +4187,40 @@ function qCard(id, i){
   let h='<article class="q'+(s.long?' long':'')+'"><div class="qhead"><span class="qno">'+s.no+
     '</span><div><p class="qtext">'+it.q+'</p><p class="meta"><b>'+marks+'</b> &nbsp;&middot;&nbsp; '+
     unitLink+(it.yr?' &nbsp;&middot;&nbsp; asked in '+it.yr:'')+'</p></div></div>';
-  if(state.ans) h+='<div class="ans"><div class="anslabel">Answer</div>'+it.a+'</div>';
+  if(state.ans){
+    const keys=(METHOD_MAP[id]||[]).filter(function(k){ return METHODS[k]; });
+    h+='<div class="ans"><div class="anshead"><span class="anslabel">Answer</span>'+
+       (keys.length?'<button type="button" class="mbtn" data-m="'+keys.join(',')+'">How the method works</button>':'')+
+       '</div>'+tidyWork(it.a)+'</div>';
+  }
   else if(state.space) h+='<div class="space"></div>';
   return h+'</article>';
 }
+
+/* ---- method modal ---- */
+function openModal(keys){
+  const list=keys.split(',').filter(function(k){ return METHODS[k]; });
+  if(!list.length) return;
+  document.getElementById('modalTitle').textContent =
+    list.length===1 ? METHODS[list[0]].t : 'How these methods work';
+  document.getElementById('modalBody').innerHTML = list.map(function(k){
+    return (list.length>1 ? '<div class="mtitle">'+METHODS[k].t+'</div>' : '') + tidyWork(METHODS[k].h);
+  }).join('');
+  document.getElementById('modal').hidden=false;
+  document.body.style.overflow='hidden';
+  document.getElementById('modalBody').scrollTop=0;
+}
+function closeModal(){
+  document.getElementById('modal').hidden=true;
+  document.body.style.overflow='';
+}
+document.getElementById('out').addEventListener('click',function(e){
+  const b=e.target.closest ? e.target.closest('.mbtn') : null;
+  if(b) openModal(b.getAttribute('data-m'));
+});
+document.getElementById('modalClose').onclick=closeModal;
+document.getElementById('modalbg').onclick=closeModal;
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
 
 function renderSet(set){
   let h='<section class="setblock"><div class="paper"><h2>Model Set '+set.n+'</h2>'+

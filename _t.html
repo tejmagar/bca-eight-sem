@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><body style="margin:0">
+<iframe id="f" src="or/index.html" style="width:380px;height:900px;border:0"></iframe>
+<pre id="PROBE">pending</pre>
+<script>
+document.getElementById('f').addEventListener('load',function(){setTimeout(function(){
+ var d=document.getElementById('f').contentDocument;
+ var bad=[].filter.call(d.querySelectorAll('.frac'),function(e){
+    return e.children.length!==2||!e.children[0].textContent.trim()||!e.children[1].textContent.trim();});
+ document.getElementById('PROBE').textContent=JSON.stringify({
+   questions:d.querySelectorAll('article.q').length,
+   fractions:d.querySelectorAll('.frac').length,
+   sqrt:d.querySelectorAll('.sqrt').length,
+   tallSqrt:d.querySelectorAll('.sqrt.tall').length,
+   unconvertedTags:d.getElementById('out').querySelectorAll('fr,sq').length,
+   malformedFractions:bad.length,
+   scrollW:d.documentElement.scrollWidth, vw:d.documentElement.clientWidth});
+},2000)});
+</script></body></html>
